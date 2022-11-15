@@ -21,7 +21,6 @@ import java.util.Map;
  */
 public class BetterQueryPlanner implements QueryPlanner {
     private MetadataMgr mdm;
-    private Map<String, IndexInfo> indexes;
 
     public BetterQueryPlanner(MetadataMgr mdm) {
         this.mdm = mdm;
@@ -33,7 +32,8 @@ public class BetterQueryPlanner implements QueryPlanner {
         Plan p = new TablePlan(tx, data.table(), mdm);
 
         boolean indexFound = false;
-        for (String fldname : mdm.getIndexInfo(data.table(), tx).keySet()) {
+        Map<String, IndexInfo> indexes = mdm.getIndexInfo(data.table(), tx);
+        for (String fldname : indexes.keySet()) {
             Constant val = data.pred().equatesWithConstant(fldname);
             if (val != null) {
                 IndexInfo ii = indexes.get(fldname);
