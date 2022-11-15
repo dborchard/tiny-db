@@ -7,6 +7,8 @@ A tiny database that supports Btree Index.
 - Basic Planners
 - Index Planners
 - CLI interface
+- File Manager
+- Record Page
 
 ## TODO
 

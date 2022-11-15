@@ -2,7 +2,6 @@ package edu.utdallas.davisbase.c_parse;
 
 import edu.utdallas.davisbase.c_parse.commands.*;
 import edu.utdallas.davisbase.e_record.Schema;
-import simpledb.c_parse.commands.*;
 import edu.utdallas.davisbase.d_scans.domains.Constant;
 import edu.utdallas.davisbase.d_scans.domains.Expression;
 import edu.utdallas.davisbase.d_scans.domains.Predicate;

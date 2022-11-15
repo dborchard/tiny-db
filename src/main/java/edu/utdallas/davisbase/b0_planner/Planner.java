@@ -6,7 +6,6 @@ import edu.utdallas.davisbase.f_tx.Transaction;
 import edu.utdallas.davisbase.b0_planner.plan.Plan;
 import edu.utdallas.davisbase.b0_planner.planner.QueryPlanner;
 import edu.utdallas.davisbase.b0_planner.planner.UpdatePlanner;
-import simpledb.c_parse.commands.*;
 
 
 public class Planner {

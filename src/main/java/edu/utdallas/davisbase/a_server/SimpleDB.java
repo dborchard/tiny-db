@@ -1,15 +1,15 @@
 package edu.utdallas.davisbase.a_server;
 
-import edu.utdallas.davisbase.b0_planner.planner.impl.BetterUpdatePlanner;
-import edu.utdallas.davisbase.b1_metadata.MetadataMgr;
-import edu.utdallas.davisbase.f_tx.Transaction;
-import edu.utdallas.davisbase.g_file.FileMgr;
 import edu.utdallas.davisbase.b0_planner.Planner;
 import edu.utdallas.davisbase.b0_planner.plan.Plan;
 import edu.utdallas.davisbase.b0_planner.planner.QueryPlanner;
 import edu.utdallas.davisbase.b0_planner.planner.UpdatePlanner;
 import edu.utdallas.davisbase.b0_planner.planner.impl.BetterQueryPlanner;
+import edu.utdallas.davisbase.b0_planner.planner.impl.BetterUpdatePlanner;
+import edu.utdallas.davisbase.b1_metadata.MetadataMgr;
 import edu.utdallas.davisbase.d_scans.Scan;
+import edu.utdallas.davisbase.f_tx.Transaction;
+import edu.utdallas.davisbase.g_file.FileMgr;
 import edu.utdallas.davisbase.h_utils.AsciiTable;
 
 import java.io.File;
@@ -65,6 +65,7 @@ public class SimpleDB {
     }
 
     public void close() {
+        System.out.println("Shutting down");
     }
 
     public Transaction newTx() {
