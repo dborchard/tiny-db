@@ -2,6 +2,7 @@ package edu.utdallas.davisbase.b0_planner;
 
 import edu.utdallas.davisbase.c_parse.Parser;
 import edu.utdallas.davisbase.c_parse.commands.*;
+import edu.utdallas.davisbase.c_parse.domain.commands.*;
 import edu.utdallas.davisbase.f_tx.Transaction;
 import edu.utdallas.davisbase.b0_planner.plan.Plan;
 import edu.utdallas.davisbase.b0_planner.planner.QueryPlanner;

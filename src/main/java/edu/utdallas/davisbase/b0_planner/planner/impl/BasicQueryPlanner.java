@@ -6,7 +6,7 @@ import edu.utdallas.davisbase.f_tx.Transaction;
 import edu.utdallas.davisbase.b0_planner.plan.Plan;
 import edu.utdallas.davisbase.b0_planner.plan.impl.TablePlan;
 import edu.utdallas.davisbase.b0_planner.planner.QueryPlanner;
-import edu.utdallas.davisbase.c_parse.commands.QueryData;
+import edu.utdallas.davisbase.c_parse.domain.commands.QueryData;
 import edu.utdallas.davisbase.b1_metadata.MetadataMgr;
 
 

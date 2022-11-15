@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.d_scans.domains;
+package edu.utdallas.davisbase.c_parse.domain.clause;
 
 import edu.utdallas.davisbase.d_scans.Scan;
 import edu.utdallas.davisbase.e_record.Schema;
@@ -8,8 +8,8 @@ import edu.utdallas.davisbase.e_record.Schema;
  * @author Edward Sciore
  *
  */
-public class Term {
-   private Expression lhs, rhs;
+public class B_Term {
+   private C_Expression lhs, rhs;
    
    /**
     * Create a new term that compares two expressions
@@ -17,7 +17,7 @@ public class Term {
     * @param lhs  the LHS expression
     * @param rhs  the RHS expression
     */
-   public Term(Expression lhs, Expression rhs) {
+   public B_Term(C_Expression lhs, C_Expression rhs) {
       this.lhs = lhs;
       this.rhs = rhs;
    }
@@ -30,8 +30,8 @@ public class Term {
     * @return true if both expressions have the same value in the scan
     */
    public boolean isSatisfied(Scan s) {
-      Constant lhsval = lhs.evaluate(s);
-      Constant rhsval = rhs.evaluate(s);
+      D_Constant lhsval = lhs.evaluate(s);
+      D_Constant rhsval = rhs.evaluate(s);
       return rhsval.equals(lhsval);
    }
 
@@ -43,7 +43,7 @@ public class Term {
     * @param fldname the name of the field
     * @return either the constant or null
     */
-   public Constant equatesWithConstant(String fldname) {
+   public D_Constant equatesWithConstant(String fldname) {
       if (lhs.isFieldName() &&
           lhs.asFieldName().equals(fldname) &&
           !rhs.isFieldName())

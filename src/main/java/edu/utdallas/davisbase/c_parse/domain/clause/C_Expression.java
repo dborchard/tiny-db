@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.d_scans.domains;
+package edu.utdallas.davisbase.c_parse.domain.clause;
 
 import edu.utdallas.davisbase.d_scans.Scan;
 import edu.utdallas.davisbase.e_record.Schema;
@@ -8,15 +8,15 @@ import edu.utdallas.davisbase.e_record.Schema;
  * @author Edward Sciore
  *
  */
-public class Expression {
-   private Constant val = null;
+public class C_Expression {
+   private D_Constant val = null;
    private String fldname = null;
    
-   public Expression(Constant val) {
+   public C_Expression(D_Constant val) {
       this.val = val;
    }
    
-   public Expression(String fldname) {
+   public C_Expression(String fldname) {
       this.fldname = fldname;
    }
    
@@ -26,7 +26,7 @@ public class Expression {
     * @param s the scan
     * @return the value of the expression, as a Constant
     */
-   public Constant evaluate(Scan s) {
+   public D_Constant evaluate(Scan s) {
       return (val != null) ? val : s.getVal(fldname);
    }
    
@@ -44,7 +44,7 @@ public class Expression {
     * denote a constant.
     * @return the expression as a constant
     */
-   public Constant asConstant() {
+   public D_Constant asConstant() {
       return val;
    }
    

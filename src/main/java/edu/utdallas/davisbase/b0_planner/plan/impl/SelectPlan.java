@@ -3,7 +3,7 @@ package edu.utdallas.davisbase.b0_planner.plan.impl;
 import edu.utdallas.davisbase.b0_planner.plan.Plan;
 import edu.utdallas.davisbase.d_scans.Scan;
 import edu.utdallas.davisbase.d_scans.impl.SelectScan;
-import edu.utdallas.davisbase.d_scans.domains.Predicate;
+import edu.utdallas.davisbase.c_parse.domain.clause.A_Predicate;
 import edu.utdallas.davisbase.e_record.Schema;
 
 /**
@@ -14,9 +14,9 @@ import edu.utdallas.davisbase.e_record.Schema;
  */
 public class SelectPlan implements Plan {
     private Plan p;
-    private Predicate pred;
+    private A_Predicate pred;
 
-    public SelectPlan(Plan p, Predicate pred) {
+    public SelectPlan(Plan p, A_Predicate pred) {
         this.p = p;
         this.pred = pred;
     }

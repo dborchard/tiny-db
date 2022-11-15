@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.c_parse.commands;
+package edu.utdallas.davisbase.c_parse.domain.commands;
 
 /**
  * The parser for the <i>create index</i> statement.

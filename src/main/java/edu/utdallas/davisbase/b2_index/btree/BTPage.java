@@ -5,7 +5,7 @@ import edu.utdallas.davisbase.e_record.RID;
 import edu.utdallas.davisbase.e_record.Schema;
 import edu.utdallas.davisbase.f_tx.Transaction;
 import edu.utdallas.davisbase.g_file.BlockId;
-import edu.utdallas.davisbase.d_scans.domains.Constant;
+import edu.utdallas.davisbase.c_parse.domain.clause.D_Constant;
 
 import static java.sql.Types.INTEGER;
 
@@ -41,7 +41,7 @@ public class BTPage {
     * @param searchkey the search key
     * @return the position before where the search key goes
     */
-   public int findSlotBefore(Constant searchkey) {
+   public int findSlotBefore(D_Constant searchkey) {
       int slot = 0;
       while (slot < getNumRecs() && getDataVal(slot).compareTo(searchkey) < 0)
          slot++;
@@ -87,7 +87,7 @@ public class BTPage {
     * @param slot the integer slot of an index record
     * @return the dataval of the record at that slot
     */
-   public Constant getDataVal(int slot) {
+   public D_Constant getDataVal(int slot) {
       return getVal(slot, "dataval");
    }
    
@@ -155,7 +155,7 @@ public class BTPage {
     * @param val the dataval to be stored
     * @param blknum the block number to be stored
     */
-   public void insertDir(int slot, Constant val, int blknum) {
+   public void insertDir(int slot, D_Constant val, int blknum) {
       insert(slot);
       setVal(slot, "dataval", val);
       setInt(slot, "block", blknum);
@@ -178,7 +178,7 @@ public class BTPage {
     * @param val the new dataval
     * @param rid the new dataRID
     */
-   public void insertLeaf(int slot, Constant val, RID rid) {
+   public void insertLeaf(int slot, D_Constant val, RID rid) {
       insert(slot);
       setVal(slot, "dataval", val);
       setInt(slot, "block", rid.blockNumber());
@@ -216,12 +216,12 @@ public class BTPage {
       return tx.getString(currentblk, pos);
    }
    
-   private Constant getVal(int slot, String fldname) {
+   private D_Constant getVal(int slot, String fldname) {
       int type = layout.schema().type(fldname);
       if (type == INTEGER)
-         return new Constant(getInt(slot, fldname));
+         return new D_Constant(getInt(slot, fldname));
       else
-         return new Constant(getString(slot, fldname));
+         return new D_Constant(getString(slot, fldname));
    }
    
    private void setInt(int slot, String fldname, int val) {
@@ -234,7 +234,7 @@ public class BTPage {
       tx.setString(currentblk, pos, val);
    }
    
-   private void setVal(int slot, String fldname, Constant val) {
+   private void setVal(int slot, String fldname, D_Constant val) {
       int type = layout.schema().type(fldname);
       if (type == INTEGER)
          setInt(slot, fldname, val.asInt());

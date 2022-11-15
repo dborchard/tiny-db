@@ -61,7 +61,9 @@ public class SimpleDB {
 
 
     public void doUpdate(String sql, Transaction tx) {
-        planner.executeUpdate(sql, tx);
+        int updatedRows = planner.executeUpdate(sql, tx);
+        String message = updatedRows + " " + (updatedRows == 1 ? "row" : "rows") + " updated.";
+        System.out.println(message);
     }
 
     public void close() {

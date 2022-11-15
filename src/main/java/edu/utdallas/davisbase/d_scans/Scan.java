@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.d_scans;
 
-import edu.utdallas.davisbase.d_scans.domains.Constant;
+import edu.utdallas.davisbase.c_parse.domain.clause.D_Constant;
 
 /**
  * The interface will be implemented by each query scan.
@@ -44,7 +44,7 @@ public interface Scan {
     * @param fldname the name of the field
     * @return the value of that field, expressed as a Constant.
     */
-   public Constant getVal(String fldname);
+   public D_Constant getVal(String fldname);
    
    /**
     * Return true if the scan has the specified field.

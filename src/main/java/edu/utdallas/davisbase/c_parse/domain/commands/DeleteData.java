@@ -1,6 +1,6 @@
-package edu.utdallas.davisbase.c_parse.commands;
+package edu.utdallas.davisbase.c_parse.domain.commands;
 
-import edu.utdallas.davisbase.d_scans.domains.Predicate;
+import edu.utdallas.davisbase.c_parse.domain.clause.A_Predicate;
 
 /**
  * Data for the SQL <i>delete</i> statement.
@@ -8,12 +8,12 @@ import edu.utdallas.davisbase.d_scans.domains.Predicate;
  */
 public class DeleteData {
    private String tblname;
-   private Predicate pred;
+   private A_Predicate pred;
    
    /**
     * Saves the table name and predicate.
     */
-   public DeleteData(String tblname, Predicate pred) {
+   public DeleteData(String tblname, A_Predicate pred) {
       this.tblname = tblname;
       this.pred = pred;
    }
@@ -31,7 +31,7 @@ public class DeleteData {
     * records should be deleted.
     * @return the deletion predicate
     */
-   public Predicate pred() {
+   public A_Predicate pred() {
       return pred;
    }
 }

@@ -1,6 +1,6 @@
-package edu.utdallas.davisbase.c_parse.commands;
+package edu.utdallas.davisbase.c_parse.domain.commands;
 
-import edu.utdallas.davisbase.d_scans.domains.Predicate;
+import edu.utdallas.davisbase.c_parse.domain.clause.A_Predicate;
 
 import java.util.List;
 
@@ -11,12 +11,12 @@ import java.util.List;
 public class QueryData {
    private List<String> fields;
    private String table;
-   private Predicate pred;
+   private A_Predicate pred;
    
    /**
     * Saves the field and table list and predicate.
     */
-   public QueryData(List<String> fields, String table, Predicate pred) {
+   public QueryData(List<String> fields, String table, A_Predicate pred) {
       this.fields = fields;
       this.table = table;
       this.pred = pred;
@@ -43,7 +43,7 @@ public class QueryData {
     * records should be in the output table.
     * @return the query predicate
     */
-   public Predicate pred() {
+   public A_Predicate pred() {
       return pred;
    }
 

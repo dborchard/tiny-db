@@ -1,11 +1,12 @@
 package edu.utdallas.davisbase.c_parse;
 
 import edu.utdallas.davisbase.c_parse.commands.*;
+import edu.utdallas.davisbase.c_parse.domain.commands.*;
 import edu.utdallas.davisbase.e_record.Schema;
-import edu.utdallas.davisbase.d_scans.domains.Constant;
-import edu.utdallas.davisbase.d_scans.domains.Expression;
-import edu.utdallas.davisbase.d_scans.domains.Predicate;
-import edu.utdallas.davisbase.d_scans.domains.Term;
+import edu.utdallas.davisbase.c_parse.domain.clause.D_Constant;
+import edu.utdallas.davisbase.c_parse.domain.clause.C_Expression;
+import edu.utdallas.davisbase.c_parse.domain.clause.A_Predicate;
+import edu.utdallas.davisbase.c_parse.domain.clause.B_Term;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,26 +23,26 @@ public class Parser {
         return lex.eatId();
     }
 
-    public Constant constant() {
-        if (lex.matchStringConstant()) return new Constant(lex.eatStringConstant());
-        else return new Constant(lex.eatIntConstant());
+    public D_Constant constant() {
+        if (lex.matchStringConstant()) return new D_Constant(lex.eatStringConstant());
+        else return new D_Constant(lex.eatIntConstant());
     }
 
-    public Expression expression() {
-        if (lex.matchId()) return new Expression(field());
-        else return new Expression(constant());
+    public C_Expression expression() {
+        if (lex.matchId()) return new C_Expression(field());
+        else return new C_Expression(constant());
     }
 
-    public Term term() {
-        Expression lhs = expression();
+    public B_Term term() {
+        C_Expression lhs = expression();
         lex.eatDelim('=');
-        Expression rhs = expression();
-        return new Term(lhs, rhs);
+        C_Expression rhs = expression();
+        return new B_Term(lhs, rhs);
     }
 
     // OK
-    public Predicate predicate() {
-        Predicate pred = new Predicate(term());
+    public A_Predicate predicate() {
+        A_Predicate pred = new A_Predicate(term());
         if (lex.matchKeyword("and")) {
             lex.eatKeyword("and");
             pred.conjoinWith(predicate());
@@ -56,7 +57,7 @@ public class Parser {
         List<String> fields = selectList();
         lex.eatKeyword("from");
         String table = lex.eatId();
-        Predicate pred = new Predicate();
+        A_Predicate pred = new A_Predicate();
         if (lex.matchKeyword("where")) {
             lex.eatKeyword("where");
             pred = predicate();
@@ -97,7 +98,7 @@ public class Parser {
         lex.eatKeyword("delete");
         lex.eatKeyword("from");
         String tblname = lex.eatId();
-        Predicate pred = new Predicate();
+        A_Predicate pred = new A_Predicate();
         if (lex.matchKeyword("where")) {
             lex.eatKeyword("where");
             pred = predicate();
@@ -116,7 +117,7 @@ public class Parser {
         lex.eatDelim(')');
         lex.eatKeyword("values");
         lex.eatDelim('(');
-        List<Constant> vals = constList();
+        List<D_Constant> vals = constList();
         lex.eatDelim(')');
         return new InsertData(tblname, flds, vals);
     }
@@ -131,8 +132,8 @@ public class Parser {
         return L;
     }
 
-    private List<Constant> constList() {
-        List<Constant> L = new ArrayList<Constant>();
+    private List<D_Constant> constList() {
+        List<D_Constant> L = new ArrayList<D_Constant>();
         L.add(constant());
         if (lex.matchDelim(',')) {
             lex.eatDelim(',');
@@ -149,8 +150,8 @@ public class Parser {
         lex.eatKeyword("set");
         String fldname = field();
         lex.eatDelim('=');
-        Expression newval = expression();
-        Predicate pred = new Predicate();
+        C_Expression newval = expression();
+        A_Predicate pred = new A_Predicate();
         if (lex.matchKeyword("where")) {
             lex.eatKeyword("where");
             pred = predicate();

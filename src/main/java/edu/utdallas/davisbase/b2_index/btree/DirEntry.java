@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.b2_index.btree;
 
-import edu.utdallas.davisbase.d_scans.domains.Constant;
+import edu.utdallas.davisbase.c_parse.domain.clause.D_Constant;
 
 /**
  * A directory entry has two components: the number of the child block,
@@ -8,7 +8,7 @@ import edu.utdallas.davisbase.d_scans.domains.Constant;
  * @author Edward Sciore
  */
 public class DirEntry {
-   private Constant dataval;
+   private D_Constant dataval;
    private int blocknum;
    
    /**
@@ -16,7 +16,7 @@ public class DirEntry {
     * @param dataval the dataval
     * @param blocknum the block number
     */
-   public DirEntry(Constant dataval, int blocknum) {
+   public DirEntry(D_Constant dataval, int blocknum) {
       this.dataval  = dataval;
       this.blocknum = blocknum;
    }
@@ -25,7 +25,7 @@ public class DirEntry {
     * Returns the dataval component of the entry
     * @return the dataval component of the entry
     */
-   public Constant dataVal() {
+   public D_Constant dataVal() {
       return dataval;
    }
    

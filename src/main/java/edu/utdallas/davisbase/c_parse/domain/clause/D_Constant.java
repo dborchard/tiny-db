@@ -1,18 +1,18 @@
-package edu.utdallas.davisbase.d_scans.domains;
+package edu.utdallas.davisbase.c_parse.domain.clause;
 
 /**
  * The class that denotes values stored in the database.
  * @author Edward Sciore
  */
-public class Constant implements Comparable<Constant> {
+public class D_Constant implements Comparable<D_Constant> {
    private Integer ival = null;
    private String  sval = null;
    
-   public Constant(Integer ival) {
+   public D_Constant(Integer ival) {
       this.ival = ival;
    }
    
-   public Constant(String sval) {
+   public D_Constant(String sval) {
       this.sval = sval;
    }
    
@@ -25,11 +25,11 @@ public class Constant implements Comparable<Constant> {
    }
    
    public boolean equals(Object obj) {
-      Constant c = (Constant) obj;
+      D_Constant c = (D_Constant) obj;
       return (ival != null) ? ival.equals(c.ival) : sval.equals(c.sval);
    }
    
-   public int compareTo(Constant c) {
+   public int compareTo(D_Constant c) {
       return (ival != null) ? ival.compareTo(c.ival) : sval.compareTo(c.sval);
    }
    

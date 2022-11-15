@@ -9,8 +9,9 @@ import edu.utdallas.davisbase.b1_metadata.MetadataMgr;
 import edu.utdallas.davisbase.b1_metadata.index.IndexInfo;
 import edu.utdallas.davisbase.b2_index.Index;
 import edu.utdallas.davisbase.c_parse.commands.*;
+import edu.utdallas.davisbase.c_parse.domain.commands.*;
 import edu.utdallas.davisbase.d_scans.UpdateScan;
-import edu.utdallas.davisbase.d_scans.domains.Constant;
+import edu.utdallas.davisbase.c_parse.domain.clause.D_Constant;
 import edu.utdallas.davisbase.e_record.RID;
 import edu.utdallas.davisbase.f_tx.Transaction;
 
@@ -31,6 +32,17 @@ public class BetterUpdatePlanner implements UpdatePlanner {
         this.mdm = mdm;
     }
 
+    public int executeCreateTable(CreateTableData data, Transaction tx) {
+        mdm.createTable(data.tableName(), data.newSchema(), tx);
+        return 0;
+    }
+
+
+    public int executeCreateIndex(CreateIndexData data, Transaction tx) {
+        mdm.createIndex(data.indexName(), data.tableName(), data.fieldName(), tx);
+        return 0;
+    }
+
     public int executeInsert(InsertData data, Transaction tx) {
         String tblname = data.tableName();
         Plan p = new TablePlan(tx, tblname, mdm);
@@ -42,9 +54,9 @@ public class BetterUpdatePlanner implements UpdatePlanner {
 
         // then modify each field, inserting an index record if appropriate
         Map<String, IndexInfo> indexes = mdm.getIndexInfo(tblname, tx);
-        Iterator<Constant> valIter = data.vals().iterator();
+        Iterator<D_Constant> valIter = data.vals().iterator();
         for (String fldname : data.fields()) {
-            Constant val = valIter.next();
+            D_Constant val = valIter.next();
             s.setVal(fldname, val);
 
             IndexInfo ii = indexes.get(fldname);
@@ -70,7 +82,7 @@ public class BetterUpdatePlanner implements UpdatePlanner {
             // first, delete the record's RID from every index
             RID rid = s.getRid();
             for (String fldname : indexes.keySet()) {
-                Constant val = s.getVal(fldname);
+                D_Constant val = s.getVal(fldname);
                 Index idx = indexes.get(fldname).open();
                 idx.delete(val, rid);
                 idx.close();
@@ -96,8 +108,8 @@ public class BetterUpdatePlanner implements UpdatePlanner {
         int count = 0;
         while (s.next()) {
             // first, update the record
-            Constant newval = data.newValue().evaluate(s);
-            Constant oldval = s.getVal(fldname);
+            D_Constant newval = data.newValue().evaluate(s);
+            D_Constant oldval = s.getVal(fldname);
             s.setVal(data.targetField(), newval);
 
             // then update the appropriate index, if it exists
@@ -113,14 +125,5 @@ public class BetterUpdatePlanner implements UpdatePlanner {
         return count;
     }
 
-    public int executeCreateTable(CreateTableData data, Transaction tx) {
-        mdm.createTable(data.tableName(), data.newSchema(), tx);
-        return 0;
-    }
 
-
-    public int executeCreateIndex(CreateIndexData data, Transaction tx) {
-        mdm.createIndex(data.indexName(), data.tableName(), data.fieldName(), tx);
-        return 0;
-    }
 }

@@ -5,12 +5,12 @@ import edu.utdallas.davisbase.b0_planner.plan.impl.SelectPlan;
 import edu.utdallas.davisbase.b0_planner.plan.impl.SelectWithIndexPlan;
 import edu.utdallas.davisbase.b1_metadata.MetadataMgr;
 import edu.utdallas.davisbase.b1_metadata.index.IndexInfo;
-import edu.utdallas.davisbase.c_parse.commands.QueryData;
+import edu.utdallas.davisbase.c_parse.domain.commands.QueryData;
 import edu.utdallas.davisbase.f_tx.Transaction;
 import edu.utdallas.davisbase.b0_planner.plan.Plan;
 import edu.utdallas.davisbase.b0_planner.plan.impl.TablePlan;
 import edu.utdallas.davisbase.b0_planner.planner.QueryPlanner;
-import edu.utdallas.davisbase.d_scans.domains.Constant;
+import edu.utdallas.davisbase.c_parse.domain.clause.D_Constant;
 
 import java.util.Map;
 
@@ -34,7 +34,7 @@ public class BetterQueryPlanner implements QueryPlanner {
         boolean indexFound = false;
         Map<String, IndexInfo> indexes = mdm.getIndexInfo(data.table(), tx);
         for (String fldname : indexes.keySet()) {
-            Constant val = data.pred().equatesWithConstant(fldname);
+            D_Constant val = data.pred().equatesWithConstant(fldname);
             if (val != null) {
                 IndexInfo ii = indexes.get(fldname);
                 p = new SelectWithIndexPlan(p, ii, val);

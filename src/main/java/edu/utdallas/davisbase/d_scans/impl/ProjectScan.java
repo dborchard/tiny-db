@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.d_scans.impl;
 
 import edu.utdallas.davisbase.d_scans.Scan;
-import edu.utdallas.davisbase.d_scans.domains.Constant;
+import edu.utdallas.davisbase.c_parse.domain.clause.D_Constant;
 
 import java.util.List;
 
@@ -49,7 +49,7 @@ public class ProjectScan implements Scan {
          throw new RuntimeException("field " + fldname + " not found.");
    }
    
-   public Constant getVal(String fldname) {
+   public D_Constant getVal(String fldname) {
       if (hasField(fldname))
          return s.getVal(fldname);
       else

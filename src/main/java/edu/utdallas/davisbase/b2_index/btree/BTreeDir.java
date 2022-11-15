@@ -3,7 +3,7 @@ package edu.utdallas.davisbase.b2_index.btree;
 import edu.utdallas.davisbase.e_record.Layout;
 import edu.utdallas.davisbase.f_tx.Transaction;
 import edu.utdallas.davisbase.g_file.BlockId;
-import edu.utdallas.davisbase.d_scans.domains.Constant;
+import edu.utdallas.davisbase.c_parse.domain.clause.D_Constant;
 
 /**
  * A B-tree directory block.
@@ -42,7 +42,7 @@ public class BTreeDir {
     * @param searchkey the search key value
     * @return the block number of the leaf block containing that search key
     */
-   public int search(Constant searchkey) {
+   public int search(D_Constant searchkey) {
       BlockId childblk = findChildBlock(searchkey);
       while (contents.getFlag() > 0) {
          contents.close();
@@ -61,7 +61,7 @@ public class BTreeDir {
     * @param e the directory entry to be added as a child of the new root
     */
    public void makeNewRoot(DirEntry e) {
-      Constant firstval = contents.getDataVal(0);
+      D_Constant firstval = contents.getDataVal(0);
       int level = contents.getFlag();
       BlockId newblk = contents.split(0, level); //ie, transfer all the records
       DirEntry oldroot = new DirEntry(firstval, newblk.number());
@@ -102,12 +102,12 @@ public class BTreeDir {
       // else page is full, so split it
       int level = contents.getFlag();
       int splitpos = contents.getNumRecs() / 2;
-      Constant splitval = contents.getDataVal(splitpos);
+      D_Constant splitval = contents.getDataVal(splitpos);
       BlockId newblk = contents.split(splitpos, level);
       return new DirEntry(splitval, newblk.number());
    }
 
-   private BlockId findChildBlock(Constant searchkey) {
+   private BlockId findChildBlock(D_Constant searchkey) {
       int slot = contents.findSlotBefore(searchkey);
       if (contents.getDataVal(slot+1).equals(searchkey))
          slot++;

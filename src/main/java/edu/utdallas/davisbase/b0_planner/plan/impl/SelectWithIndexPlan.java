@@ -3,7 +3,7 @@ package edu.utdallas.davisbase.b0_planner.plan.impl;
 import edu.utdallas.davisbase.e_record.Schema;
 import edu.utdallas.davisbase.b0_planner.plan.Plan;
 import edu.utdallas.davisbase.d_scans.Scan;
-import edu.utdallas.davisbase.d_scans.domains.Constant;
+import edu.utdallas.davisbase.c_parse.domain.clause.D_Constant;
 import edu.utdallas.davisbase.d_scans.impl.SelectOnIndexScan;
 import edu.utdallas.davisbase.d_scans.impl.TableScan;
 import edu.utdallas.davisbase.b2_index.Index;
@@ -18,10 +18,10 @@ import edu.utdallas.davisbase.b1_metadata.index.IndexInfo;
 public class SelectWithIndexPlan implements Plan {
     private Plan p;
     private IndexInfo ii;
-    private Constant val;
+    private D_Constant val;
 
 
-    public SelectWithIndexPlan(Plan p, IndexInfo ii, Constant val) {
+    public SelectWithIndexPlan(Plan p, IndexInfo ii, D_Constant val) {
         this.p = p;
         this.ii = ii;
         this.val = val;

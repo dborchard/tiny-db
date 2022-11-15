@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.d_scans.impl;
 
 import edu.utdallas.davisbase.d_scans.UpdateScan;
-import edu.utdallas.davisbase.d_scans.domains.Constant;
+import edu.utdallas.davisbase.c_parse.domain.clause.D_Constant;
 import edu.utdallas.davisbase.e_record.Layout;
 import edu.utdallas.davisbase.e_record.RID;
 import edu.utdallas.davisbase.e_record.RecordPage;
@@ -55,9 +55,9 @@ public class TableScan implements UpdateScan {
         return rp.getString(currentSlot, fldname);
     }
 
-    public Constant getVal(String fldname) {
-        if (layout.schema().type(fldname) == INTEGER) return new Constant(getInt(fldname));
-        else return new Constant(getString(fldname));
+    public D_Constant getVal(String fldname) {
+        if (layout.schema().type(fldname) == INTEGER) return new D_Constant(getInt(fldname));
+        else return new D_Constant(getString(fldname));
     }
 
     public boolean hasField(String fldname) {
@@ -78,7 +78,7 @@ public class TableScan implements UpdateScan {
         rp.setString(currentSlot, fldname, val);
     }
 
-    public void setVal(String fldname, Constant val) {
+    public void setVal(String fldname, D_Constant val) {
         if (layout.schema().type(fldname) == INTEGER) setInt(fldname, val.asInt());
         else setString(fldname, val.asString());
     }

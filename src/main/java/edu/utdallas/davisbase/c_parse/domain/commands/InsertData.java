@@ -1,6 +1,6 @@
-package edu.utdallas.davisbase.c_parse.commands;
+package edu.utdallas.davisbase.c_parse.domain.commands;
 
-import edu.utdallas.davisbase.d_scans.domains.Constant;
+import edu.utdallas.davisbase.c_parse.domain.clause.D_Constant;
 
 import java.util.List;
 
@@ -12,12 +12,12 @@ import java.util.List;
 public class InsertData {
     private String tblname;
     private List<String> flds;
-    private List<Constant> vals;
+    private List<D_Constant> vals;
 
     /**
      * Saves the table name and the field and value lists.
      */
-    public InsertData(String tblname, List<String> flds, List<Constant> vals) {
+    public InsertData(String tblname, List<String> flds, List<D_Constant> vals) {
         this.tblname = tblname;
         this.flds = flds;
         this.vals = vals;
@@ -49,7 +49,7 @@ public class InsertData {
      *
      * @return a list of Constant values.
      */
-    public List<Constant> vals() {
+    public List<D_Constant> vals() {
         return vals;
     }
 }

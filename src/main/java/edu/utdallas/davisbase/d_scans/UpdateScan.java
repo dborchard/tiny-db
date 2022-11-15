@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.d_scans;
 
 import edu.utdallas.davisbase.e_record.RID;
-import edu.utdallas.davisbase.d_scans.domains.Constant;
+import edu.utdallas.davisbase.c_parse.domain.clause.D_Constant;
 
 /**
  * The interface implemented by all updateable scans.
@@ -13,7 +13,7 @@ public interface UpdateScan extends Scan {
     * @param fldname the name of the field
     * @param val the new value, expressed as a Constant
     */
-   public void setVal(String fldname, Constant val);
+   public void setVal(String fldname, D_Constant val);
    
    /**
     * Modify the field value of the current record.

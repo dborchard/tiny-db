@@ -4,7 +4,7 @@ import edu.utdallas.davisbase.e_record.Layout;
 import edu.utdallas.davisbase.e_record.RID;
 import edu.utdallas.davisbase.e_record.Schema;
 import edu.utdallas.davisbase.f_tx.Transaction;
-import edu.utdallas.davisbase.d_scans.domains.Constant;
+import edu.utdallas.davisbase.c_parse.domain.clause.D_Constant;
 import edu.utdallas.davisbase.g_file.BlockId;
 import edu.utdallas.davisbase.b2_index.Index;
 
@@ -48,14 +48,14 @@ public class BTreeIndex implements Index {
             node.format(rootblk, 0);
             // insert initial directory entry
             int fldtype = dirsch.type("dataval");
-            Constant minval = (fldtype == INTEGER) ? new Constant(Integer.MIN_VALUE) : new Constant("");
+            D_Constant minval = (fldtype == INTEGER) ? new D_Constant(Integer.MIN_VALUE) : new D_Constant("");
             node.insertDir(0, minval, 0);
             node.close();
         }
     }
 
 
-    public void beforeFirst(Constant searchkey) {
+    public void beforeFirst(D_Constant searchkey) {
         close();
         BTreeDir root = new BTreeDir(tx, rootblk, dirLayout);
         int blknum = root.search(searchkey);
@@ -85,7 +85,7 @@ public class BTreeIndex implements Index {
     }
 
 
-    public void insert(Constant dataval, RID datarid) {
+    public void insert(D_Constant dataval, RID datarid) {
         beforeFirst(dataval);
         DirEntry e = leaf.insert(datarid);
         leaf.close();
@@ -104,7 +104,7 @@ public class BTreeIndex implements Index {
      *
      * @see Index#delete(simpledb.d_scans.Constant, RID)
      */
-    public void delete(Constant dataval, RID datarid) {
+    public void delete(D_Constant dataval, RID datarid) {
         beforeFirst(dataval);
         leaf.delete(datarid);
         leaf.close();

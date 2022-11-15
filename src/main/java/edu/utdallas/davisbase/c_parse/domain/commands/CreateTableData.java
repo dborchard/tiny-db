@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.c_parse.commands;
+package edu.utdallas.davisbase.c_parse.domain.commands;
 
 import edu.utdallas.davisbase.e_record.Schema;
 

@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.d_scans.domains;
+package edu.utdallas.davisbase.c_parse.domain.clause;
 
 import edu.utdallas.davisbase.d_scans.Scan;
 
@@ -11,13 +11,13 @@ import java.util.List;
  *
  * @author Edward Sciore
  */
-public class Predicate {
-    private List<Term> terms = new ArrayList<Term>();
+public class A_Predicate {
+    private List<B_Term> terms = new ArrayList<B_Term>();
 
     /**
      * Create an empty predicate, corresponding to "true".
      */
-    public Predicate() {
+    public A_Predicate() {
     }
 
     /**
@@ -25,7 +25,7 @@ public class Predicate {
      *
      * @param t the term
      */
-    public Predicate(Term t) {
+    public A_Predicate(B_Term t) {
         terms.add(t);
     }
 
@@ -35,7 +35,7 @@ public class Predicate {
      *
      * @param pred the other predicate
      */
-    public void conjoinWith(Predicate pred) {
+    public void conjoinWith(A_Predicate pred) {
         terms.addAll(pred.terms);
     }
 
@@ -47,15 +47,15 @@ public class Predicate {
      * @return true if the predicate is true in the scan
      */
     public boolean isSatisfied(Scan s) {
-        for (Term t : terms)
+        for (B_Term t : terms)
             if (!t.isSatisfied(s)) return false;
         return true;
     }
 
 
-    public Constant equatesWithConstant(String fldname) {
-        for (Term t : terms) {
-            Constant c = t.equatesWithConstant(fldname);
+    public D_Constant equatesWithConstant(String fldname) {
+        for (B_Term t : terms) {
+            D_Constant c = t.equatesWithConstant(fldname);
             if (c != null)
                 return c;
         }
@@ -63,7 +63,7 @@ public class Predicate {
     }
 
     public String toString() {
-        Iterator<Term> iter = terms.iterator();
+        Iterator<B_Term> iter = terms.iterator();
         if (!iter.hasNext()) return "";
         String result = iter.next().toString();
         while (iter.hasNext()) result += " and " + iter.next().toString();

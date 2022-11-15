@@ -3,8 +3,8 @@ package edu.utdallas.davisbase.d_scans.impl;
 import edu.utdallas.davisbase.d_scans.Scan;
 import edu.utdallas.davisbase.d_scans.UpdateScan;
 import edu.utdallas.davisbase.e_record.RID;
-import edu.utdallas.davisbase.d_scans.domains.Constant;
-import edu.utdallas.davisbase.d_scans.domains.Predicate;
+import edu.utdallas.davisbase.c_parse.domain.clause.D_Constant;
+import edu.utdallas.davisbase.c_parse.domain.clause.A_Predicate;
 
 /**
  * The scan class corresponding to the <i>select</i> relational
@@ -15,7 +15,7 @@ import edu.utdallas.davisbase.d_scans.domains.Predicate;
  */
 public class SelectScan implements UpdateScan {
 	private Scan s;
-	private Predicate pred;
+	private A_Predicate pred;
 
 	/**
 	 * Create a select scan having the specified underlying
@@ -23,7 +23,7 @@ public class SelectScan implements UpdateScan {
 	 * @param s the scan of the underlying query
 	 * @param pred the selection predicate
 	 */
-	public SelectScan(Scan s, Predicate pred) {
+	public SelectScan(Scan s, A_Predicate pred) {
 		this.s = s;
 		this.pred = pred;
 	}
@@ -50,7 +50,7 @@ public class SelectScan implements UpdateScan {
 		return s.getString(fldname);
 	}
 
-   public Constant getVal(String fldname) {
+   public D_Constant getVal(String fldname) {
       return s.getVal(fldname);
    }
 
@@ -74,7 +74,7 @@ public class SelectScan implements UpdateScan {
 		us.setString(fldname, val);
 	}
 
-   public void setVal(String fldname, Constant val) {
+   public void setVal(String fldname, D_Constant val) {
       UpdateScan us = (UpdateScan) s;
       us.setVal(fldname, val);
    }

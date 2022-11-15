@@ -1,7 +1,7 @@
-package edu.utdallas.davisbase.c_parse.commands;
+package edu.utdallas.davisbase.c_parse.domain.commands;
 
-import edu.utdallas.davisbase.d_scans.domains.Expression;
-import edu.utdallas.davisbase.d_scans.domains.Predicate;
+import edu.utdallas.davisbase.c_parse.domain.clause.C_Expression;
+import edu.utdallas.davisbase.c_parse.domain.clause.A_Predicate;
 
 /**
  * Data for the SQL <i>update</i> statement.
@@ -11,13 +11,13 @@ import edu.utdallas.davisbase.d_scans.domains.Predicate;
 public class ModifyData {
     private String tblname;
     private String fldname;
-    private Expression newval;
-    private Predicate pred;
+    private C_Expression newval;
+    private A_Predicate pred;
 
     /**
      * Saves the table name, the modified field and its new value, and the predicate.
      */
-    public ModifyData(String tblname, String fldname, Expression newval, Predicate pred) {
+    public ModifyData(String tblname, String fldname, C_Expression newval, A_Predicate pred) {
         this.tblname = tblname;
         this.fldname = fldname;
         this.newval = newval;
@@ -49,7 +49,7 @@ public class ModifyData {
      *
      * @return the target expression
      */
-    public Expression newValue() {
+    public C_Expression newValue() {
         return newval;
     }
 
@@ -59,7 +59,7 @@ public class ModifyData {
      *
      * @return the modification predicate
      */
-    public Predicate pred() {
+    public A_Predicate pred() {
         return pred;
     }
 }

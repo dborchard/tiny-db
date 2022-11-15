@@ -4,7 +4,7 @@ import edu.utdallas.davisbase.e_record.Layout;
 import edu.utdallas.davisbase.e_record.RID;
 import edu.utdallas.davisbase.f_tx.Transaction;
 import edu.utdallas.davisbase.g_file.BlockId;
-import edu.utdallas.davisbase.d_scans.domains.Constant;
+import edu.utdallas.davisbase.c_parse.domain.clause.D_Constant;
 
 /**
  * An object that holds the contents of a B-tree leaf block.
@@ -13,7 +13,7 @@ import edu.utdallas.davisbase.d_scans.domains.Constant;
 public class BTreeLeaf {
    private Transaction tx;
    private Layout layout;
-   private Constant searchkey;
+   private D_Constant searchkey;
    private BTPage contents;
    private int currentslot;
    private String filename;
@@ -27,7 +27,7 @@ public class BTreeLeaf {
     * @param searchkey the search key value
     * @param tx the calling transaction
     */
-   public BTreeLeaf(Transaction tx, BlockId blk, Layout layout, Constant searchkey) {
+   public BTreeLeaf(Transaction tx, BlockId blk, Layout layout, D_Constant searchkey) {
       this.tx = tx;
       this.layout = layout;
       this.searchkey = searchkey;
@@ -94,7 +94,7 @@ public class BTreeLeaf {
     */
    public DirEntry insert(RID datarid) {
       if (contents.getFlag() >= 0 && contents.getDataVal(0).compareTo(searchkey) > 0) {
-         Constant firstval = contents.getDataVal(0);
+         D_Constant firstval = contents.getDataVal(0);
          BlockId newblk = contents.split(0, contents.getFlag());
          currentslot = 0;
          contents.setFlag(-1);
@@ -107,8 +107,8 @@ public class BTreeLeaf {
       if (!contents.isFull())
          return null;
       // else page is full, so split it
-      Constant firstkey = contents.getDataVal(0);
-      Constant lastkey  = contents.getDataVal(contents.getNumRecs()-1);
+      D_Constant firstkey = contents.getDataVal(0);
+      D_Constant lastkey  = contents.getDataVal(contents.getNumRecs()-1);
       if (lastkey.equals(firstkey)) {
          // create an overflow block to hold all but the first record
          BlockId newblk = contents.split(1, contents.getFlag());
@@ -117,7 +117,7 @@ public class BTreeLeaf {
       }
       else {
          int splitpos = contents.getNumRecs() / 2;
-         Constant splitkey = contents.getDataVal(splitpos);
+         D_Constant splitkey = contents.getDataVal(splitpos);
          if (splitkey.equals(firstkey)) {
             // move right, looking for the next key
             while (contents.getDataVal(splitpos).equals(splitkey))
@@ -135,7 +135,7 @@ public class BTreeLeaf {
    }
 
    private boolean tryOverflow() {
-      Constant firstkey = contents.getDataVal(0);
+      D_Constant firstkey = contents.getDataVal(0);
       int flag = contents.getFlag();
       if (!searchkey.equals(firstkey) || flag < 0)
          return false;
