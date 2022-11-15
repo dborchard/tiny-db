@@ -19,6 +19,22 @@ insert into T1 (A, B) values (2, 'Bob');
 select a,b from T1;
 select a,b from T1 where a=1;
 ```
+Output
+```shell
+>
++---+-------+
+| a | b     |
++---+-------+
+| 1 | Alice |
+| 2 | Bob   |
++---+-------+
+>
++---+-------+
+| a | b     |
++---+-------+
+| 1 | Alice |
++---+-------+
+```
 
 - With Index
 ```shell
@@ -30,6 +46,22 @@ select a,b from T2;
 select a,b from T2 where a=1;
 ```
 
+```shell
+>
++---+-------+
+| a | b     |
++---+-------+
+| 1 | Alice |
+| 2 | Bob   |
++---+-------+
+
+> index on a used
++---+-------+
+| a | b     |
++---+-------+
+| 1 | Alice |
++---+-------+
+```
 ## TODO
 
 - Recovery Manager (WAL)
