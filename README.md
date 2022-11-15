@@ -1,21 +1,20 @@
-## Not required
-- buffer
-- jdbc
-- log
-- materialize
-- multibuffer
-- opt
+## DavisBase
 
-## OK
-- file
-- metadata
-- query
-- record
-- server
-- parse
-- plan
-- tx
-- 
+A tiny database that supports Btree Index.
+
+## Features
+
+- Basic Planners
+- Index Planners
+- CLI interface
+
 ## TODO
-- index
 
+- Recovery Manager (WAL)
+- Transactions
+- Concurrency Manager
+- Buffer Manager
+
+## Notes
+
+This work is a derived from [SimpleDB](http://cs.bc.edu/~sciore/simpledb/)
