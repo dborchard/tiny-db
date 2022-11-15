@@ -5,7 +5,6 @@ import edu.utdallas.davisbase.b0_planner.plan.impl.SelectPlan;
 import edu.utdallas.davisbase.b0_planner.plan.impl.TablePlan;
 import edu.utdallas.davisbase.b0_planner.planner.UpdatePlanner;
 import edu.utdallas.davisbase.b1_metadata.MetadataMgr;
-import edu.utdallas.davisbase.c_parse.commands.*;
 import edu.utdallas.davisbase.c_parse.domain.commands.*;
 import edu.utdallas.davisbase.d_scans.UpdateScan;
 import edu.utdallas.davisbase.c_parse.domain.clause.D_Constant;
