@@ -53,6 +53,15 @@ public class Predicate {
     }
 
 
+    public Constant equatesWithConstant(String fldname) {
+        for (Term t : terms) {
+            Constant c = t.equatesWithConstant(fldname);
+            if (c != null)
+                return c;
+        }
+        return null;
+    }
+
     public String toString() {
         Iterator<Term> iter = terms.iterator();
         if (!iter.hasNext()) return "";
