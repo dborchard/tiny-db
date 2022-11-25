@@ -30,8 +30,8 @@ public class SelectScan implements UpdateScan {
 
 	// Scan methods
 
-	public void beforeFirst() {
-		s.beforeFirst();
+	public void seekToHead() {
+		s.seekToHead();
 	}
 
 	public boolean next() {

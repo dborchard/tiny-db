@@ -14,7 +14,7 @@ public interface Scan {
     * Position the scan before its first record. A
     * subsequent call to next() will return the first record.
     */
-   public void beforeFirst();
+   public void seekToHead();
    
    /**
     * Move the scan to the next record.

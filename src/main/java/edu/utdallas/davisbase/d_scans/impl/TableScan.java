@@ -33,7 +33,7 @@ public class TableScan implements UpdateScan {
 
     // Methods that implement Scan
 
-    public void beforeFirst() {
+    public void seekToHead() {
         moveToBlock(0);
     }
 

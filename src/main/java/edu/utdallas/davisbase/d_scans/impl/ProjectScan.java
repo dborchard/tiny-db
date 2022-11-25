@@ -27,8 +27,8 @@ public class ProjectScan implements Scan {
       this.fieldlist = fieldlist;
    }
    
-   public void beforeFirst() {
-      s.beforeFirst();
+   public void seekToHead() {
+      s.seekToHead();
    }
    
    public boolean next() {

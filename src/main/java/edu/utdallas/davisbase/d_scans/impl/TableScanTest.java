@@ -32,7 +32,7 @@ public class TableScanTest {
 
         System.out.println("Deleting these records, whose A-values are less than 25.");
         int count = 0;
-        ts.beforeFirst();
+        ts.seekToHead();
         while (ts.next()) {
             int a = ts.getInt("A");
             String b = ts.getString("B");
@@ -45,7 +45,7 @@ public class TableScanTest {
         System.out.println(count + " values under 10 were deleted.\n");
 
         System.out.println("Here are the remaining records.");
-        ts.beforeFirst();
+        ts.seekToHead();
         while (ts.next()) {
             int a = ts.getInt("A");
             String b = ts.getString("B");

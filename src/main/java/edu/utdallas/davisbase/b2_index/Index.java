@@ -15,7 +15,7 @@ public interface Index {
     * having the specified search key.
     * @param searchkey the search key value.
     */
-   public void    beforeFirst(D_Constant searchkey);
+   public void seek(D_Constant searchkey);
    
    /**
     * Moves the index to the next record having the

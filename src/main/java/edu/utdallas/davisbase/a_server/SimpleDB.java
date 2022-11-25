@@ -30,8 +30,7 @@ public class SimpleDB {
     public SimpleDB(String dirname) {
         this(dirname, BLOCK_SIZE);
         Transaction tx = new Transaction(fm);
-        boolean isNew = fm.isNew();
-        MetadataMgr mdm = new MetadataMgr(isNew, tx);
+        MetadataMgr mdm = new MetadataMgr(fm.isNew(), tx);
 
         // QueryPlanner qp = new BasicQueryPlanner(mdm);
         // UpdatePlanner up = new BasicUpdatePlanner(mdm);

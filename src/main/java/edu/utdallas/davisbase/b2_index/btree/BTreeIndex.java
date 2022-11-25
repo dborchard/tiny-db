@@ -55,7 +55,7 @@ public class BTreeIndex implements Index {
     }
 
 
-    public void beforeFirst(D_Constant searchkey) {
+    public void seek(D_Constant searchkey) {
         close();
         BTreeDir root = new BTreeDir(tx, rootblk, dirLayout);
         int blknum = root.search(searchkey);
@@ -86,7 +86,7 @@ public class BTreeIndex implements Index {
 
 
     public void insert(D_Constant dataval, RID datarid) {
-        beforeFirst(dataval);
+        seek(dataval);
         DirEntry e = leaf.insert(datarid);
         leaf.close();
         if (e == null) return;
@@ -105,7 +105,7 @@ public class BTreeIndex implements Index {
      * @see Index#delete(simpledb.d_scans.Constant, RID)
      */
     public void delete(D_Constant dataval, RID datarid) {
-        beforeFirst(dataval);
+        seek(dataval);
         leaf.delete(datarid);
         leaf.close();
     }

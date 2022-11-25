@@ -16,11 +16,11 @@ public class SelectOnIndexScan implements Scan {
         this.ts = ts;
         this.idx = idx;
         this.val = val;
-        beforeFirst();
+        seekToHead();
     }
 
-    public void beforeFirst() {
-        idx.beforeFirst(val);
+    public void seekToHead() {
+        idx.seek(val);
     }
 
     public boolean next() {
