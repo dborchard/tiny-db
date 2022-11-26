@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.storage_engine.b2_index.btree;
 
 import edu.utdallas.davisbase.storage_engine.e_record.Layout;
-import edu.utdallas.davisbase.query_engine.f_tx.Transaction;
+import edu.utdallas.davisbase.storage_engine.f_tx.Transaction;
 import edu.utdallas.davisbase.storage_engine.g_file.BlockId;
 import edu.utdallas.davisbase.query_engine.c_parse.domain.clause.D_Constant;
 

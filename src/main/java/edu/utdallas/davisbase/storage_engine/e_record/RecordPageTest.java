@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.storage_engine.e_record;
 
 
-import edu.utdallas.davisbase.query_engine.f_tx.Transaction;
+import edu.utdallas.davisbase.storage_engine.f_tx.Transaction;
 import edu.utdallas.davisbase.query_engine.a_server.SimpleDB;
 import edu.utdallas.davisbase.storage_engine.g_file.BlockId;
 

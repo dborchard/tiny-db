@@ -8,7 +8,7 @@ import edu.utdallas.davisbase.query_engine.b0_planner.planner.impl.BetterQueryPl
 import edu.utdallas.davisbase.query_engine.b0_planner.planner.impl.BetterUpdatePlanner;
 import edu.utdallas.davisbase.query_engine.b1_metadata.MetadataMgr;
 import edu.utdallas.davisbase.query_engine.d_scans.Scan;
-import edu.utdallas.davisbase.query_engine.f_tx.Transaction;
+import edu.utdallas.davisbase.storage_engine.f_tx.Transaction;
 import edu.utdallas.davisbase.storage_engine.g_file.FileMgr;
 import edu.utdallas.davisbase.query_engine.h_utils.AsciiTable;
 

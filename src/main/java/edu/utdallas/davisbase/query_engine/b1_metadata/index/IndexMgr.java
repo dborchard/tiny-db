@@ -4,7 +4,7 @@ import edu.utdallas.davisbase.query_engine.b1_metadata.table.TableMgr;
 import edu.utdallas.davisbase.query_engine.d_scans.impl.TableScan;
 import edu.utdallas.davisbase.storage_engine.e_record.Layout;
 import edu.utdallas.davisbase.storage_engine.e_record.Schema;
-import edu.utdallas.davisbase.query_engine.f_tx.Transaction;
+import edu.utdallas.davisbase.storage_engine.f_tx.Transaction;
 
 import java.util.HashMap;
 import java.util.Map;

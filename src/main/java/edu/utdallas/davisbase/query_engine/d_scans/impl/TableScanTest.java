@@ -4,7 +4,7 @@ package edu.utdallas.davisbase.query_engine.d_scans.impl;
 import edu.utdallas.davisbase.query_engine.a_server.SimpleDB;
 import edu.utdallas.davisbase.storage_engine.e_record.Layout;
 import edu.utdallas.davisbase.storage_engine.e_record.Schema;
-import edu.utdallas.davisbase.query_engine.f_tx.Transaction;
+import edu.utdallas.davisbase.storage_engine.f_tx.Transaction;
 
 public class TableScanTest {
     public static void main(String[] args) throws Exception {

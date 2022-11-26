@@ -2,7 +2,7 @@ package edu.utdallas.davisbase.storage_engine.e_record;
 
 
 
-import edu.utdallas.davisbase.query_engine.f_tx.Transaction;
+import edu.utdallas.davisbase.storage_engine.f_tx.Transaction;
 import edu.utdallas.davisbase.storage_engine.g_file.BlockId;
 
 import static java.sql.Types.INTEGER;
