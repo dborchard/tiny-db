@@ -14,4 +14,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>io.github.myui</groupId>
+            <artifactId>btree4j</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+    </dependencies>
 </project>

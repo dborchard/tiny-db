@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase;
 
-import edu.utdallas.davisbase.f_tx.Transaction;
-import edu.utdallas.davisbase.a_server.SimpleDB;
+import edu.utdallas.davisbase.query_engine.f_tx.Transaction;
+import edu.utdallas.davisbase.query_engine.a_server.SimpleDB;
 
 import java.util.Scanner;
 
