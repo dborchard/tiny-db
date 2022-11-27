@@ -5,7 +5,7 @@ import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordKey;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueLayout;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueSchema;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
+import edu.utdallas.davisbase.server.d_storage_engine.b_common.b_file.BlockId;
 
 import static java.sql.Types.INTEGER;
 
@@ -209,6 +209,10 @@ public class BTPage {
 
     // Private methods
 
+    private void setNumRecs(int n) {
+        tx.setInt(currentblk, Integer.BYTES, n, true);
+    }
+
     private int getInt(int slot, String fldname) {
         int pos = fldpos(slot, fldname);
         return tx.getInt(currentblk, pos);
@@ -239,10 +243,6 @@ public class BTPage {
         int type = layout.schema().type(fldname);
         if (type == INTEGER) setInt(slot, fldname, val.asInt());
         else setString(slot, fldname, val.asString());
-    }
-
-    private void setNumRecs(int n) {
-        tx.setInt(currentblk, Integer.BYTES, n, true);
     }
 
     private void insert(int slot) {

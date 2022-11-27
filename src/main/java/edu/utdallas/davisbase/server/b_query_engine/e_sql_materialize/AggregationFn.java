@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.b_query_engine.e_sql_materialize;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
+import edu.utdallas.davisbase.server.d_storage_engine.b_common.a_scans.Scan;
 
 /**
  * The interface implemented by aggregation functions.

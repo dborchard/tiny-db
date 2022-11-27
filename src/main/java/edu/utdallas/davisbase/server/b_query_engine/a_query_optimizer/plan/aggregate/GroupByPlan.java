@@ -1,11 +1,12 @@
 package edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.aggregate;
 
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.Plan;
+import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.aggregate.common.SortPlan;
 import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.aggregate.GroupByScan;
 import edu.utdallas.davisbase.server.b_query_engine.e_sql_materialize.AggregationFn;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueSchema;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
+import edu.utdallas.davisbase.server.d_storage_engine.b_common.a_scans.Scan;
 
 import java.util.List;
 

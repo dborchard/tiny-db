@@ -8,7 +8,7 @@ import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.regul
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.UpdatePlanner;
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.UpdateScan;
+import edu.utdallas.davisbase.server.d_storage_engine.b_common.a_scans.UpdateScan;
 
 import java.util.Iterator;
 

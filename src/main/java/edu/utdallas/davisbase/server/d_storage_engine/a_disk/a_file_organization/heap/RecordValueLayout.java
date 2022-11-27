@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap;
 
 
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.Page;
+import edu.utdallas.davisbase.server.d_storage_engine.b_common.b_file.Page;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +26,7 @@ public class RecordValueLayout {
      * is created. It determines the physical offset of
      * each field within the record.
      *
-     * @param tblname     the name of the table
+     * @param tblname           the name of the table
      * @param recordValueSchema the schema of the table's records
      */
     public RecordValueLayout(RecordValueSchema recordValueSchema) {
@@ -45,10 +45,10 @@ public class RecordValueLayout {
      * This constructor is used when the metadata
      * is retrieved from the catalog.
      *
-     * @param tblname     the name of the table
+     * @param tblname           the name of the table
      * @param recordValueSchema the schema of the table's records
-     * @param offsets     the already-calculated offsets of the fields within a record
-     * @param recordlen   the already-calculated length of each record
+     * @param offsets           the already-calculated offsets of the fields within a record
+     * @param recordlen         the already-calculated length of each record
      */
     public RecordValueLayout(RecordValueSchema recordValueSchema, Map<String, Integer> offsets, int slotsize) {
         this.recordValueSchema = recordValueSchema;

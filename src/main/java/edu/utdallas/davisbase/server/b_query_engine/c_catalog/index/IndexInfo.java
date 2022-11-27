@@ -3,9 +3,9 @@ package edu.utdallas.davisbase.server.b_query_engine.c_catalog.index;
 import edu.utdallas.davisbase.server.b_query_engine.b_stats_manager.domain.StatInfo;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.BTreeIndex;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.b_index.Index;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueLayout;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.b_index.Index;
 
 import static java.sql.Types.INTEGER;
 

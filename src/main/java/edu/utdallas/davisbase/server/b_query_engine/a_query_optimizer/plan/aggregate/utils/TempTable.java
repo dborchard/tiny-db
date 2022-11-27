@@ -4,7 +4,7 @@ import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.regular.TableSca
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueLayout;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueSchema;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.UpdateScan;
+import edu.utdallas.davisbase.server.d_storage_engine.b_common.a_scans.UpdateScan;
 
 /**
  * A class that creates temporary tables.
@@ -33,6 +33,11 @@ public class TempTable {
         layout = new RecordValueLayout(sch);
     }
 
+    private static synchronized String nextTableName() {
+        nextTableNum++;
+        return "temp" + nextTableNum;
+    }
+
     /**
      * Open a table scan for the temporary table.
      */
@@ -51,10 +56,5 @@ public class TempTable {
      */
     public RecordValueLayout getLayout() {
         return layout;
-    }
-
-    private static synchronized String nextTableName() {
-        nextTableNum++;
-        return "temp" + nextTableNum;
     }
 }

@@ -3,8 +3,8 @@ package edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.regu
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.A_Predicate;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.Plan;
 import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.regular.SelectScan;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.b_common.a_scans.Scan;
 
 /**
  * The Plan class corresponding to the <i>select</i>
@@ -40,6 +40,7 @@ public class SelectPlan implements Plan {
      * Estimates the number of output records in the selection,
      * which is determined by the
      * reduction factor of the predicate.
+     *
      * @see simpledb.plan.Plan#recordsOutput()
      */
     public int recordsOutput() {
@@ -54,6 +55,7 @@ public class SelectPlan implements Plan {
      * Otherwise, it will be the number of the distinct values
      * in the underlying query
      * (but not more than the size of the output table).
+     *
      * @see simpledb.plan.Plan#distinctValues(java.lang.String)
      */
     public int distinctValues(String fldname) {

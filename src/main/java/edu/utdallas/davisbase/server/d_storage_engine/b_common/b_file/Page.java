@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file;
+package edu.utdallas.davisbase.server.d_storage_engine.b_common.b_file;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
@@ -19,6 +19,11 @@ public class Page {
     }
 
     public static int maxBytesRequiredForString(int strlen) {
+        float bytesPerChar = CHARSET.newEncoder().maxBytesPerChar();
+        return Integer.BYTES + (strlen * (int) bytesPerChar);
+    }
+
+    public static int maxLength(int strlen) {
         float bytesPerChar = CHARSET.newEncoder().maxBytesPerChar();
         return Integer.BYTES + (strlen * (int) bytesPerChar);
     }
@@ -59,10 +64,5 @@ public class Page {
     ByteBuffer contents() {
         bb.position(0);
         return bb;
-    }
-
-    public static int maxLength(int strlen) {
-        float bytesPerChar = CHARSET.newEncoder().maxBytesPerChar();
-        return Integer.BYTES + (strlen * (int) bytesPerChar);
     }
 }

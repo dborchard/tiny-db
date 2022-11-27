@@ -29,6 +29,9 @@ public class HashIndex implements Index {
         this.layout = layout;
     }
 
+    public static int searchCost(int numblocks, int rpb) {
+        return numblocks / HashIndex.NUM_BUCKETS;
+    }
 
     public void seek(D_Constant searchkey) {
         close();
@@ -38,19 +41,16 @@ public class HashIndex implements Index {
         ts = new TableScan(tx, tblname, layout);
     }
 
-
     public boolean next() {
         while (ts.next()) if (ts.getVal("dataval").equals(searchkey)) return true;
         return false;
     }
-
 
     public RecordKey getRecordId() {
         int blknum = ts.getInt("block");
         int id = ts.getInt("id");
         return new RecordKey(blknum, id);
     }
-
 
     public void insert(D_Constant val, RecordKey rid) {
         seek(val);
@@ -59,7 +59,6 @@ public class HashIndex implements Index {
         ts.setInt("id", rid.slot());
         ts.setVal("dataval", val);
     }
-
 
     public void delete(D_Constant val, RecordKey rid) {
         seek(val);
@@ -71,10 +70,5 @@ public class HashIndex implements Index {
 
     public void close() {
         if (ts != null) ts.close();
-    }
-
-
-    public static int searchCost(int numblocks, int rpb) {
-        return numblocks / HashIndex.NUM_BUCKETS;
     }
 }

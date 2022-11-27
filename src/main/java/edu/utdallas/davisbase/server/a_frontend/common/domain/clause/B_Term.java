@@ -2,7 +2,7 @@ package edu.utdallas.davisbase.server.a_frontend.common.domain.clause;
 
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.Plan;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueSchema;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
+import edu.utdallas.davisbase.server.d_storage_engine.b_common.a_scans.Scan;
 
 /**
  * A term is a comparison between two expressions.

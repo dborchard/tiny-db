@@ -1,9 +1,9 @@
-package edu.utdallas.davisbase.server.d_storage_engine.b_buffer_mgr;
+package edu.utdallas.davisbase.server.c_key_value_store.b_buffer_mgr;
 
 
 import edu.utdallas.davisbase.server.d_storage_engine.LogMgr;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.FileMgr;
+import edu.utdallas.davisbase.server.d_storage_engine.b_common.b_file.BlockId;
+import edu.utdallas.davisbase.server.d_storage_engine.b_common.b_file.FileMgr;
 
 /**
  * Manages the pinning and unpinning of buffers to blocks.
@@ -11,9 +11,9 @@ import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.FileMgr;
  * @author Edward Sciore
  */
 public class BufferMgr {
+    private static final long MAX_TIME = 10000; // 10 seconds
     private Buffer[] bufferpool;
     private int numAvailable;
-    private static final long MAX_TIME = 10000; // 10 seconds
 
 
     public BufferMgr(FileMgr fm, LogMgr lm, int numbuffs) {
@@ -39,8 +39,7 @@ public class BufferMgr {
      */
     public synchronized void flushAll(int txnum) {
         for (Buffer buff : bufferpool)
-            if (buff.modifyingTx() == txnum)
-                buff.flush();
+            if (buff.modifyingTx() == txnum) buff.flush();
     }
 
 
@@ -67,8 +66,7 @@ public class BufferMgr {
                 wait(MAX_TIME);
                 buff = tryToPin(blk);
             }
-            if (buff == null)
-                throw new BufferAbortException();
+            if (buff == null) throw new BufferAbortException();
             return buff;
         } catch (InterruptedException e) {
             throw new BufferAbortException();
@@ -93,12 +91,10 @@ public class BufferMgr {
         Buffer buff = findExistingBuffer(blk);
         if (buff == null) {
             buff = chooseUnpinnedBuffer();
-            if (buff == null)
-                return null;
+            if (buff == null) return null;
             buff.assignToBlock(blk);
         }
-        if (!buff.isPinned())
-            numAvailable--;
+        if (!buff.isPinned()) numAvailable--;
         buff.pin();
         return buff;
     }
@@ -106,16 +102,14 @@ public class BufferMgr {
     private Buffer findExistingBuffer(BlockId blk) {
         for (Buffer buff : bufferpool) {
             BlockId b = buff.block();
-            if (b != null && b.equals(blk))
-                return buff;
+            if (b != null && b.equals(blk)) return buff;
         }
         return null;
     }
 
     private Buffer chooseUnpinnedBuffer() {
         for (Buffer buff : bufferpool)
-            if (!buff.isPinned())
-                return buff;
+            if (!buff.isPinned()) return buff;
         return null;
     }
 }

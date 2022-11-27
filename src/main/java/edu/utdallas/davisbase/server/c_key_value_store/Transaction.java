@@ -3,12 +3,12 @@ package edu.utdallas.davisbase.server.c_key_value_store;
 import edu.utdallas.davisbase.server.c_key_value_store.a_transaction.a_concurrency.ConcurrencyMgr;
 import edu.utdallas.davisbase.server.c_key_value_store.a_transaction.b_page_pinner.BufferList;
 import edu.utdallas.davisbase.server.c_key_value_store.a_transaction.c_recovery_mgr.RecoveryMgr;
+import edu.utdallas.davisbase.server.c_key_value_store.b_buffer_mgr.Buffer;
+import edu.utdallas.davisbase.server.c_key_value_store.b_buffer_mgr.BufferMgr;
 import edu.utdallas.davisbase.server.d_storage_engine.LogMgr;
-import edu.utdallas.davisbase.server.d_storage_engine.b_buffer_mgr.Buffer;
-import edu.utdallas.davisbase.server.d_storage_engine.b_buffer_mgr.BufferMgr;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.FileMgr;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.Page;
+import edu.utdallas.davisbase.server.d_storage_engine.b_common.b_file.BlockId;
+import edu.utdallas.davisbase.server.d_storage_engine.b_common.b_file.FileMgr;
+import edu.utdallas.davisbase.server.d_storage_engine.b_common.b_file.Page;
 
 
 /**
@@ -38,6 +38,10 @@ public class Transaction {
         mybuffers = new BufferList(bm);
     }
 
+    private static synchronized int nextTxNumber() {
+        nextTxNum++;
+        return nextTxNum;
+    }
 
     public void commit() {
         recoveryMgr.commit();
@@ -58,7 +62,6 @@ public class Transaction {
         concurMgr.release();
         mybuffers.unpinAll();
     }
-
 
     public void recover() {
         bm.flushAll(txnum);
@@ -190,11 +193,6 @@ public class Transaction {
 
     public int availableBuffs() {
         return bm.available();
-    }
-
-    private static synchronized int nextTxNumber() {
-        nextTxNum++;
-        return nextTxNum;
     }
 }
 //DONE

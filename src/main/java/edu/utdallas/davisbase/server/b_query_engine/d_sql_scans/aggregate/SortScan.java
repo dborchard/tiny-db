@@ -4,8 +4,8 @@ import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.aggregate.utils.RecordComparator;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.aggregate.utils.TempTable;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordKey;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.UpdateScan;
+import edu.utdallas.davisbase.server.d_storage_engine.b_common.a_scans.Scan;
+import edu.utdallas.davisbase.server.d_storage_engine.b_common.a_scans.UpdateScan;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +48,6 @@ public class SortScan implements Scan {
      * Internally, it moves to the first record of each underlying scan.
      * The variable currentscan is set to null, indicating that there is
      * no current scan.
-     *
      */
     public void seekToHead_Query() {
         currentscan = null;
@@ -65,7 +64,6 @@ public class SortScan implements Scan {
      * First, the current scan is moved to the next record.
      * Then the lowest record of the two scans is found, and that
      * scan is chosen to be the new current scan.
-     *
      */
     public boolean next() {
         if (currentscan != null) {
@@ -91,7 +89,6 @@ public class SortScan implements Scan {
 
     /**
      * Close the two underlying scans.
-     *
      */
     public void close() {
         s1.close();
@@ -102,7 +99,6 @@ public class SortScan implements Scan {
     /**
      * Get the Constant value of the specified field
      * of the current scan.
-     *
      */
     public D_Constant getVal(String fldname) {
         return currentscan.getVal(fldname);
@@ -111,7 +107,6 @@ public class SortScan implements Scan {
     /**
      * Get the integer value of the specified field
      * of the current scan.
-     *
      */
     public int getInt(String fldname) {
         return currentscan.getInt(fldname);
@@ -120,7 +115,6 @@ public class SortScan implements Scan {
     /**
      * Get the string value of the specified field
      * of the current scan.
-     *
      */
     public String getString(String fldname) {
         return currentscan.getString(fldname);
@@ -128,7 +122,6 @@ public class SortScan implements Scan {
 
     /**
      * Return true if the specified field is in the current scan.
-     *
      */
     public boolean hasField(String fldname) {
         return currentscan.hasField(fldname);
