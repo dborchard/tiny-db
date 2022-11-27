@@ -1,5 +1,6 @@
-package edu.utdallas.davisbase.server.d_storage_engine.a_disk.c_wal;
+package edu.utdallas.davisbase.server.d_storage_engine;
 
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.c_wal.LogIterator;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.FileMgr;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.Page;
@@ -22,14 +23,6 @@ public class LogMgr {
     private int latestLSN = 0;
     private int lastSavedLSN = 0;
 
-    /**
-     * Creates the manager for the specified log file.
-     * If the log file does not yet exist, it is created
-     * with an empty first block.
-     *
-     * @param FileMgr the file manager
-     * @param logfile the name of the log file
-     */
     public LogMgr(FileMgr fm, String logfile) {
         this.fm = fm;
         this.logfile = logfile;

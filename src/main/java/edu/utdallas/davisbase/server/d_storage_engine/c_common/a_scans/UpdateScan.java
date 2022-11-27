@@ -36,7 +36,7 @@ public interface UpdateScan extends Scan {
     /**
      * Insert a new record somewhere in the scan.
      */
-    public void seekToHead_Update();
+    public void seekToHead_Insert();
 
     /**
      * Delete the current record from the scan.

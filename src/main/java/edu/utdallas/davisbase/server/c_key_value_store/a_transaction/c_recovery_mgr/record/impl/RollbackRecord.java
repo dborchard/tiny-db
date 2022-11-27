@@ -2,7 +2,7 @@ package edu.utdallas.davisbase.server.c_key_value_store.a_transaction.c_recovery
 
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.c_key_value_store.a_transaction.c_recovery_mgr.record.LogRecord;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.c_wal.LogMgr;
+import edu.utdallas.davisbase.server.d_storage_engine.LogMgr;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.Page;
 
 /**

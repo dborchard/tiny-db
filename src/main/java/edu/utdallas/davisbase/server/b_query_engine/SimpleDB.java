@@ -9,7 +9,7 @@ import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.b_
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.b_query_engine.e_dto.Table;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.c_wal.LogMgr;
+import edu.utdallas.davisbase.server.d_storage_engine.LogMgr;
 import edu.utdallas.davisbase.server.d_storage_engine.b_buffer_mgr.BufferMgr;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.FileMgr;
@@ -94,8 +94,26 @@ public class SimpleDB {
         return new Transaction(fm, lm, bm);
     }
 
+
+    //Debugging Helper
+    public MetadataMgr mdMgr() {
+        return mdm;
+    }
+
+    public Planner planner() {
+        return planner;
+    }
+
     public FileMgr fileMgr() {
         return fm;
+    }
+
+    public LogMgr logMgr() {
+        return lm;
+    }
+
+    public BufferMgr bufferMgr() {
+        return bm;
     }
 }
 

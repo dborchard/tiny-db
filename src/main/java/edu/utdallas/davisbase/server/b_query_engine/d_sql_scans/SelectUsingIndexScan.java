@@ -1,21 +1,20 @@
 package edu.utdallas.davisbase.server.b_query_engine.d_sql_scans;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
-import edu.utdallas.davisbase.server.d_storage_engine.TableDataScan;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.b_index.Index;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordId;
 
 
 public class SelectUsingIndexScan implements Scan {
-    private final TableDataScan ts;
+    private final TableScan ts;
     private final Index idx;
 
     // Start value of Index Field.
     private final D_Constant val;
 
 
-    public SelectUsingIndexScan(TableDataScan ts, Index idx, D_Constant val) {
+    public SelectUsingIndexScan(TableScan ts, Index idx, D_Constant val) {
         this.ts = ts;
         this.idx = idx;
         this.val = val;

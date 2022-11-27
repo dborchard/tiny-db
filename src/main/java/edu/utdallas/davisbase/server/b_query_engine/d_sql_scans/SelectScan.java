@@ -85,9 +85,9 @@ public class SelectScan implements UpdateScan {
         us.delete();
     }
 
-    public void seekToHead_Update() {
+    public void seekToHead_Insert() {
         UpdateScan us = (UpdateScan) s;
-        us.seekToHead_Update();
+        us.seekToHead_Insert();
     }
 
     public RecordId getRid() {

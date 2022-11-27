@@ -64,4 +64,8 @@ public class IndexInfo {
     public int recordsOutput() {
         return si.recordsOutput() / si.distinctValues(fldname);
     }
+
+    public int distinctValues(String fname) {
+        return fldname.equals(fname) ? 1 : si.distinctValues(fldname);
+    }
 }

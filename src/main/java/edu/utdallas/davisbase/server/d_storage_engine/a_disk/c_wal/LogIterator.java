@@ -13,7 +13,7 @@ import java.util.Iterator;
  * 
  * @author Edward Sciore
  */
-class LogIterator implements Iterator<byte[]> {
+public class LogIterator implements Iterator<byte[]> {
    private FileMgr fm;
    private BlockId blk;
    private Page p;

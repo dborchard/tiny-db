@@ -48,7 +48,7 @@ public class BetterUpdatePlanner implements UpdatePlanner {
 
         // first, insert the record
         UpdateScan s = (UpdateScan) p.open();
-        s.seekToHead_Update();
+        s.seekToHead_Insert();
 
         // then modify each field, inserting an index record if appropriate
         RecordId recordID = s.getRid();

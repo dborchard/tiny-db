@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.b_query_engine.c_catalog.table;
 
+import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.TableScan;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.TableDataScan;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.TableFileLayout;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.TableSchema;
 
@@ -19,7 +19,7 @@ import java.util.Map;
 public class TableMgr {
     // The max characters a tablename or fieldname can have.
     public static final int MAX_NAME = 16;
-    private TableFileLayout tcatTableFileLayout, fcatTableFileLayout;
+    private TableFileLayout tcatLayout, fcatLayout;
 
     /**
      * Create a new catalog manager for the database system.
@@ -30,22 +30,22 @@ public class TableMgr {
      * @param tx    the startup transaction
      */
     public TableMgr(boolean isNew, Transaction tx) {
-        TableSchema tcatTableSchema = new TableSchema();
-        tcatTableSchema.addStringField("tblname", MAX_NAME);
-        tcatTableSchema.addIntField("slotsize");
-        tcatTableFileLayout = new TableFileLayout(tcatTableSchema);
+        TableSchema tcatSchema = new TableSchema();
+        tcatSchema.addStringField("tblname", MAX_NAME);
+        tcatSchema.addIntField("slotsize");
+        tcatLayout = new TableFileLayout(tcatSchema);
 
-        TableSchema fcatTableSchema = new TableSchema();
-        fcatTableSchema.addStringField("tblname", MAX_NAME);
-        fcatTableSchema.addStringField("fldname", MAX_NAME);
-        fcatTableSchema.addIntField("type");
-        fcatTableSchema.addIntField("length");
-        fcatTableSchema.addIntField("offset");
-        fcatTableFileLayout = new TableFileLayout(fcatTableSchema);
+        TableSchema fcatSchema = new TableSchema();
+        fcatSchema.addStringField("tblname", MAX_NAME);
+        fcatSchema.addStringField("fldname", MAX_NAME);
+        fcatSchema.addIntField("type");
+        fcatSchema.addIntField("length");
+        fcatSchema.addIntField("offset");
+        fcatLayout = new TableFileLayout(fcatSchema);
 
         if (isNew) {
-            createTable("davisbase_tables", tcatTableSchema, tx);
-            createTable("davisbase_columns", fcatTableSchema, tx);
+            createTable("tblcat", tcatSchema, tx);
+            createTable("fldcat", fcatSchema, tx);
         }
     }
 
@@ -57,28 +57,29 @@ public class TableMgr {
      * @param tx      the transaction creating the table
      */
     public void createTable(String tblname, TableSchema sch, Transaction tx) {
-        TableFileLayout tableFileLayout = new TableFileLayout(sch);
-
-        TableDataScan tcat = new TableDataScan(tx, "davisbase_tables", tcatTableFileLayout);
-        tcat.seekToHead_Update();
+        TableFileLayout layout = new TableFileLayout(sch);
+        // insert one record into tblcat
+        TableScan tcat = new TableScan(tx, "tblcat", tcatLayout);
+        tcat.seekToHead_Insert();
         tcat.setString("tblname", tblname);
-        tcat.setInt("slotsize", tableFileLayout.slotSize());
+        tcat.setInt("slotsize", layout.slotSize());
         tcat.close();
 
-        TableDataScan fcat = new TableDataScan(tx, "davisbase_columns", fcatTableFileLayout);
+        // insert a record into fldcat for each field
+        TableScan fcat = new TableScan(tx, "fldcat", fcatLayout);
         for (String fldname : sch.fields()) {
-            fcat.seekToHead_Update();
+            fcat.seekToHead_Insert();
             fcat.setString("tblname", tblname);
             fcat.setString("fldname", fldname);
             fcat.setInt("type", sch.type(fldname));
             fcat.setInt("length", sch.length(fldname));
-            fcat.setInt("offset", tableFileLayout.offset(fldname));
+            fcat.setInt("offset", layout.offset(fldname));
         }
         fcat.close();
     }
 
     /**
-     * Retrieve the layout of the specified table
+     * Retrieve the TableFileLayout of the specified table
      * from the catalog.
      *
      * @param tblname the name of the table
@@ -87,7 +88,7 @@ public class TableMgr {
      */
     public TableFileLayout getLayout(String tblname, Transaction tx) {
         int size = -1;
-        TableDataScan tcat = new TableDataScan(tx, "davisbase_tables", tcatTableFileLayout);
+        TableScan tcat = new TableScan(tx, "tblcat", tcatLayout);
         while (tcat.next()) if (tcat.getString("tblname").equals(tblname)) {
             size = tcat.getInt("slotsize");
             break;
@@ -96,7 +97,7 @@ public class TableMgr {
 
         TableSchema sch = new TableSchema();
         Map<String, Integer> offsets = new HashMap<String, Integer>();
-        TableDataScan fcat = new TableDataScan(tx, "davisbase_columns", fcatTableFileLayout);
+        TableScan fcat = new TableScan(tx, "fldcat", fcatLayout);
         while (fcat.next()) if (fcat.getString("tblname").equals(tblname)) {
             String fldname = fcat.getString("fldname");
             int fldtype = fcat.getInt("type");
