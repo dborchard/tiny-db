@@ -6,6 +6,7 @@
 
     <groupId>edu.utdallas</groupId>
     <artifactId>davisbase</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
