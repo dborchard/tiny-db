@@ -1,6 +1,11 @@
 package edu.utdallas.davisbase.server.c_key_value_store;
 
-import edu.utdallas.davisbase.server.c_key_value_store.b_buffer_mgr.BufferMgr;
+import edu.utdallas.davisbase.server.c_key_value_store.a_transaction.a_concurrency.ConcurrencyMgr;
+import edu.utdallas.davisbase.server.c_key_value_store.a_transaction.b_page_pinner.BufferList;
+import edu.utdallas.davisbase.server.c_key_value_store.a_transaction.c_recovery_mgr.RecoveryMgr;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.c_wal.LogMgr;
+import edu.utdallas.davisbase.server.d_storage_engine.b_buffer_mgr.Buffer;
+import edu.utdallas.davisbase.server.d_storage_engine.b_buffer_mgr.BufferMgr;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.FileMgr;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.Page;
@@ -16,29 +21,49 @@ import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.Page;
 public class Transaction {
     private static final int END_OF_FILE = -1;
     private static int nextTxNum = 0;
-    private FileMgr fm;
+    private RecoveryMgr recoveryMgr;
     private BufferMgr bm;
+    private FileMgr fm;
     private int txnum;
+    private ConcurrencyMgr concurMgr;
+    private BufferList mybuffers;
 
 
-    public Transaction(FileMgr fm) {
+    public Transaction(FileMgr fm, LogMgr lm, BufferMgr bm) {
         this.fm = fm;
+        this.bm = bm;
         txnum = nextTxNumber();
+        recoveryMgr = new RecoveryMgr(this, txnum, lm, bm);
+        concurMgr = new ConcurrencyMgr();
+        mybuffers = new BufferList(bm);
     }
 
-    private static synchronized int nextTxNumber() {
-        nextTxNum++;
-        return nextTxNum;
-    }
 
     public void commit() {
+        recoveryMgr.commit();
+        System.out.println("transaction " + txnum + " committed");
+        concurMgr.release();
+        mybuffers.unpinAll();
     }
 
+    /**
+     * Rollback the current transaction.
+     * Undo any modified values,
+     * flush those buffers,
+     * write and flush a rollback record to the log,
+     * release all locks, and unpin any pinned buffers.
+     */
     public void rollback() {
+        recoveryMgr.rollback();
+        System.out.println("transaction " + txnum + " rolled back");
+        concurMgr.release();
+        mybuffers.unpinAll();
     }
+
 
     public void recover() {
-
+        bm.flushAll(txnum);
+        recoveryMgr.recover();
     }
 
     /**
@@ -48,6 +73,7 @@ public class Transaction {
      * @param blk a reference to the disk block
      */
     public void pin(BlockId blk) {
+        mybuffers.pin(blk);
     }
 
     /**
@@ -58,18 +84,29 @@ public class Transaction {
      * @param blk a reference to the disk block
      */
     public void unpin(BlockId blk) {
+        mybuffers.unpin(blk);
     }
 
-    public synchronized int getInt(BlockId blk, int offset) {
-        Page contents = new Page(fm.blockSize());
-        fm.read(blk, contents);
-        return contents.getInt(offset);
+    public int getInt(BlockId blk, int offset) {
+        concurMgr.sLock(blk);
+        Buffer buff = mybuffers.getBuffer(blk);
+        return buff.contents().getInt(offset);
     }
 
-    public synchronized String getString(BlockId blk, int offset) {
-        Page contents = new Page(fm.blockSize());
-        fm.read(blk, contents);
-        return contents.getString(offset);
+    /**
+     * Return the string value stored at the
+     * specified offset of the specified block.
+     * The method first obtains an SLock on the block,
+     * then it calls the buffer to retrieve the value.
+     *
+     * @param blk    a reference to a disk block
+     * @param offset the byte offset within the block
+     * @return the string stored at that offset
+     */
+    public String getString(BlockId blk, int offset) {
+        concurMgr.sLock(blk);
+        Buffer buff = mybuffers.getBuffer(blk);
+        return buff.contents().getString(offset);
     }
 
     /**
@@ -86,12 +123,14 @@ public class Transaction {
      * @param offset a byte offset within that block
      * @param val    the value to be stored
      */
-    public synchronized void setInt(BlockId blk, int offset, int val) {
-        Page contents = new Page(fm.blockSize());
-        fm.read(blk, contents);
-
-        contents.setInt(offset, val);
-        fm.write(blk, contents);
+    public void setInt(BlockId blk, int offset, int val, boolean okToLog) {
+        concurMgr.xLock(blk);
+        Buffer buff = mybuffers.getBuffer(blk);
+        int lsn = -1;
+        if (okToLog) lsn = recoveryMgr.setInt(buff, offset, val);
+        Page p = buff.contents();
+        p.setInt(offset, val);
+        buff.setModified(txnum, lsn);
     }
 
     /**
@@ -108,12 +147,14 @@ public class Transaction {
      * @param offset a byte offset within that block
      * @param val    the value to be stored
      */
-    public synchronized void setString(BlockId blk, int offset, String val) {
-        Page contents = new Page(fm.blockSize());
-        fm.read(blk, contents);
-
-        contents.setString(offset, val);
-        fm.write(blk, contents);
+    public void setString(BlockId blk, int offset, String val, boolean okToLog) {
+        concurMgr.xLock(blk);
+        Buffer buff = mybuffers.getBuffer(blk);
+        int lsn = -1;
+        if (okToLog) lsn = recoveryMgr.setString(buff, offset, val);
+        Page p = buff.contents();
+        p.setString(offset, val);
+        buff.setModified(txnum, lsn);
     }
 
     /**
@@ -125,7 +166,9 @@ public class Transaction {
      * @param filename the name of the file
      * @return the number of blocks in the file
      */
-    public synchronized int size(String filename) {
+    public int size(String filename) {
+        BlockId dummyblk = new BlockId(filename, END_OF_FILE);
+        concurMgr.sLock(dummyblk);
         return fm.length(filename);
     }
 
@@ -145,4 +188,15 @@ public class Transaction {
     public synchronized int blockSize() {
         return fm.blockSize();
     }
+
+    public int availableBuffs() {
+        return bm.available();
+    }
+
+    private static synchronized int nextTxNumber() {
+        nextTxNum++;
+        return nextTxNum;
+    }
+
+
 }

@@ -12,6 +12,11 @@ public class Page {
     public Page(int blocksize) {
         bb = ByteBuffer.allocateDirect(blocksize);
     }
+    // For creating log pages
+
+    public Page(byte[] b) {
+        bb = ByteBuffer.wrap(b);
+    }
 
     public static int maxBytesRequiredForString(int strlen) {
         float bytesPerChar = CHARSET.newEncoder().maxBytesPerChar();
@@ -54,5 +59,10 @@ public class Page {
     ByteBuffer contents() {
         bb.position(0);
         return bb;
+    }
+
+    public static int maxLength(int strlen) {
+        float bytesPerChar = CHARSET.newEncoder().maxBytesPerChar();
+        return Integer.BYTES + (strlen * (int) bytesPerChar);
     }
 }

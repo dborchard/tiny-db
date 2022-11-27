@@ -4,7 +4,7 @@ import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.A_Predicate
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.UpdateScan;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordId;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordId;
 
 /**
  * The scan class corresponding to the <i>select</i> relational

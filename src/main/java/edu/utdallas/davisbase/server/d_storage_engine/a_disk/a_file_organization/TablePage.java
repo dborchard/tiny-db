@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.d_storage_engine.a_file_organization;
+package edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization;
 
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
 
