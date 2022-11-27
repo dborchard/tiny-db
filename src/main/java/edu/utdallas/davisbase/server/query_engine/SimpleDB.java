@@ -6,7 +6,7 @@ import edu.utdallas.davisbase.server.query_engine.a_query_optimizer.planner.Quer
 import edu.utdallas.davisbase.server.query_engine.a_query_optimizer.planner.UpdatePlanner;
 import edu.utdallas.davisbase.server.query_engine.a_query_optimizer.planner.b_rule_base.BetterQueryPlanner;
 import edu.utdallas.davisbase.server.query_engine.a_query_optimizer.planner.b_rule_base.BetterUpdatePlanner;
-import edu.utdallas.davisbase.server.query_engine.b_metadata.MetadataMgr;
+import edu.utdallas.davisbase.server.query_engine.b_catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.storage_engine.a_scans.Scan;
 import edu.utdallas.davisbase.server.query_engine.d_domain.dto.Table;
 import edu.utdallas.davisbase.server.storage_engine.Transaction;

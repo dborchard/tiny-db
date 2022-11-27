@@ -1,8 +1,8 @@
 package edu.utdallas.davisbase.server.query_engine.a_query_optimizer.plan.impl;
 
 import edu.utdallas.davisbase.server.query_engine.a_query_optimizer.plan.Plan;
-import edu.utdallas.davisbase.server.query_engine.d_domain.domain.StatInfo;
-import edu.utdallas.davisbase.server.query_engine.b_metadata.MetadataMgr;
+import edu.utdallas.davisbase.server.query_engine.d_domain.misc.StatInfo;
+import edu.utdallas.davisbase.server.query_engine.b_catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.storage_engine.Scan_TableScan;
 import edu.utdallas.davisbase.server.storage_engine.Transaction;
 import edu.utdallas.davisbase.server.storage_engine.a_scans.Scan;

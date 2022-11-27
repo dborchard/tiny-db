@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.query_engine.b_metadata.table;
+package edu.utdallas.davisbase.server.query_engine.b_catalog.table;
 
 import edu.utdallas.davisbase.server.storage_engine.b_io.data.heap.TableFileLayout;
 import edu.utdallas.davisbase.server.storage_engine.b_io.data.heap.TableSchema;

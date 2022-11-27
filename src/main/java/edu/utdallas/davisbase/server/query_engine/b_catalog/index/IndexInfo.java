@@ -1,6 +1,6 @@
-package edu.utdallas.davisbase.server.query_engine.b_metadata.index;
+package edu.utdallas.davisbase.server.query_engine.b_catalog.index;
 
-import edu.utdallas.davisbase.server.query_engine.d_domain.domain.StatInfo;
+import edu.utdallas.davisbase.server.query_engine.d_domain.misc.StatInfo;
 import edu.utdallas.davisbase.server.storage_engine.Index_BTree;
 import edu.utdallas.davisbase.server.storage_engine.Transaction;
 import edu.utdallas.davisbase.server.storage_engine.b_io.data.heap.TableFileLayout;

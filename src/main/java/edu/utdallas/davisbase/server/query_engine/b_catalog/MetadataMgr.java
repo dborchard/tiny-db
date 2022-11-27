@@ -1,11 +1,11 @@
-package edu.utdallas.davisbase.server.query_engine.b_metadata;
+package edu.utdallas.davisbase.server.query_engine.b_catalog;
 
-import edu.utdallas.davisbase.server.query_engine.b_metadata.index.IndexInfo;
-import edu.utdallas.davisbase.server.query_engine.b_metadata.index.IndexMgr;
+import edu.utdallas.davisbase.server.query_engine.b_catalog.index.IndexInfo;
+import edu.utdallas.davisbase.server.query_engine.b_catalog.index.IndexMgr;
 import edu.utdallas.davisbase.server.storage_engine.b_io.data.heap.TableFileLayout;
 import edu.utdallas.davisbase.server.storage_engine.b_io.data.heap.TableSchema;
 import edu.utdallas.davisbase.server.storage_engine.Transaction;
-import edu.utdallas.davisbase.server.query_engine.b_metadata.table.TableMgr;
+import edu.utdallas.davisbase.server.query_engine.b_catalog.table.TableMgr;
 
 import java.util.Map;
 

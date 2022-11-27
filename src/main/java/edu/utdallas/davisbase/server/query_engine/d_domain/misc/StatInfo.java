@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.query_engine.d_domain.domain;
+package edu.utdallas.davisbase.server.query_engine.d_domain.misc;
 
 /**
  * A StatInfo object holds three pieces of 

@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class DavisCLI {
 
-    public static void run(String args[]) {
+    public static void run(String[] args) {
         // Create Database
         String dirname = (args.length == 0) ? "davisdb" : args[0];
         SimpleDB db = new SimpleDB(dirname);
