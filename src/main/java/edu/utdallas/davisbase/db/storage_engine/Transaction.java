@@ -1,5 +1,6 @@
 package edu.utdallas.davisbase.db.storage_engine;
 
+import edu.utdallas.davisbase.db.storage_engine.c_buffercache.BufferMgr;
 import edu.utdallas.davisbase.db.storage_engine.d_file.BlockId;
 import edu.utdallas.davisbase.db.storage_engine.d_file.FileMgr;
 import edu.utdallas.davisbase.db.storage_engine.d_file.Page;
@@ -16,6 +17,7 @@ public class Transaction {
     private static int nextTxNum = 0;
     private static final int END_OF_FILE = -1;
     private FileMgr fm;
+    private BufferMgr bm;
     private int txnum;
 
 
