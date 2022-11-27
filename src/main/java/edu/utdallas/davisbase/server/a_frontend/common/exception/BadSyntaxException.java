@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.a_frontend.exception;
+package edu.utdallas.davisbase.server.a_frontend.common.exception;
 
 /**
  * A runtime exception indicating that the submitted query

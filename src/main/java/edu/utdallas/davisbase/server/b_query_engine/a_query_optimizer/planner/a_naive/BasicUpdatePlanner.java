@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.a_naive;
 
-import edu.utdallas.davisbase.server.a_frontend.domain.clause.D_Constant;
-import edu.utdallas.davisbase.server.a_frontend.domain.commands.*;
+import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
+import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.*;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.Plan;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.impl.SelectPlan;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.impl.TablePlan;

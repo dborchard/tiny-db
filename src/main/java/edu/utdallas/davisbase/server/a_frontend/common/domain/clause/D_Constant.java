@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.a_frontend.domain.clause;
+package edu.utdallas.davisbase.server.a_frontend.common.domain.clause;
 
 /**
  * The class that denotes values stored in the database.

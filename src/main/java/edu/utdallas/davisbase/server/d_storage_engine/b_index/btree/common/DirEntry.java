@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.server.d_storage_engine.b_index.btree.common;
 
-import edu.utdallas.davisbase.server.a_frontend.domain.clause.D_Constant;
+import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 
 /**
  * A directory entry has two components: the number of the child block,

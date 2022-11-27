@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.a_frontend.domain.clause;
+package edu.utdallas.davisbase.server.a_frontend.common.domain.clause;
 
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
 

@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.impl;
 
-import edu.utdallas.davisbase.server.a_frontend.domain.clause.D_Constant;
+import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.Plan;
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.index.IndexInfo;
 import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.SelectUsingIndexScan;

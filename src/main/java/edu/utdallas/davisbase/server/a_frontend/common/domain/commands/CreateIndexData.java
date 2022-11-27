@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.a_frontend.domain.commands;
+package edu.utdallas.davisbase.server.a_frontend.common.domain.commands;
 
 /**
  * The parser for the <i>create index</i> statement.

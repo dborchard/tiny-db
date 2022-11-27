@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.a_frontend.domain.commands;
+package edu.utdallas.davisbase.server.a_frontend.common.domain.commands;
 
 import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.TableSchema;
 

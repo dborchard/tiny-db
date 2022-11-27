@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.a_frontend.impl.derby;
 
 
-import edu.utdallas.davisbase.server.a_frontend.exception.BadSyntaxException;
+import edu.utdallas.davisbase.server.a_frontend.common.exception.BadSyntaxException;
 
 import java.io.IOException;
 import java.io.StreamTokenizer;

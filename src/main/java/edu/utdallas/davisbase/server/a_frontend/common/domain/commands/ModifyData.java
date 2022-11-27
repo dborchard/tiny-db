@@ -1,7 +1,7 @@
-package edu.utdallas.davisbase.server.a_frontend.domain.commands;
+package edu.utdallas.davisbase.server.a_frontend.common.domain.commands;
 
-import edu.utdallas.davisbase.server.a_frontend.domain.clause.A_Predicate;
-import edu.utdallas.davisbase.server.a_frontend.domain.clause.C_Expression;
+import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.A_Predicate;
+import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.C_Expression;
 
 /**
  * Data for the SQL <i>update</i> statement.

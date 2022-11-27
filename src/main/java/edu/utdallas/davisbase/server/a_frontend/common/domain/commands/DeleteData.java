@@ -1,6 +1,6 @@
-package edu.utdallas.davisbase.server.a_frontend.domain.commands;
+package edu.utdallas.davisbase.server.a_frontend.common.domain.commands;
 
-import edu.utdallas.davisbase.server.a_frontend.domain.clause.A_Predicate;
+import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.A_Predicate;
 
 /**
  * Data for the SQL <i>delete</i> statement.
