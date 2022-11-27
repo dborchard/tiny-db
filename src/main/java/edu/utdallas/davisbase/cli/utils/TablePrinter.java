@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.cli.utils;
 
-import edu.utdallas.davisbase.server.query_engine.d_domain.dto.Table;
+import edu.utdallas.davisbase.server.b_query_engine.e_dto.Table;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +103,32 @@ public class TablePrinter {
         this.maxColumnWidth = maxColumnWidth;
     }
 
+    public void print(Table table) {
+        print(table.columnNames, table.rowValues);
+    }
+
+    public void print(List<String> columnNames, List<List<String>> rows) {
+        TablePrinter table = new TablePrinter();
+        table.setMaxColumnWidth(45);
+
+        for (String columnName : columnNames)
+            table.getColumns().add(new TablePrinter.Column(columnName));
+
+        for (List<String> row : rows) {
+
+            TablePrinter.Row asciiRow = new TablePrinter.Row();
+            table.getData().add(asciiRow);
+
+            for (String rowValue : row) {
+                asciiRow.getValues().add(rowValue);
+            }
+
+        }
+
+        table.calculateColumnWidth();
+        table.render();
+    }
+
     public static class Column {
 
         private String name;
@@ -130,33 +156,6 @@ public class TablePrinter {
         public String toString() {
             return "Row{" + "values=" + values + '}';
         }
-    }
-
-
-    public void print(Table table) {
-        print(table.columnNames, table.rowValues);
-    }
-
-    public void print(List<String> columnNames, List<List<String>> rows) {
-        TablePrinter table = new TablePrinter();
-        table.setMaxColumnWidth(45);
-
-        for (String columnName : columnNames)
-            table.getColumns().add(new TablePrinter.Column(columnName));
-
-        for (List<String> row : rows) {
-
-            TablePrinter.Row asciiRow = new TablePrinter.Row();
-            table.getData().add(asciiRow);
-
-            for (String rowValue : row) {
-                asciiRow.getValues().add(rowValue);
-            }
-
-        }
-
-        table.calculateColumnWidth();
-        table.render();
     }
 
 }
