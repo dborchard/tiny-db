@@ -4,7 +4,7 @@ import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.UpdateScan;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
-import edu.utdallas.davisbase.server.d_storage_engine.HeapTablePageImpl;
+import edu.utdallas.davisbase.server.d_storage_engine.HeapRecordIteratorImpl;
 import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordKey;
 import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordValueLayout;
 
@@ -19,7 +19,7 @@ import static java.sql.Types.INTEGER;
 public class TableScan implements UpdateScan {
     private Transaction tx;
     private RecordValueLayout recordValueLayout;
-    private HeapTablePageImpl rp;
+    private HeapRecordIteratorImpl rp;
     private String filename;
     private int currentSlot;
 
@@ -99,7 +99,7 @@ public class TableScan implements UpdateScan {
     public void moveToRid(RecordKey recordKey) {
         close();
         BlockId blk = new BlockId(filename, recordKey.blockNumber());
-        rp = new HeapTablePageImpl(tx, blk, recordValueLayout);
+        rp = new HeapRecordIteratorImpl(tx, blk, recordValueLayout);
         currentSlot = recordKey.slot();
     }
 
@@ -112,14 +112,14 @@ public class TableScan implements UpdateScan {
     private void moveToBlock(int blknum) {
         close();
         BlockId blk = new BlockId(filename, blknum);
-        rp = new HeapTablePageImpl(tx, blk, recordValueLayout);
+        rp = new HeapRecordIteratorImpl(tx, blk, recordValueLayout);
         currentSlot = -1;
     }
 
     private void moveToNewBlock() {
         close();
         BlockId blk = tx.append(filename);
-        rp = new HeapTablePageImpl(tx, blk, recordValueLayout);
+        rp = new HeapRecordIteratorImpl(tx, blk, recordValueLayout);
         rp.format();
         currentSlot = -1;
     }

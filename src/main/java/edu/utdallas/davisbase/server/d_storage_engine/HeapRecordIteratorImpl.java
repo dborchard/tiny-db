@@ -4,7 +4,7 @@ import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordValueLayout;
 import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordValueSchema;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.TablePage;
+import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.IRecordIterator;
 
 import static java.sql.Types.INTEGER;
 
@@ -13,13 +13,13 @@ import static java.sql.Types.INTEGER;
  *
  * @author Edward Sciore
  */
-public class HeapTablePageImpl implements TablePage {
+public class HeapRecordIteratorImpl implements IRecordIterator {
     public static final int EMPTY = 0, USED = 1;
     private Transaction tx;
     private BlockId blk;
     private RecordValueLayout recordValueLayout;
 
-    public HeapTablePageImpl(Transaction tx, BlockId blk, RecordValueLayout recordValueLayout) {
+    public HeapRecordIteratorImpl(Transaction tx, BlockId blk, RecordValueLayout recordValueLayout) {
         this.tx = tx;
         this.blk = blk;
         this.recordValueLayout = recordValueLayout;
