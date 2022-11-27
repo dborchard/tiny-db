@@ -1,8 +1,8 @@
 package edu.utdallas.davisbase;
 
 import edu.utdallas.davisbase.cli.TablePrinter;
-import edu.utdallas.davisbase.db.query_engine.SimpleDB;
-import edu.utdallas.davisbase.db.query_engine.d_dto.Table;
+import edu.utdallas.davisbase.server.query_engine.SimpleDB;
+import edu.utdallas.davisbase.server.query_engine.d_dto.Table;
 
 import java.util.Scanner;
 
