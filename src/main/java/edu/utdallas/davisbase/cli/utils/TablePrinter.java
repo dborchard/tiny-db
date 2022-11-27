@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.cli;
+package edu.utdallas.davisbase.cli.utils;
 
 import edu.utdallas.davisbase.server.query_engine.d_domain.dto.Table;
 
