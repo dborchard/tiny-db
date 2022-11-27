@@ -5,8 +5,8 @@ import edu.utdallas.davisbase.server.b_query_engine.b_stats_manager.domain.StatI
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.index.IndexInfo;
 import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.TableScan;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.TableFileLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.TableSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueSchema;
 
 import java.util.Map;
 
@@ -18,15 +18,15 @@ public class MetadataMgrTest {
         Transaction tx = db.newTx();
         MetadataMgr mdm = new MetadataMgr(true, tx);
 
-        TableSchema sch = new TableSchema();
+        RecordValueSchema sch = new RecordValueSchema();
         sch.addIntField("A");
         sch.addStringField("B", 9);
 
         // Part 1: Table Metadata
         mdm.createTable("MyTable", sch, tx);
-        TableFileLayout layout = mdm.getLayout("MyTable", tx);
+        RecordValueLayout layout = mdm.getLayout("MyTable", tx);
         int size = layout.slotSize();
-        TableSchema sch2 = layout.schema();
+        RecordValueSchema sch2 = layout.schema();
         System.out.println("MyTable has slot size " + size);
         System.out.println("Its fields are:");
         for (String fldname : sch2.fields()) {

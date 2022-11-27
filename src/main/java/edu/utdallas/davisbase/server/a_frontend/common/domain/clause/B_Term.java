@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.a_frontend.common.domain.clause;
 
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.TableSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueSchema;
 
 /**
  * A term is a comparison between two expressions.
@@ -88,7 +88,7 @@ public class B_Term {
      * @param sch the schema
      * @return true if both expressions apply to the schema
      */
-    public boolean appliesTo(TableSchema sch) {
+    public boolean appliesTo(RecordValueSchema sch) {
         return lhs.appliesTo(sch) && rhs.appliesTo(sch);
     }
 

@@ -4,6 +4,8 @@ import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.Planner;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.Plan;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.QueryPlanner;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.UpdatePlanner;
+import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.a_naive.BasicQueryPlanner;
+import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.a_naive.BasicUpdatePlanner;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.b_rule_base.BetterQueryPlanner;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.b_rule_base.BetterUpdatePlanner;
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.MetadataMgr;
@@ -48,6 +50,8 @@ public class SimpleDB {
         }
         mdm = new MetadataMgr(isnew, tx);
 
+//        QueryPlanner qp = new BasicQueryPlanner(mdm);
+//        UpdatePlanner up = new BasicUpdatePlanner(mdm);
         QueryPlanner qp = new BetterQueryPlanner(mdm);
         UpdatePlanner up = new BetterUpdatePlanner(mdm);
         planner = new Planner(qp, up);

@@ -7,7 +7,7 @@ import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.impl.
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.index.IndexInfo;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordId;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordKey;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.UpdateScan;
 
 import java.util.Map;
@@ -31,7 +31,7 @@ public class IndexRetrievalTest {
         idx.seek(new D_Constant(20));
         while (idx.next()) {
             // Use the datarid to go to the corresponding STUDENT record.
-            RecordId datarid = idx.getRecordId();
+            RecordKey datarid = idx.getRecordId();
             studentscan.moveToRid(datarid);
             System.out.println(studentscan.getString("sname"));
         }

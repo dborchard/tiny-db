@@ -5,8 +5,8 @@ import edu.utdallas.davisbase.server.b_query_engine.b_stats_manager.domain.StatI
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.table.TableMgr;
 import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.TableScan;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.TableFileLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.TableSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueSchema;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +20,7 @@ import static edu.utdallas.davisbase.server.b_query_engine.c_catalog.table.Table
  * @author Edward Sciore
  */
 public class IndexMgr {
-    private TableFileLayout layout;
+    private RecordValueLayout layout;
     private TableMgr tblmgr;
     private StatMgr statmgr;
 
@@ -34,7 +34,7 @@ public class IndexMgr {
      */
     public IndexMgr(boolean isnew, TableMgr tblmgr, StatMgr statmgr, Transaction tx) {
         if (isnew) {
-            TableSchema sch = new TableSchema();
+            RecordValueSchema sch = new RecordValueSchema();
             sch.addStringField("indexname", MAX_NAME);
             sch.addStringField("tablename", MAX_NAME);
             sch.addStringField("fieldname", MAX_NAME);
@@ -78,7 +78,7 @@ public class IndexMgr {
         while (ts.next()) if (ts.getString("tablename").equals(tblname)) {
             String idxname = ts.getString("indexname");
             String fldname = ts.getString("fieldname");
-            TableFileLayout tblLayout = tblmgr.getLayout(tblname, tx);
+            RecordValueLayout tblLayout = tblmgr.getLayout(tblname, tx);
             StatInfo tblsi = statmgr.getStatInfo(tblname, tblLayout, tx);
             IndexInfo ii = new IndexInfo(idxname, fldname, tblLayout.schema(), tx, tblsi);
             result.put(fldname, ii);

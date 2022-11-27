@@ -2,8 +2,8 @@ package edu.utdallas.davisbase.server.c_key_value_store.a_transaction.c_recovery
 
 
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.c_key_value_store.a_transaction.c_recovery_mgr.record.LogRecord;
-import edu.utdallas.davisbase.server.c_key_value_store.a_transaction.c_recovery_mgr.record.impl.*;
+import edu.utdallas.davisbase.server.c_key_value_store.a_transaction.c_recovery_mgr.log_record.LogRecord;
+import edu.utdallas.davisbase.server.c_key_value_store.a_transaction.c_recovery_mgr.log_record.impl.*;
 import edu.utdallas.davisbase.server.d_storage_engine.LogMgr;
 import edu.utdallas.davisbase.server.d_storage_engine.b_buffer_mgr.Buffer;
 import edu.utdallas.davisbase.server.d_storage_engine.b_buffer_mgr.BufferMgr;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import static edu.utdallas.davisbase.server.c_key_value_store.a_transaction.c_recovery_mgr.record.LogRecord.*;
+import static edu.utdallas.davisbase.server.c_key_value_store.a_transaction.c_recovery_mgr.log_record.LogRecord.*;
 
 
 /**

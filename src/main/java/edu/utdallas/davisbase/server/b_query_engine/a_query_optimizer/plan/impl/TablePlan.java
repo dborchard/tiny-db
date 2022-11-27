@@ -6,8 +6,8 @@ import edu.utdallas.davisbase.server.b_query_engine.c_catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.TableScan;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.TableFileLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.TableSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueSchema;
 
 /**
  * The Plan class corresponding to a table.
@@ -17,22 +17,22 @@ import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization
 public class TablePlan implements Plan {
     private String tblname;
     private Transaction tx;
-    private TableFileLayout tableFileLayout;
+    private RecordValueLayout recordValueLayout;
     private StatInfo si;
 
     public TablePlan(Transaction tx, String tblname, MetadataMgr md) {
         this.tblname = tblname;
         this.tx = tx;
-        tableFileLayout = md.getLayout(tblname, tx);
+        recordValueLayout = md.getLayout(tblname, tx);
     }
 
     public Scan open() {
-        return new TableScan(tx, tblname, tableFileLayout);
+        return new TableScan(tx, tblname, recordValueLayout);
     }
 
 
-    public TableSchema schema() {
-        return tableFileLayout.schema();
+    public RecordValueSchema schema() {
+        return recordValueLayout.schema();
     }
 
     @Override

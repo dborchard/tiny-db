@@ -4,7 +4,7 @@ import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.A_Predicate
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.UpdateScan;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordId;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordKey;
 
 /**
  * The scan class corresponding to the <i>select</i> relational
@@ -90,13 +90,13 @@ public class SelectScan implements UpdateScan {
         us.seekToHead_Insert();
     }
 
-    public RecordId getRid() {
+    public RecordKey getRid() {
         UpdateScan us = (UpdateScan) s;
         return us.getRid();
     }
 
-    public void moveToRid(RecordId recordID) {
+    public void moveToRid(RecordKey recordKey) {
         UpdateScan us = (UpdateScan) s;
-        us.moveToRid(recordID);
+        us.moveToRid(recordKey);
     }
 }

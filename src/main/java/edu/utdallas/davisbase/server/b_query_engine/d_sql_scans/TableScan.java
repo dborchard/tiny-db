@@ -2,9 +2,9 @@ package edu.utdallas.davisbase.server.b_query_engine.d_sql_scans;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.RecordPageImpl_Heap;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordId;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.TableFileLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.RecordIteratorImpl_Heap;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordKey;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueLayout;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.UpdateScan;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
 
@@ -18,12 +18,12 @@ import static java.sql.Types.INTEGER;
  */
 public class TableScan implements UpdateScan {
     private Transaction tx;
-    private TableFileLayout layout;
-    private RecordPageImpl_Heap rp;
+    private RecordValueLayout layout;
+    private RecordIteratorImpl_Heap rp;
     private String filename;
     private int currentslot;
 
-    public TableScan(Transaction tx, String tblname, TableFileLayout layout) {
+    public TableScan(Transaction tx, String tblname, RecordValueLayout layout) {
         this.tx = tx;
         this.layout = layout;
         filename = tblname + ".tbl";
@@ -98,15 +98,15 @@ public class TableScan implements UpdateScan {
         rp.delete(currentslot);
     }
 
-    public void moveToRid(RecordId rid) {
+    public void moveToRid(RecordKey rid) {
         close();
         BlockId blk = new BlockId(filename, rid.blockNumber());
-        rp = new RecordPageImpl_Heap(tx, blk, layout);
+        rp = new RecordIteratorImpl_Heap(tx, blk, layout);
         currentslot = rid.slot();
     }
 
-    public RecordId getRid() {
-        return new RecordId(rp.getBlockId().number(), currentslot);
+    public RecordKey getRid() {
+        return new RecordKey(rp.getBlockId().number(), currentslot);
     }
 
     // Private auxiliary methods
@@ -114,14 +114,14 @@ public class TableScan implements UpdateScan {
     private void moveToBlock(int blknum) {
         close();
         BlockId blk = new BlockId(filename, blknum);
-        rp = new RecordPageImpl_Heap(tx, blk, layout);
+        rp = new RecordIteratorImpl_Heap(tx, blk, layout);
         currentslot = -1;
     }
 
     private void moveToNewBlock() {
         close();
         BlockId blk = tx.append(filename);
-        rp = new RecordPageImpl_Heap(tx, blk, layout);
+        rp = new RecordIteratorImpl_Heap(tx, blk, layout);
         rp.format();
         currentslot = -1;
     }

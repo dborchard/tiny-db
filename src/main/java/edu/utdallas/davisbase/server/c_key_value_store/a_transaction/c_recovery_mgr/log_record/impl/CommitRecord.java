@@ -1,31 +1,26 @@
-package edu.utdallas.davisbase.server.c_key_value_store.a_transaction.c_recovery_mgr.record.impl;
+package edu.utdallas.davisbase.server.c_key_value_store.a_transaction.c_recovery_mgr.log_record.impl;
 
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.c_key_value_store.a_transaction.c_recovery_mgr.record.LogRecord;
+import edu.utdallas.davisbase.server.c_key_value_store.a_transaction.c_recovery_mgr.log_record.LogRecord;
 import edu.utdallas.davisbase.server.d_storage_engine.LogMgr;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.Page;
 
 /**
- * The ROLLBACK log record.
+ * The COMMIT log record
  *
  * @author Edward Sciore
  */
-public class RollbackRecord implements LogRecord {
+public class CommitRecord implements LogRecord {
     private int txnum;
 
-    /**
-     * Create a RollbackRecord object.
-     *
-     * @param txnum the ID of the specified transaction
-     */
-    public RollbackRecord(Page p) {
+    public CommitRecord(Page p) {
         int tpos = Integer.BYTES;
         txnum = p.getInt(tpos);
     }
 
     /**
-     * A static method to write a rollback record to the log.
-     * This log record contains the ROLLBACK operator,
+     * A static method to write a commit record to the log.
+     * This log record contains the COMMIT operator,
      * followed by the transaction id.
      *
      * @return the LSN of the last log value
@@ -33,13 +28,13 @@ public class RollbackRecord implements LogRecord {
     public static int writeToLog(LogMgr lm, int txnum) {
         byte[] rec = new byte[2 * Integer.BYTES];
         Page p = new Page(rec);
-        p.setInt(0, ROLLBACK);
+        p.setInt(0, COMMIT);
         p.setInt(Integer.BYTES, txnum);
         return lm.append(rec);
     }
 
     public int op() {
-        return ROLLBACK;
+        return COMMIT;
     }
 
     public int txNumber() {
@@ -47,13 +42,13 @@ public class RollbackRecord implements LogRecord {
     }
 
     /**
-     * Does nothing, because a rollback record
+     * Does nothing, because a commit record
      * contains no undo information.
      */
     public void undo(Transaction tx) {
     }
 
     public String toString() {
-        return "<ROLLBACK " + txnum + ">";
+        return "<COMMIT " + txnum + ">";
     }
 }

@@ -16,7 +16,7 @@ import static java.sql.Types.VARCHAR;
  *
  * @author Edward Sciore
  */
-public class TableSchema {
+public class RecordValueSchema {
     private final List<String> fields = new ArrayList<>();
     private final Map<String, FieldInfo> info = new HashMap<>();
 
@@ -65,7 +65,7 @@ public class TableSchema {
      * @param fldname the name of the field
      * @param sch     the other schema
      */
-    public void add(String fldname, TableSchema sch) {
+    public void add(String fldname, RecordValueSchema sch) {
         int type = sch.type(fldname);
         int length = sch.length(fldname);
         addField(fldname, type, length);
@@ -77,7 +77,7 @@ public class TableSchema {
      *
      * @param sch the other schema
      */
-    public void addAll(TableSchema sch) {
+    public void addAll(RecordValueSchema sch) {
         for (String fldname : sch.fields())
             add(fldname, sch);
     }

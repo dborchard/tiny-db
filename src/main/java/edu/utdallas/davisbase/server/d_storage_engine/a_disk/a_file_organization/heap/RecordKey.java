@@ -7,7 +7,7 @@ package edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organizatio
  *
  * @author Edward Sciore
  */
-public class RecordId {
+public class RecordKey {
     private int blknum;
     private int slot;
 
@@ -18,7 +18,7 @@ public class RecordId {
      * @param blknum the block number where the record lives
      * @param slot   the record's loction
      */
-    public RecordId(int blknum, int slot) {
+    public RecordKey(int blknum, int slot) {
         this.blknum = blknum;
         this.slot = slot;
     }
@@ -42,7 +42,7 @@ public class RecordId {
     }
 
     public boolean equals(Object obj) {
-        RecordId r = (RecordId) obj;
+        RecordKey r = (RecordKey) obj;
         return blknum == r.blknum && slot == r.slot;
     }
 

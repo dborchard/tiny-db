@@ -3,8 +3,8 @@ package edu.utdallas.davisbase.server.d_storage_engine.a_disk.b_index.hash;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.TableScan;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordId;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.TableFileLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordKey;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueLayout;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.b_index.Index;
 
 /**
@@ -18,12 +18,12 @@ public class HashIndex implements Index {
     public static int NUM_BUCKETS = 100;
     private Transaction tx;
     private String idxname;
-    private TableFileLayout layout;
+    private RecordValueLayout layout;
     private D_Constant searchkey = null;
     private TableScan ts = null;
 
 
-    public HashIndex(Transaction tx, String idxname, TableFileLayout layout) {
+    public HashIndex(Transaction tx, String idxname, RecordValueLayout layout) {
         this.tx = tx;
         this.idxname = idxname;
         this.layout = layout;
@@ -45,14 +45,14 @@ public class HashIndex implements Index {
     }
 
 
-    public RecordId getRecordId() {
+    public RecordKey getRecordId() {
         int blknum = ts.getInt("block");
         int id = ts.getInt("id");
-        return new RecordId(blknum, id);
+        return new RecordKey(blknum, id);
     }
 
 
-    public void insert(D_Constant val, RecordId rid) {
+    public void insert(D_Constant val, RecordKey rid) {
         seek(val);
         ts.seekToHead_Insert();
         ts.setInt("block", rid.blockNumber());
@@ -61,7 +61,7 @@ public class HashIndex implements Index {
     }
 
 
-    public void delete(D_Constant val, RecordId rid) {
+    public void delete(D_Constant val, RecordKey rid) {
         seek(val);
         while (next()) if (getRecordId().equals(rid)) {
             ts.delete();

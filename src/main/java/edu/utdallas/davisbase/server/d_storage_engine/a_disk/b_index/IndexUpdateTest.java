@@ -7,7 +7,7 @@ import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.impl.
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.index.IndexInfo;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordId;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordKey;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.UpdateScan;
 
 import java.util.HashMap;
@@ -38,7 +38,7 @@ public class IndexUpdateTest {
         studentscan.setInt("majorid", 30);
 
         //    Then insert a record into each of the indexes.
-        RecordId datarid = studentscan.getRid();
+        RecordKey datarid = studentscan.getRid();
         for (String fldname : indexes.keySet()) {
             D_Constant dataval = studentscan.getVal(fldname);
             Index idx = indexes.get(fldname);
@@ -51,7 +51,7 @@ public class IndexUpdateTest {
             if (studentscan.getString("sname").equals("joe")) {
 
                 // First, delete the index records for Joe.
-                RecordId joeRid = studentscan.getRid();
+                RecordKey joeRid = studentscan.getRid();
                 for (String fldname : indexes.keySet()) {
                     D_Constant dataval = studentscan.getVal(fldname);
                     Index idx = indexes.get(fldname);

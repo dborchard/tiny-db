@@ -1,9 +1,9 @@
 package edu.utdallas.davisbase.server.d_storage_engine;
 
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.IRecordPage;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.TableFileLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.TableSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.IRecordIterator;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueSchema;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
 
 import static java.sql.Types.INTEGER;
@@ -13,13 +13,13 @@ import static java.sql.Types.INTEGER;
  *
  * @author Edward Sciore
  */
-public class RecordPageImpl_Heap implements IRecordPage {
+public class RecordIteratorImpl_Heap implements IRecordIterator {
     public static final int EMPTY = 0, USED = 1;
     private Transaction tx;
     private BlockId blk;
-    private TableFileLayout layout;
+    private RecordValueLayout layout;
 
-    public RecordPageImpl_Heap(Transaction tx, BlockId blk, TableFileLayout layout) {
+    public RecordIteratorImpl_Heap(Transaction tx, BlockId blk, RecordValueLayout layout) {
         this.tx = tx;
         this.blk = blk;
         this.layout = layout;
@@ -87,7 +87,7 @@ public class RecordPageImpl_Heap implements IRecordPage {
         int slot = 0;
         while (isValidSlot(slot)) {
             tx.setInt(blk, offset(slot), EMPTY, false);
-            TableSchema sch = layout.schema();
+            RecordValueSchema sch = layout.schema();
             for (String fldname : sch.fields()) {
                 int fldpos = offset(slot) + layout.offset(fldname);
                 if (sch.type(fldname) == INTEGER)

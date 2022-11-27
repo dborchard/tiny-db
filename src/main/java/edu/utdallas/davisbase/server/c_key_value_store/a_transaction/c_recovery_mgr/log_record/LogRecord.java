@@ -1,7 +1,7 @@
-package edu.utdallas.davisbase.server.c_key_value_store.a_transaction.c_recovery_mgr.record;
+package edu.utdallas.davisbase.server.c_key_value_store.a_transaction.c_recovery_mgr.log_record;
 
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.c_key_value_store.a_transaction.c_recovery_mgr.record.impl.*;
+import edu.utdallas.davisbase.server.c_key_value_store.a_transaction.c_recovery_mgr.log_record.impl.*;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.Page;
 
 /**

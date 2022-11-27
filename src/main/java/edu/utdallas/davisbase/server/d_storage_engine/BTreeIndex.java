@@ -8,9 +8,9 @@ import edu.utdallas.davisbase.server.d_storage_engine.a_disk.b_index.btree.BTree
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.b_index.btree.BTreeLeaf;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.b_index.btree.common.BTPage;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.b_index.btree.common.DirEntry;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordId;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.TableFileLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.TableSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordKey;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueSchema;
 
 import static java.sql.Types.INTEGER;
 
@@ -21,34 +21,34 @@ import static java.sql.Types.INTEGER;
  */
 public class BTreeIndex implements Index {
     private Transaction tx;
-    private TableFileLayout dirTableFileLayout, leafTableFileLayout;
+    private RecordValueLayout dirRecordValueLayout, leafRecordValueLayout;
     private String leaftbl;
     private BTreeLeaf leaf = null;
     private BlockId rootblk;
 
 
-    public BTreeIndex(Transaction tx, String idxname, TableFileLayout leafTableFileLayout) {
+    public BTreeIndex(Transaction tx, String idxname, RecordValueLayout leafRecordValueLayout) {
         this.tx = tx;
         // deal with the leaves
         leaftbl = idxname + "leaf";
-        this.leafTableFileLayout = leafTableFileLayout;
+        this.leafRecordValueLayout = leafRecordValueLayout;
         if (tx.size(leaftbl) == 0) {
             BlockId blk = tx.append(leaftbl);
-            BTPage node = new BTPage(tx, blk, leafTableFileLayout);
+            BTPage node = new BTPage(tx, blk, leafRecordValueLayout);
             node.format(blk, -1);
         }
 
         // deal with the directory
-        TableSchema dirsch = new TableSchema();
-        dirsch.add("block", leafTableFileLayout.schema());
-        dirsch.add("dataval", leafTableFileLayout.schema());
+        RecordValueSchema dirsch = new RecordValueSchema();
+        dirsch.add("block", leafRecordValueLayout.schema());
+        dirsch.add("dataval", leafRecordValueLayout.schema());
         String dirtbl = idxname + "dir";
-        dirTableFileLayout = new TableFileLayout(dirsch);
+        dirRecordValueLayout = new RecordValueLayout(dirsch);
         rootblk = new BlockId(dirtbl, 0);
         if (tx.size(dirtbl) == 0) {
             // create new root block
             tx.append(dirtbl);
-            BTPage node = new BTPage(tx, rootblk, dirTableFileLayout);
+            BTPage node = new BTPage(tx, rootblk, dirRecordValueLayout);
             node.format(rootblk, 0);
             // insert initial directory entry
             int fldtype = dirsch.type("dataval");
@@ -73,11 +73,11 @@ public class BTreeIndex implements Index {
 
     public void seek(D_Constant searchkey) {
         close();
-        BTreeDir root = new BTreeDir(tx, rootblk, dirTableFileLayout);
+        BTreeDir root = new BTreeDir(tx, rootblk, dirRecordValueLayout);
         int blknum = root.search(searchkey);
         root.close();
         BlockId leafblk = new BlockId(leaftbl, blknum);
-        leaf = new BTreeLeaf(tx, leafblk, leafTableFileLayout, searchkey);
+        leaf = new BTreeLeaf(tx, leafblk, leafRecordValueLayout, searchkey);
     }
 
     /**
@@ -96,16 +96,16 @@ public class BTreeIndex implements Index {
      *
      * @see Index#getRecordId()
      */
-    public RecordId getRecordId() {
+    public RecordKey getRecordId() {
         return leaf.getDataRid();
     }
 
-    public void insert(D_Constant dataval, RecordId datarid) {
+    public void insert(D_Constant dataval, RecordKey datarid) {
         seek(dataval);
         DirEntry e = leaf.insert(datarid);
         leaf.close();
         if (e == null) return;
-        BTreeDir root = new BTreeDir(tx, rootblk, dirTableFileLayout);
+        BTreeDir root = new BTreeDir(tx, rootblk, dirRecordValueLayout);
         DirEntry e2 = root.insert(e);
         if (e2 != null) root.makeNewRoot(e2);
         root.close();
@@ -117,9 +117,9 @@ public class BTreeIndex implements Index {
      * the leaf page containing that record; then it
      * deletes the record from the page.
      *
-     * @see Index#delete(simpledb.d_scans.Constant, RecordId)
+     * @see Index#delete(simpledb.d_scans.Constant, RecordKey)
      */
-    public void delete(D_Constant dataval, RecordId datarid) {
+    public void delete(D_Constant dataval, RecordKey datarid) {
         seek(dataval);
         leaf.delete(datarid);
         leaf.close();

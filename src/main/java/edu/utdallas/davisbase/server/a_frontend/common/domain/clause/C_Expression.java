@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.a_frontend.common.domain.clause;
 
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
-import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.TableSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueSchema;
 
 /**
  * The interface corresponding to SQL expressions.
@@ -69,7 +69,7 @@ public class C_Expression {
      * @param sch the schema
      * @return true if all fields in the expression are in the schema
      */
-    public boolean appliesTo(TableSchema sch) {
+    public boolean appliesTo(RecordValueSchema sch) {
         return (val != null) ? true : sch.hasField(fldname);
     }
 
