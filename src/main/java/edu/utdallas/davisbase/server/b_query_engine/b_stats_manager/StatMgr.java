@@ -2,6 +2,7 @@ package edu.utdallas.davisbase.server.b_query_engine.b_stats_manager;
 
 import edu.utdallas.davisbase.server.b_query_engine.b_stats_manager.domain.StatInfo;
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.table.TableMgr;
+import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.TableScan;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.TableFileLayout;
 
@@ -31,9 +32,27 @@ public class StatMgr {
 
     private synchronized void refreshStatistics(Transaction tx) {
         tablestats = new HashMap<String, StatInfo>();
+        numcalls = 0;
+        TableFileLayout tcatlayout = tblMgr.getLayout("tblcat", tx);
+        TableScan tcat = new TableScan(tx, "tblcat", tcatlayout);
+        while (tcat.next()) {
+            String tblname = tcat.getString("tblname");
+            TableFileLayout layout = tblMgr.getLayout(tblname, tx);
+            StatInfo si = calcTableStats(tblname, layout, tx);
+            tablestats.put(tblname, si);
+        }
+        tcat.close();
     }
 
     private synchronized StatInfo calcTableStats(String tblname, TableFileLayout layout, Transaction tx) {
-        return null;
+        int numRecs = 0;
+        int numblocks = 0;
+        TableScan ts = new TableScan(tx, tblname, layout);
+        while (ts.next()) {
+            numRecs++;
+            numblocks = ts.getRid().blockNumber() + 1;
+        }
+        ts.close();
+        return new StatInfo(numblocks, numRecs);
     }
 }

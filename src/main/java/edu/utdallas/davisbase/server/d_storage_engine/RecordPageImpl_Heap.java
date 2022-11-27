@@ -13,16 +13,17 @@ import static java.sql.Types.INTEGER;
  *
  * @author Edward Sciore
  */
-public class HeapRecordPageImpl implements IRecordPage {
+public class RecordPageImpl_Heap implements IRecordPage {
     public static final int EMPTY = 0, USED = 1;
     private Transaction tx;
     private BlockId blk;
     private TableFileLayout layout;
 
-    public HeapRecordPageImpl(Transaction tx, BlockId blk, TableFileLayout layout) {
+    public RecordPageImpl_Heap(Transaction tx, BlockId blk, TableFileLayout layout) {
         this.tx = tx;
         this.blk = blk;
         this.layout = layout;
+        tx.pin(blk);
     }
 
     /**
@@ -73,7 +74,6 @@ public class HeapRecordPageImpl implements IRecordPage {
         tx.setString(blk, fldpos, val, true);
     }
 
-
     public void delete(int slot) {
         setFlag(slot, EMPTY);
     }
@@ -90,8 +90,10 @@ public class HeapRecordPageImpl implements IRecordPage {
             TableSchema sch = layout.schema();
             for (String fldname : sch.fields()) {
                 int fldpos = offset(slot) + layout.offset(fldname);
-                if (sch.type(fldname) == INTEGER) tx.setInt(blk, fldpos, 0, false);
-                else tx.setString(blk, fldpos, "", false);
+                if (sch.type(fldname) == INTEGER)
+                    tx.setInt(blk, fldpos, 0, false);
+                else
+                    tx.setString(blk, fldpos, "", false);
             }
             slot++;
         }
@@ -103,7 +105,8 @@ public class HeapRecordPageImpl implements IRecordPage {
 
     public int insertAfter(int slot) {
         int newslot = searchAfter(slot, EMPTY);
-        if (newslot >= 0) setFlag(newslot, USED);
+        if (newslot >= 0)
+            setFlag(newslot, USED);
         return newslot;
     }
 
@@ -120,11 +123,11 @@ public class HeapRecordPageImpl implements IRecordPage {
         tx.setInt(blk, offset(slot), flag, true);
     }
 
-
     private int searchAfter(int slot, int flag) {
         slot++;
         while (isValidSlot(slot)) {
-            if (tx.getInt(blk, offset(slot)) == flag) return slot;
+            if (tx.getInt(blk, offset(slot)) == flag)
+                return slot;
             slot++;
         }
         return -1;

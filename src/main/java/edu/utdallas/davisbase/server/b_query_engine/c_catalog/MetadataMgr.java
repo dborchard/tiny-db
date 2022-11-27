@@ -43,3 +43,4 @@ public class MetadataMgr {
         return statmgr.getStatInfo(tblname, layout, tx);
     }
 }
+//DONE

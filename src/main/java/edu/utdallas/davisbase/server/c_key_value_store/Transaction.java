@@ -41,7 +41,6 @@ public class Transaction {
 
     public void commit() {
         recoveryMgr.commit();
-        System.out.println("transaction " + txnum + " committed");
         concurMgr.release();
         mybuffers.unpinAll();
     }
@@ -198,3 +197,4 @@ public class Transaction {
         return nextTxNum;
     }
 }
+//DONE
