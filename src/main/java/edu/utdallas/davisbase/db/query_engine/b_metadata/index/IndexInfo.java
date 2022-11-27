@@ -4,7 +4,7 @@ import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
 import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.Index;
-import edu.utdallas.davisbase.db.storage_engine.BTreeIndex;
+import edu.utdallas.davisbase.db.storage_engine.IndexBTreePage;
 
 import static java.sql.Types.INTEGER;
 
@@ -35,7 +35,7 @@ public class IndexInfo {
 
 
     public Index open() {
-        return new BTreeIndex(tx, idxname, idxTableFileLayout);
+        return new IndexBTreePage(tx, idxname, idxTableFileLayout);
     }
 
 

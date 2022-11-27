@@ -19,7 +19,7 @@ import static java.sql.Types.INTEGER;
  *
  * @author Edward Sciore
  */
-public class BTreeIndex implements Index {
+public class IndexBTreePage implements Index {
     private Transaction tx;
     private TableFileLayout dirTableFileLayout, leafTableFileLayout;
     private String leaftbl;
@@ -27,7 +27,7 @@ public class BTreeIndex implements Index {
     private BlockId rootblk;
 
 
-    public BTreeIndex(Transaction tx, String idxname, TableFileLayout leafTableFileLayout) {
+    public IndexBTreePage(Transaction tx, String idxname, TableFileLayout leafTableFileLayout) {
         this.tx = tx;
         // deal with the leaves
         leaftbl = idxname + "leaf";

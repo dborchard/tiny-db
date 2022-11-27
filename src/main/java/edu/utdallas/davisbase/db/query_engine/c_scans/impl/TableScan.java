@@ -4,7 +4,7 @@ import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 import edu.utdallas.davisbase.db.query_engine.c_scans.UpdateScan;
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.RecordId;
-import edu.utdallas.davisbase.db.storage_engine.RecordPage;
+import edu.utdallas.davisbase.db.storage_engine.DataRecordPage;
 import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
 import edu.utdallas.davisbase.db.storage_engine.d_file.BlockId;
 
@@ -19,7 +19,7 @@ import static java.sql.Types.INTEGER;
 public class TableScan implements UpdateScan {
     private Transaction tx;
     private TableFileLayout tableFileLayout;
-    private RecordPage rp;
+    private DataRecordPage rp;
     private String filename;
     private int currentSlot;
 
@@ -99,7 +99,7 @@ public class TableScan implements UpdateScan {
     public void moveToRid(RecordId recordID) {
         close();
         BlockId blk = new BlockId(filename, recordID.blockNumber());
-        rp = new RecordPage(tx, blk, tableFileLayout);
+        rp = new DataRecordPage(tx, blk, tableFileLayout);
         currentSlot = recordID.slot();
     }
 
@@ -112,14 +112,14 @@ public class TableScan implements UpdateScan {
     private void moveToBlock(int blknum) {
         close();
         BlockId blk = new BlockId(filename, blknum);
-        rp = new RecordPage(tx, blk, tableFileLayout);
+        rp = new DataRecordPage(tx, blk, tableFileLayout);
         currentSlot = -1;
     }
 
     private void moveToNewBlock() {
         close();
         BlockId blk = tx.append(filename);
-        rp = new RecordPage(tx, blk, tableFileLayout);
+        rp = new DataRecordPage(tx, blk, tableFileLayout);
         rp.format();
         currentSlot = -1;
     }

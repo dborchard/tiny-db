@@ -13,13 +13,13 @@ import static java.sql.Types.INTEGER;
  * Store a record at a given location in a block. 
  * @author Edward Sciore
  */
-public class RecordPage {
+public class DataRecordPage {
    public static final int EMPTY = 0, USED = 1;
    private Transaction tx;
    private BlockId blk;
    private TableFileLayout tableFileLayout;
 
-   public RecordPage(Transaction tx, BlockId blk, TableFileLayout tableFileLayout) {
+   public DataRecordPage(Transaction tx, BlockId blk, TableFileLayout tableFileLayout) {
       this.tx = tx;
       this.blk = blk;
       this.tableFileLayout = tableFileLayout;
