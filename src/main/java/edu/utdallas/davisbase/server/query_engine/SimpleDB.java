@@ -1,14 +1,14 @@
 package edu.utdallas.davisbase.server.query_engine;
 
-import edu.utdallas.davisbase.server.query_engine.a_planner.Planner;
-import edu.utdallas.davisbase.server.query_engine.a_planner.plan.Plan;
-import edu.utdallas.davisbase.server.query_engine.a_planner.planner.QueryPlanner;
-import edu.utdallas.davisbase.server.query_engine.a_planner.planner.UpdatePlanner;
-import edu.utdallas.davisbase.server.query_engine.a_planner.planner.impl.BetterQueryPlanner;
-import edu.utdallas.davisbase.server.query_engine.a_planner.planner.impl.BetterUpdatePlanner;
+import edu.utdallas.davisbase.server.query_engine.a_query_optimizer.Planner;
+import edu.utdallas.davisbase.server.query_engine.a_query_optimizer.plan.Plan;
+import edu.utdallas.davisbase.server.query_engine.a_query_optimizer.planner.QueryPlanner;
+import edu.utdallas.davisbase.server.query_engine.a_query_optimizer.planner.UpdatePlanner;
+import edu.utdallas.davisbase.server.query_engine.a_query_optimizer.planner.b_rule_base.BetterQueryPlanner;
+import edu.utdallas.davisbase.server.query_engine.a_query_optimizer.planner.b_rule_base.BetterUpdatePlanner;
 import edu.utdallas.davisbase.server.query_engine.b_metadata.MetadataMgr;
 import edu.utdallas.davisbase.server.storage_engine.a_scans.Scan;
-import edu.utdallas.davisbase.server.query_engine.d_dto.Table;
+import edu.utdallas.davisbase.server.query_engine.d_domain.dto.Table;
 import edu.utdallas.davisbase.server.storage_engine.Transaction;
 import edu.utdallas.davisbase.server.storage_engine.e_file.FileMgr;
 

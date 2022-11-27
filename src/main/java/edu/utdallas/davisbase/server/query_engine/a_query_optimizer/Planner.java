@@ -1,10 +1,10 @@
-package edu.utdallas.davisbase.server.query_engine.a_planner;
+package edu.utdallas.davisbase.server.query_engine.a_query_optimizer;
 
 import edu.utdallas.davisbase.server.frontend.domain.commands.*;
 import edu.utdallas.davisbase.server.frontend.impl.derby.Parser;
-import edu.utdallas.davisbase.server.query_engine.a_planner.plan.Plan;
-import edu.utdallas.davisbase.server.query_engine.a_planner.planner.QueryPlanner;
-import edu.utdallas.davisbase.server.query_engine.a_planner.planner.UpdatePlanner;
+import edu.utdallas.davisbase.server.query_engine.a_query_optimizer.plan.Plan;
+import edu.utdallas.davisbase.server.query_engine.a_query_optimizer.planner.QueryPlanner;
+import edu.utdallas.davisbase.server.query_engine.a_query_optimizer.planner.UpdatePlanner;
 import edu.utdallas.davisbase.server.storage_engine.Transaction;
 
 

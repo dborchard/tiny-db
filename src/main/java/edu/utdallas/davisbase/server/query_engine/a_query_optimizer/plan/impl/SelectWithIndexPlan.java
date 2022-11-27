@@ -1,7 +1,7 @@
-package edu.utdallas.davisbase.server.query_engine.a_planner.plan.impl;
+package edu.utdallas.davisbase.server.query_engine.a_query_optimizer.plan.impl;
 
 import edu.utdallas.davisbase.server.frontend.domain.clause.D_Constant;
-import edu.utdallas.davisbase.server.query_engine.a_planner.plan.Plan;
+import edu.utdallas.davisbase.server.query_engine.a_query_optimizer.plan.Plan;
 import edu.utdallas.davisbase.server.query_engine.b_metadata.index.IndexInfo;
 import edu.utdallas.davisbase.server.storage_engine.a_scans.Scan;
 import edu.utdallas.davisbase.server.query_engine.c_sql_scans.SelectUsingIndexScan;
@@ -37,5 +37,10 @@ public class SelectWithIndexPlan implements Plan {
 
     public TableSchema schema() {
         return p.schema();
+    }
+
+    @Override
+    public int blocksAccessed() {
+        return ii.blocksAccessed() + ii.recordsOutput();
     }
 }

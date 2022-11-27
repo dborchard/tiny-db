@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.query_engine.d_dto;
+package edu.utdallas.davisbase.server.query_engine.d_domain.dto;
 
 import java.util.List;
 

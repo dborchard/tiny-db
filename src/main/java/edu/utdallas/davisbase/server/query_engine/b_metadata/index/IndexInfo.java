@@ -1,10 +1,11 @@
 package edu.utdallas.davisbase.server.query_engine.b_metadata.index;
 
+import edu.utdallas.davisbase.server.query_engine.d_domain.domain.StatInfo;
+import edu.utdallas.davisbase.server.storage_engine.Index_BTree;
+import edu.utdallas.davisbase.server.storage_engine.Transaction;
 import edu.utdallas.davisbase.server.storage_engine.b_io.data.heap.TableFileLayout;
 import edu.utdallas.davisbase.server.storage_engine.b_io.data.heap.TableSchema;
-import edu.utdallas.davisbase.server.storage_engine.Transaction;
 import edu.utdallas.davisbase.server.storage_engine.b_io.index.Index;
-import edu.utdallas.davisbase.server.storage_engine.Index_BTree;
 
 import static java.sql.Types.INTEGER;
 
@@ -23,6 +24,7 @@ public class IndexInfo {
     private Transaction tx;
     private TableSchema tblTableSchema;
     private TableFileLayout idxTableFileLayout;
+    private StatInfo si;
 
 
     public IndexInfo(String idxname, String fldname, TableSchema tblTableSchema, Transaction tx) {
@@ -50,5 +52,13 @@ public class IndexInfo {
             sch.addStringField("dataval", fldlen);
         }
         return new TableFileLayout(sch);
+    }
+
+    public int blocksAccessed() {
+        return 0;
+    }
+
+    public int recordsOutput() {
+        return si.recordsOutput() / si.distinctValues(fldname);
     }
 }
