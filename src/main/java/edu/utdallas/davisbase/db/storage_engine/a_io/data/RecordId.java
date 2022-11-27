@@ -6,7 +6,7 @@ package edu.utdallas.davisbase.db.storage_engine.a_io.data;
  * and the location of the record in that block.
  * @author Edward Sciore
  */
-public class RID {
+public class RecordId {
 	private int blknum;
 	private int slot;
 
@@ -16,7 +16,7 @@ public class RID {
 	 * @param blknum the block number where the record lives
 	 * @param slot the record's loction
 	 */
-	public RID(int blknum, int slot) {
+	public RecordId(int blknum, int slot) {
 		this.blknum = blknum;
 		this.slot   = slot;
 	}
@@ -38,7 +38,7 @@ public class RID {
 	}
 
 	public boolean equals(Object obj) {
-		RID r = (RID) obj;
+		RecordId r = (RecordId) obj;
 		return blknum == r.blknum && slot==r.slot;
 	}
 

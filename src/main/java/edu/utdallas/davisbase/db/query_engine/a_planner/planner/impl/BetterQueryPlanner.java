@@ -6,7 +6,7 @@ import edu.utdallas.davisbase.db.query_engine.a_planner.plan.impl.SelectPlan;
 import edu.utdallas.davisbase.db.query_engine.a_planner.plan.impl.SelectWithIndexPlan;
 import edu.utdallas.davisbase.db.query_engine.b_metadata.MetadataMgr;
 import edu.utdallas.davisbase.db.query_engine.b_metadata.index.IndexInfo;
-import edu.utdallas.davisbase.db.storage_engine.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
 import edu.utdallas.davisbase.db.query_engine.a_planner.plan.Plan;
 import edu.utdallas.davisbase.db.query_engine.a_planner.plan.impl.TablePlan;
 import edu.utdallas.davisbase.db.query_engine.a_planner.planner.QueryPlanner;

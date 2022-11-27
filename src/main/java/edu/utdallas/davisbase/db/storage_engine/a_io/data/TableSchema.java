@@ -17,8 +17,8 @@ import static java.sql.Types.VARCHAR;
  *
  */
 public class TableSchema {
-   private List<String> fields = new ArrayList<>();
-   private Map<String,FieldInfo> info = new HashMap<>();
+   private final List<String> fields = new ArrayList<>();
+   private final Map<String,FieldInfo> info = new HashMap<>();
    
    /**
     * Add a field to the schema having a specified

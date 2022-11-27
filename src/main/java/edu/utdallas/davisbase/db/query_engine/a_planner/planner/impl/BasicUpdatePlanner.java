@@ -8,7 +8,7 @@ import edu.utdallas.davisbase.db.query_engine.a_planner.plan.impl.TablePlan;
 import edu.utdallas.davisbase.db.query_engine.a_planner.planner.UpdatePlanner;
 import edu.utdallas.davisbase.db.query_engine.b_metadata.MetadataMgr;
 import edu.utdallas.davisbase.db.query_engine.c_scans.UpdateScan;
-import edu.utdallas.davisbase.db.storage_engine.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
 
 import java.util.Iterator;
 

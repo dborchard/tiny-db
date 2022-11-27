@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.db.query_engine.c_scans;
 
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.RID;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.RecordId;
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 
 /**
@@ -43,12 +43,12 @@ public interface UpdateScan extends Scan {
     * Return the id of the current record.
     * @return the id of the current record
     */
-   public RID getRid();
+   public RecordId getRid();
    
    /**
     * Position the scan so that the current record has
     * the specified id.
-    * @param rid the id of the desired record
+    * @param recordID the id of the desired record
     */
-   public void moveToRid(RID rid);
+   public void moveToRid(RecordId recordID);
 }

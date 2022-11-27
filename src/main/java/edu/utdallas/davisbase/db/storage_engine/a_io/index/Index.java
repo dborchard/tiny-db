@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.db.storage_engine.a_io.index;
 
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.RID;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.RecordId;
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 
 /**
@@ -29,7 +29,7 @@ public interface Index {
     * Returns the dataRID value stored in the current index record. 
     * @return the dataRID stored in the current index record.
     */
-   public RID getDataRid();
+   public RecordId getDataRid();
    
    /**
     * Inserts an index record having the specified
@@ -37,7 +37,7 @@ public interface Index {
     * @param dataval the dataval in the new index record.
     * @param datarid the dataRID in the new index record.
     */
-   public void    insert(D_Constant dataval, RID datarid);
+   public void    insert(D_Constant dataval, RecordId datarid);
    
    /**
     * Deletes the index record having the specified
@@ -45,7 +45,7 @@ public interface Index {
     * @param dataval the dataval of the deleted index record
     * @param datarid the dataRID of the deleted index record
     */
-   public void    delete(D_Constant dataval, RID datarid);
+   public void    delete(D_Constant dataval, RecordId datarid);
    
    /**
     * Closes the index.

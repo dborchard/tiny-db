@@ -2,9 +2,9 @@ package edu.utdallas.davisbase.db.query_engine.b_metadata.index;
 
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
-import edu.utdallas.davisbase.db.storage_engine.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.Index;
-import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.BTreeIndex;
+import edu.utdallas.davisbase.db.storage_engine.BTreeIndex;
 
 import static java.sql.Types.INTEGER;
 

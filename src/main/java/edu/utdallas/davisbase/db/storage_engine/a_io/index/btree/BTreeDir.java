@@ -1,10 +1,10 @@
 package edu.utdallas.davisbase.db.storage_engine.a_io.index.btree;
 
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
-import edu.utdallas.davisbase.db.storage_engine.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.common.BTPage;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.common.DirEntry;
-import edu.utdallas.davisbase.db.storage_engine.c_file.BlockId;
+import edu.utdallas.davisbase.db.storage_engine.d_file.BlockId;
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 
 /**
@@ -24,7 +24,7 @@ public class BTreeDir {
     * @param tableFileLayout the metadata of the B-tree directory file
     * @param tx the calling transaction
     */
-   BTreeDir(Transaction tx, BlockId blk, TableFileLayout tableFileLayout) {
+   public BTreeDir(Transaction tx, BlockId blk, TableFileLayout tableFileLayout) {
       this.tx = tx;
       this.tableFileLayout = tableFileLayout;
       contents = new BTPage(tx, blk, tableFileLayout);

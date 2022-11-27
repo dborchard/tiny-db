@@ -4,7 +4,8 @@ package edu.utdallas.davisbase.db.storage_engine;
 
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
-import edu.utdallas.davisbase.db.storage_engine.c_file.BlockId;
+import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.d_file.BlockId;
 
 import static java.sql.Types.INTEGER;
 

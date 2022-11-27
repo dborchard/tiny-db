@@ -2,7 +2,7 @@ package edu.utdallas.davisbase.db.query_engine.c_scans.impl;
 
 import edu.utdallas.davisbase.db.query_engine.c_scans.Scan;
 import edu.utdallas.davisbase.db.query_engine.c_scans.UpdateScan;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.RID;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.RecordId;
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 import edu.utdallas.davisbase.db.frontend.domain.clause.A_Predicate;
 
@@ -89,13 +89,13 @@ public class SelectScan implements UpdateScan {
 		us.seekToHead_Update();
 	}
 
-	public RID getRid() {
+	public RecordId getRid() {
 		UpdateScan us = (UpdateScan) s;
 		return us.getRid();
 	}
 
-	public void moveToRid(RID rid) {
+	public void moveToRid(RecordId recordID) {
 		UpdateScan us = (UpdateScan) s;
-		us.moveToRid(rid);
+		us.moveToRid(recordID);
 	}
 }

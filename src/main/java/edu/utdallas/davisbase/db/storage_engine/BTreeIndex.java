@@ -1,14 +1,16 @@
-package edu.utdallas.davisbase.db.storage_engine.a_io.index.btree;
+package edu.utdallas.davisbase.db.storage_engine;
 
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.RID;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.RecordId;
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
-import edu.utdallas.davisbase.db.storage_engine.Transaction;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.Index;
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
+import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.BTreeDir;
+import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.BTreeLeaf;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.common.BTPage;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.common.DirEntry;
-import edu.utdallas.davisbase.db.storage_engine.c_file.BlockId;
+import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.d_file.BlockId;
 
 import static java.sql.Types.INTEGER;
 
@@ -82,12 +84,12 @@ public class BTreeIndex implements Index {
      *
      * @see Index#getDataRid()
      */
-    public RID getDataRid() {
+    public RecordId getDataRid() {
         return leaf.getDataRid();
     }
 
 
-    public void insert(D_Constant dataval, RID datarid) {
+    public void insert(D_Constant dataval, RecordId datarid) {
         seek(dataval);
         DirEntry e = leaf.insert(datarid);
         leaf.close();
@@ -104,9 +106,9 @@ public class BTreeIndex implements Index {
      * the leaf page containing that record; then it
      * deletes the record from the page.
      *
-     * @see Index#delete(simpledb.d_scans.Constant, RID)
+     * @see Index#delete(simpledb.d_scans.Constant, RecordId)
      */
-    public void delete(D_Constant dataval, RID datarid) {
+    public void delete(D_Constant dataval, RecordId datarid) {
         seek(dataval);
         leaf.delete(datarid);
         leaf.close();

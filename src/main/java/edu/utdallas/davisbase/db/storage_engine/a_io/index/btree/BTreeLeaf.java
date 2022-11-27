@@ -1,11 +1,11 @@
 package edu.utdallas.davisbase.db.storage_engine.a_io.index.btree;
 
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.RID;
-import edu.utdallas.davisbase.db.storage_engine.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.RecordId;
+import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.common.BTPage;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.common.DirEntry;
-import edu.utdallas.davisbase.db.storage_engine.c_file.BlockId;
+import edu.utdallas.davisbase.db.storage_engine.d_file.BlockId;
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 
 /**
@@ -65,7 +65,7 @@ public class BTreeLeaf {
     * Returns the dataRID value of the current leaf record.
     * @return the dataRID of the current record
     */
-   public RID getDataRid() {
+   public RecordId getDataRid() {
       return contents.getDataRid(currentslot);
    }
 
@@ -73,7 +73,7 @@ public class BTreeLeaf {
     * Deletes the leaf record having the specified dataRID
     * @param datarid the dataRId whose record is to be deleted
     */
-   public void delete(RID datarid) {
+   public void delete(RecordId datarid) {
       while(next())
          if(getDataRid().equals(datarid)) {
             contents.delete(currentslot);
@@ -94,7 +94,7 @@ public class BTreeLeaf {
     * @param datarid the dataRID value of the new record
     * @return the directory entry of the newly-split page, if one exists.
     */
-   public DirEntry insert(RID datarid) {
+   public DirEntry insert(RecordId datarid) {
       if (contents.getFlag() >= 0 && contents.getDataVal(0).compareTo(searchkey) > 0) {
          D_Constant firstval = contents.getDataVal(0);
          BlockId newblk = contents.split(0, contents.getFlag());

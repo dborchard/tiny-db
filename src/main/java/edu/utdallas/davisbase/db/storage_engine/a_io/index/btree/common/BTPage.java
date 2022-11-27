@@ -1,10 +1,10 @@
 package edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.common;
 
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.RID;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.RecordId;
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
-import edu.utdallas.davisbase.db.storage_engine.Transaction;
-import edu.utdallas.davisbase.db.storage_engine.c_file.BlockId;
+import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.d_file.BlockId;
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 
 import static java.sql.Types.INTEGER;
@@ -168,21 +168,21 @@ public class BTPage {
     * @param slot the slot of the desired index record
     * @return the dataRID value store at that slot
     */
-   public RID getDataRid(int slot) {
-      return new RID(getInt(slot, "block"), getInt(slot, "id"));
+   public RecordId getDataRid(int slot) {
+      return new RecordId(getInt(slot, "block"), getInt(slot, "id"));
    }
    
    /**
     * Insert a leaf index record at the specified slot.
     * @param slot the slot of the desired index record
     * @param val the new dataval
-    * @param rid the new dataRID
+    * @param recordID the new dataRID
     */
-   public void insertLeaf(int slot, D_Constant val, RID rid) {
+   public void insertLeaf(int slot, D_Constant val, RecordId recordID) {
       insert(slot);
       setVal(slot, "dataval", val);
-      setInt(slot, "block", rid.blockNumber());
-      setInt(slot, "id", rid.slot());
+      setInt(slot, "block", recordID.blockNumber());
+      setInt(slot, "id", recordID.slot());
    }
    
    /**

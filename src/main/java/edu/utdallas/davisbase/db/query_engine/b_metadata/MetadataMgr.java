@@ -4,7 +4,7 @@ import edu.utdallas.davisbase.db.query_engine.b_metadata.index.IndexInfo;
 import edu.utdallas.davisbase.db.query_engine.b_metadata.index.IndexMgr;
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
-import edu.utdallas.davisbase.db.storage_engine.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
 import edu.utdallas.davisbase.db.query_engine.b_metadata.table.TableMgr;
 
 import java.util.Map;

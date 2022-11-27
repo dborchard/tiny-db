@@ -3,10 +3,10 @@ package edu.utdallas.davisbase.db.query_engine.c_scans.impl;
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 import edu.utdallas.davisbase.db.query_engine.c_scans.UpdateScan;
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.RID;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.RecordId;
 import edu.utdallas.davisbase.db.storage_engine.RecordPage;
-import edu.utdallas.davisbase.db.storage_engine.Transaction;
-import edu.utdallas.davisbase.db.storage_engine.c_file.BlockId;
+import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.d_file.BlockId;
 
 import static java.sql.Types.INTEGER;
 
@@ -96,15 +96,15 @@ public class TableScan implements UpdateScan {
         rp.delete(currentSlot);
     }
 
-    public void moveToRid(RID rid) {
+    public void moveToRid(RecordId recordID) {
         close();
-        BlockId blk = new BlockId(filename, rid.blockNumber());
+        BlockId blk = new BlockId(filename, recordID.blockNumber());
         rp = new RecordPage(tx, blk, tableFileLayout);
-        currentSlot = rid.slot();
+        currentSlot = recordID.slot();
     }
 
-    public RID getRid() {
-        return new RID(rp.block().number(), currentSlot);
+    public RecordId getRid() {
+        return new RecordId(rp.block().number(), currentSlot);
     }
 
     // Private auxiliary methods
