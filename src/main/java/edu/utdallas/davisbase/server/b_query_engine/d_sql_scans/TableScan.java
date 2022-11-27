@@ -1,12 +1,12 @@
-package edu.utdallas.davisbase.server.d_storage_engine;
+package edu.utdallas.davisbase.server.b_query_engine.d_sql_scans;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.UpdateScan;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.HeapTablePageImpl;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordId;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.TableFileLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.HeapTablePageImpl;
+import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordKey;
+import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordValueLayout;
 
 import static java.sql.Types.INTEGER;
 
@@ -16,16 +16,16 @@ import static java.sql.Types.INTEGER;
  *
  * @author sciore
  */
-public class TableDataScan implements UpdateScan {
+public class TableScan implements UpdateScan {
     private Transaction tx;
-    private TableFileLayout tableFileLayout;
+    private RecordValueLayout recordValueLayout;
     private HeapTablePageImpl rp;
     private String filename;
     private int currentSlot;
 
-    public TableDataScan(Transaction tx, String tblname, TableFileLayout tableFileLayout) {
+    public TableScan(Transaction tx, String tblname, RecordValueLayout recordValueLayout) {
         this.tx = tx;
-        this.tableFileLayout = tableFileLayout;
+        this.recordValueLayout = recordValueLayout;
         filename = tblname + ".tbl";
         if (tx.size(filename) == 0) moveToNewBlock();
         else moveToBlock(0);
@@ -56,12 +56,12 @@ public class TableDataScan implements UpdateScan {
     }
 
     public D_Constant getVal(String fldname) {
-        if (tableFileLayout.schema().type(fldname) == INTEGER) return new D_Constant(getInt(fldname));
+        if (recordValueLayout.schema().type(fldname) == INTEGER) return new D_Constant(getInt(fldname));
         else return new D_Constant(getString(fldname));
     }
 
     public boolean hasField(String fldname) {
-        return tableFileLayout.schema().hasField(fldname);
+        return recordValueLayout.schema().hasField(fldname);
     }
 
     public void close() {
@@ -79,11 +79,11 @@ public class TableDataScan implements UpdateScan {
     }
 
     public void setVal(String fldname, D_Constant val) {
-        if (tableFileLayout.schema().type(fldname) == INTEGER) setInt(fldname, val.asInt());
+        if (recordValueLayout.schema().type(fldname) == INTEGER) setInt(fldname, val.asInt());
         else setString(fldname, val.asString());
     }
 
-    public void seekToHead_Update() {
+    public void seekToHead_Insert() {
         currentSlot = rp.insertAfter(currentSlot);
         while (currentSlot < 0) {
             if (atLastBlock()) moveToNewBlock();
@@ -96,15 +96,15 @@ public class TableDataScan implements UpdateScan {
         rp.delete(currentSlot);
     }
 
-    public void moveToRid(RecordId recordID) {
+    public void moveToRid(RecordKey recordKey) {
         close();
-        BlockId blk = new BlockId(filename, recordID.blockNumber());
-        rp = new HeapTablePageImpl(tx, blk, tableFileLayout);
-        currentSlot = recordID.slot();
+        BlockId blk = new BlockId(filename, recordKey.blockNumber());
+        rp = new HeapTablePageImpl(tx, blk, recordValueLayout);
+        currentSlot = recordKey.slot();
     }
 
-    public RecordId getRid() {
-        return new RecordId(rp.getBlockId().number(), currentSlot);
+    public RecordKey getRid() {
+        return new RecordKey(rp.getBlockId().number(), currentSlot);
     }
 
     // Private auxiliary methods
@@ -112,14 +112,14 @@ public class TableDataScan implements UpdateScan {
     private void moveToBlock(int blknum) {
         close();
         BlockId blk = new BlockId(filename, blknum);
-        rp = new HeapTablePageImpl(tx, blk, tableFileLayout);
+        rp = new HeapTablePageImpl(tx, blk, recordValueLayout);
         currentSlot = -1;
     }
 
     private void moveToNewBlock() {
         close();
         BlockId blk = tx.append(filename);
-        rp = new HeapTablePageImpl(tx, blk, tableFileLayout);
+        rp = new HeapTablePageImpl(tx, blk, recordValueLayout);
         rp.format();
         currentSlot = -1;
     }

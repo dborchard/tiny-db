@@ -5,8 +5,8 @@ import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
 import edu.utdallas.davisbase.server.d_storage_engine.b_index.btree.common.BTPage;
 import edu.utdallas.davisbase.server.d_storage_engine.b_index.btree.common.DirEntry;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordId;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.TableFileLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordKey;
+import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordValueLayout;
 
 /**
  * An object that holds the contents of a B-tree leaf block.
@@ -15,7 +15,7 @@ import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.T
  */
 public class BTreeLeaf {
     private Transaction tx;
-    private TableFileLayout tableFileLayout;
+    private RecordValueLayout recordValueLayout;
     private D_Constant searchkey;
     private BTPage contents;
     private int currentslot;
@@ -27,15 +27,15 @@ public class BTreeLeaf {
      * having the specified search key (if any).
      *
      * @param blk             a reference to the disk block
-     * @param tableFileLayout the metadata of the B-tree leaf file
+     * @param recordValueLayout the metadata of the B-tree leaf file
      * @param searchkey       the search key value
      * @param tx              the calling transaction
      */
-    public BTreeLeaf(Transaction tx, BlockId blk, TableFileLayout tableFileLayout, D_Constant searchkey) {
+    public BTreeLeaf(Transaction tx, BlockId blk, RecordValueLayout recordValueLayout, D_Constant searchkey) {
         this.tx = tx;
-        this.tableFileLayout = tableFileLayout;
+        this.recordValueLayout = recordValueLayout;
         this.searchkey = searchkey;
-        contents = new BTPage(tx, blk, tableFileLayout);
+        contents = new BTPage(tx, blk, recordValueLayout);
         currentslot = contents.findSlotBefore(searchkey);
         filename = blk.fileName();
     }
@@ -69,7 +69,7 @@ public class BTreeLeaf {
      *
      * @return the dataRID of the current record
      */
-    public RecordId getDataRid() {
+    public RecordKey getDataRid() {
         return contents.getDataRid(currentslot);
     }
 
@@ -78,7 +78,7 @@ public class BTreeLeaf {
      *
      * @param datarid the dataRId whose record is to be deleted
      */
-    public void delete(RecordId datarid) {
+    public void delete(RecordKey datarid) {
         while (next())
             if (getDataRid().equals(datarid)) {
                 contents.delete(currentslot);
@@ -100,7 +100,7 @@ public class BTreeLeaf {
      * @param datarid the dataRID value of the new record
      * @return the directory entry of the newly-split page, if one exists.
      */
-    public DirEntry insert(RecordId datarid) {
+    public DirEntry insert(RecordKey datarid) {
         if (contents.getFlag() >= 0 && contents.getDataVal(0).compareTo(searchkey) > 0) {
             D_Constant firstval = contents.getDataVal(0);
             BlockId newblk = contents.split(0, contents.getFlag());
@@ -147,7 +147,7 @@ public class BTreeLeaf {
             return false;
         contents.close();
         BlockId nextblk = new BlockId(filename, flag);
-        contents = new BTPage(tx, nextblk, tableFileLayout);
+        contents = new BTPage(tx, nextblk, recordValueLayout);
         currentslot = 0;
         return true;
     }

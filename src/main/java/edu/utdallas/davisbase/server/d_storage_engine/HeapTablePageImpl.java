@@ -1,6 +1,8 @@
-package edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap;
+package edu.utdallas.davisbase.server.d_storage_engine;
 
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
+import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordValueSchema;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
 import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.TablePage;
 
@@ -15,12 +17,12 @@ public class HeapTablePageImpl implements TablePage {
     public static final int EMPTY = 0, USED = 1;
     private Transaction tx;
     private BlockId blk;
-    private TableFileLayout tableFileLayout;
+    private RecordValueLayout recordValueLayout;
 
-    public HeapTablePageImpl(Transaction tx, BlockId blk, TableFileLayout tableFileLayout) {
+    public HeapTablePageImpl(Transaction tx, BlockId blk, RecordValueLayout recordValueLayout) {
         this.tx = tx;
         this.blk = blk;
-        this.tableFileLayout = tableFileLayout;
+        this.recordValueLayout = recordValueLayout;
     }
 
     /**
@@ -31,7 +33,7 @@ public class HeapTablePageImpl implements TablePage {
      * @return the integer stored in that field
      */
     public int getInt(int slot, String fldname) {
-        int fldpos = offset(slot) + tableFileLayout.offset(fldname);
+        int fldpos = offset(slot) + recordValueLayout.offset(fldname);
         return tx.getInt(blk, fldpos);
     }
 
@@ -43,7 +45,7 @@ public class HeapTablePageImpl implements TablePage {
      * @return the string stored in that field
      */
     public String getString(int slot, String fldname) {
-        int fldpos = offset(slot) + tableFileLayout.offset(fldname);
+        int fldpos = offset(slot) + recordValueLayout.offset(fldname);
         return tx.getString(blk, fldpos);
     }
 
@@ -55,7 +57,7 @@ public class HeapTablePageImpl implements TablePage {
      * @param val     the integer value stored in that field
      */
     public void setInt(int slot, String fldname, int val) {
-        int fldpos = offset(slot) + tableFileLayout.offset(fldname);
+        int fldpos = offset(slot) + recordValueLayout.offset(fldname);
         tx.setInt(blk, fldpos, val);
     }
 
@@ -67,7 +69,7 @@ public class HeapTablePageImpl implements TablePage {
      * @param val     the string value stored in that field
      */
     public void setString(int slot, String fldname, String val) {
-        int fldpos = offset(slot) + tableFileLayout.offset(fldname);
+        int fldpos = offset(slot) + recordValueLayout.offset(fldname);
         tx.setString(blk, fldpos, val);
     }
 
@@ -84,9 +86,9 @@ public class HeapTablePageImpl implements TablePage {
         int slot = 0;
         while (isValidSlot(slot)) {
             tx.setInt(blk, offset(slot), EMPTY);
-            TableSchema sch = tableFileLayout.schema();
+            RecordValueSchema sch = recordValueLayout.schema();
             for (String fldname : sch.fields()) {
-                int fldpos = offset(slot) + tableFileLayout.offset(fldname);
+                int fldpos = offset(slot) + recordValueLayout.offset(fldname);
                 if (sch.type(fldname) == INTEGER) tx.setInt(blk, fldpos, 0);
                 else tx.setString(blk, fldpos, "");
             }
@@ -131,7 +133,7 @@ public class HeapTablePageImpl implements TablePage {
     }
 
     private int offset(int slot) {
-        return slot * tableFileLayout.slotSize();
+        return slot * recordValueLayout.slotSize();
     }
 }
 

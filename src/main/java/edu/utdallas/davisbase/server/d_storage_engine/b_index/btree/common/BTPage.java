@@ -3,9 +3,9 @@ package edu.utdallas.davisbase.server.d_storage_engine.b_index.btree.common;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordId;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.TableFileLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.TableSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordKey;
+import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordValueSchema;
 
 import static java.sql.Types.INTEGER;
 
@@ -20,19 +20,19 @@ import static java.sql.Types.INTEGER;
 public class BTPage {
     private Transaction tx;
     private BlockId currentblk;
-    private TableFileLayout tableFileLayout;
+    private RecordValueLayout recordValueLayout;
 
     /**
      * Open a node for the specified B-tree block.
      *
      * @param currentblk      a reference to the B-tree block
-     * @param tableFileLayout the metadata for the particular B-tree file
+     * @param recordValueLayout the metadata for the particular B-tree file
      * @param tx              the calling transaction
      */
-    public BTPage(Transaction tx, BlockId currentblk, TableFileLayout tableFileLayout) {
+    public BTPage(Transaction tx, BlockId currentblk, RecordValueLayout recordValueLayout) {
         this.tx = tx;
         this.currentblk = currentblk;
-        this.tableFileLayout = tableFileLayout;
+        this.recordValueLayout = recordValueLayout;
         tx.pin(currentblk);
     }
 
@@ -80,7 +80,7 @@ public class BTPage {
      */
     public BlockId split(int splitpos, int flag) {
         BlockId newblk = appendNew(flag);
-        BTPage newpage = new BTPage(tx, newblk, tableFileLayout);
+        BTPage newpage = new BTPage(tx, newblk, recordValueLayout);
         transferRecs(splitpos, newpage);
         newpage.setFlag(flag);
         newpage.close();
@@ -132,15 +132,15 @@ public class BTPage {
     public void format(BlockId blk, int flag) {
         tx.setInt(blk, 0, flag);
         tx.setInt(blk, Integer.BYTES, 0);  // #records = 0
-        int recsize = tableFileLayout.slotSize();
+        int recsize = recordValueLayout.slotSize();
         for (int pos = 2 * Integer.BYTES; pos + recsize <= tx.blockSize(); pos += recsize)
             makeDefaultRecord(blk, pos);
     }
 
     private void makeDefaultRecord(BlockId blk, int pos) {
-        for (String fldname : tableFileLayout.schema().fields()) {
-            int offset = tableFileLayout.offset(fldname);
-            if (tableFileLayout.schema().type(fldname) == INTEGER)
+        for (String fldname : recordValueLayout.schema().fields()) {
+            int offset = recordValueLayout.offset(fldname);
+            if (recordValueLayout.schema().type(fldname) == INTEGER)
                 tx.setInt(blk, pos + offset, 0);
             else
                 tx.setString(blk, pos + offset, "");
@@ -180,8 +180,8 @@ public class BTPage {
      * @param slot the slot of the desired index record
      * @return the dataRID value store at that slot
      */
-    public RecordId getDataRid(int slot) {
-        return new RecordId(getInt(slot, "block"), getInt(slot, "id"));
+    public RecordKey getDataRid(int slot) {
+        return new RecordKey(getInt(slot, "block"), getInt(slot, "id"));
     }
 
     /**
@@ -189,13 +189,13 @@ public class BTPage {
      *
      * @param slot     the slot of the desired index record
      * @param val      the new dataval
-     * @param recordID the new dataRID
+     * @param recordKey the new dataRID
      */
-    public void insertLeaf(int slot, D_Constant val, RecordId recordID) {
+    public void insertLeaf(int slot, D_Constant val, RecordKey recordKey) {
         insert(slot);
         setVal(slot, "dataval", val);
-        setInt(slot, "block", recordID.blockNumber());
-        setInt(slot, "id", recordID.slot());
+        setInt(slot, "block", recordKey.blockNumber());
+        setInt(slot, "id", recordKey.slot());
     }
 
     /**
@@ -236,7 +236,7 @@ public class BTPage {
     }
 
     private D_Constant getVal(int slot, String fldname) {
-        int type = tableFileLayout.schema().type(fldname);
+        int type = recordValueLayout.schema().type(fldname);
         if (type == INTEGER)
             return new D_Constant(getInt(slot, fldname));
         else
@@ -254,7 +254,7 @@ public class BTPage {
     }
 
     private void setVal(int slot, String fldname, D_Constant val) {
-        int type = tableFileLayout.schema().type(fldname);
+        int type = recordValueLayout.schema().type(fldname);
         if (type == INTEGER)
             setInt(slot, fldname, val.asInt());
         else
@@ -268,7 +268,7 @@ public class BTPage {
     }
 
     private void copyRecord(int from, int to) {
-        TableSchema sch = tableFileLayout.schema();
+        RecordValueSchema sch = recordValueLayout.schema();
         for (String fldname : sch.fields())
             setVal(to, fldname, getVal(from, fldname));
     }
@@ -277,7 +277,7 @@ public class BTPage {
         int destslot = 0;
         while (slot < getNumRecs()) {
             dest.insert(destslot);
-            TableSchema sch = tableFileLayout.schema();
+            RecordValueSchema sch = recordValueLayout.schema();
             for (String fldname : sch.fields())
                 dest.setVal(destslot, fldname, getVal(slot, fldname));
             delete(slot);
@@ -286,12 +286,12 @@ public class BTPage {
     }
 
     private int fldpos(int slot, String fldname) {
-        int offset = tableFileLayout.offset(fldname);
+        int offset = recordValueLayout.offset(fldname);
         return slotpos(slot) + offset;
     }
 
     private int slotpos(int slot) {
-        int slotsize = tableFileLayout.slotSize();
+        int slotsize = recordValueLayout.slotSize();
         return Integer.BYTES + Integer.BYTES + (slot * slotsize);
     }
 }

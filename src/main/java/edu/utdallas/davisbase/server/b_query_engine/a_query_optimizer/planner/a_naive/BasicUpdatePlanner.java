@@ -37,7 +37,7 @@ public class BasicUpdatePlanner implements UpdatePlanner {
     public int executeInsert(InsertData data, Transaction tx) {
         Plan p = new TablePlan(tx, data.tableName(), mdm);
         UpdateScan us = (UpdateScan) p.open();
-        us.seekToHead_Update();
+        us.seekToHead_Insert();
         Iterator<D_Constant> iter = data.vals().iterator();
         for (String fldname : data.fields()) {
             D_Constant val = iter.next();

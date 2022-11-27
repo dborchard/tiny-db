@@ -15,8 +15,8 @@ import static java.sql.Types.INTEGER;
  *
  * @author Edward Sciore
  */
-public class TableFileLayout {
-    private TableSchema tableSchema;
+public class RecordValueLayout {
+    private RecordValueSchema recordValueSchema;
     private Map<String, Integer> offsets;
     private int slotsize;
 
@@ -27,13 +27,13 @@ public class TableFileLayout {
      * each field within the record.
      *
      * @param tblname     the name of the table
-     * @param tableSchema the schema of the table's records
+     * @param recordValueSchema the schema of the table's records
      */
-    public TableFileLayout(TableSchema tableSchema) {
-        this.tableSchema = tableSchema;
+    public RecordValueLayout(RecordValueSchema recordValueSchema) {
+        this.recordValueSchema = recordValueSchema;
         offsets = new HashMap<>();
         int pos = Integer.BYTES; // leave space for the empty/inuse flag
-        for (String fldname : tableSchema.fields()) {
+        for (String fldname : recordValueSchema.fields()) {
             offsets.put(fldname, pos);
             pos += lengthInBytes(fldname);
         }
@@ -46,12 +46,12 @@ public class TableFileLayout {
      * is retrieved from the catalog.
      *
      * @param tblname     the name of the table
-     * @param tableSchema the schema of the table's records
+     * @param recordValueSchema the schema of the table's records
      * @param offsets     the already-calculated offsets of the fields within a record
      * @param recordlen   the already-calculated length of each record
      */
-    public TableFileLayout(TableSchema tableSchema, Map<String, Integer> offsets, int slotsize) {
-        this.tableSchema = tableSchema;
+    public RecordValueLayout(RecordValueSchema recordValueSchema, Map<String, Integer> offsets, int slotsize) {
+        this.recordValueSchema = recordValueSchema;
         this.offsets = offsets;
         this.slotsize = slotsize;
     }
@@ -61,8 +61,8 @@ public class TableFileLayout {
      *
      * @return the table's record schema
      */
-    public TableSchema schema() {
-        return tableSchema;
+    public RecordValueSchema schema() {
+        return recordValueSchema;
     }
 
     /**
@@ -85,11 +85,11 @@ public class TableFileLayout {
     }
 
     private int lengthInBytes(String fldname) {
-        int fldtype = tableSchema.type(fldname);
+        int fldtype = recordValueSchema.type(fldname);
         if (fldtype == INTEGER)
             return Integer.BYTES;
         else
-            return Page.maxBytesRequiredForString(tableSchema.length(fldname));
+            return Page.maxBytesRequiredForString(recordValueSchema.length(fldname));
     }
 }
 

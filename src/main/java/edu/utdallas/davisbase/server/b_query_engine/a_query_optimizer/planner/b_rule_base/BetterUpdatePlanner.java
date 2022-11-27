@@ -12,7 +12,7 @@ import edu.utdallas.davisbase.server.b_query_engine.c_catalog.index.IndexInfo;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.UpdateScan;
 import edu.utdallas.davisbase.server.d_storage_engine.b_index.Index;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordId;
+import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordKey;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -48,10 +48,10 @@ public class BetterUpdatePlanner implements UpdatePlanner {
 
         // first, insert the record
         UpdateScan s = (UpdateScan) p.open();
-        s.seekToHead_Update();
+        s.seekToHead_Insert();
 
         // then modify each field, inserting an index record if appropriate
-        RecordId recordID = s.getRid();
+        RecordKey recordKey = s.getRid();
         Map<String, IndexInfo> indexes = mdm.getIndexInfo(tblname, tx);
         Iterator<D_Constant> valIter = data.vals().iterator();
         for (String fldname : data.fields()) {
@@ -61,7 +61,7 @@ public class BetterUpdatePlanner implements UpdatePlanner {
             IndexInfo ii = indexes.get(fldname);
             if (ii != null) {
                 Index idx = ii.open();
-                idx.insert(val, recordID);
+                idx.insert(val, recordKey);
                 idx.close();
             }
         }
@@ -79,11 +79,11 @@ public class BetterUpdatePlanner implements UpdatePlanner {
         int count = 0;
         while (s.next()) {
             // first, delete the record's RID from every index
-            RecordId recordID = s.getRid();
+            RecordKey recordKey = s.getRid();
             for (String fldname : indexes.keySet()) {
                 D_Constant val = s.getVal(fldname);
                 Index idx = indexes.get(fldname).open();
-                idx.delete(val, recordID);
+                idx.delete(val, recordKey);
                 idx.close();
             }
             // then delete the record
@@ -113,9 +113,9 @@ public class BetterUpdatePlanner implements UpdatePlanner {
 
             // then update the appropriate index, if it exists
             if (idx != null) {
-                RecordId recordID = s.getRid();
-                idx.delete(oldval, recordID);
-                idx.insert(newval, recordID);
+                RecordKey recordKey = s.getRid();
+                idx.delete(oldval, recordKey);
+                idx.insert(newval, recordKey);
             }
             count++;
         }

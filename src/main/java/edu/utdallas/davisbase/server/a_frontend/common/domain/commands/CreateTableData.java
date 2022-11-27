@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.server.a_frontend.common.domain.commands;
 
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.TableSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordValueSchema;
 
 /**
  * Data for the SQL <i>create table</i> statement.
@@ -9,12 +9,12 @@ import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.T
  */
 public class CreateTableData {
     private String tblname;
-    private TableSchema sch;
+    private RecordValueSchema sch;
 
     /**
      * Saves the table name and schema.
      */
-    public CreateTableData(String tblname, TableSchema sch) {
+    public CreateTableData(String tblname, RecordValueSchema sch) {
         this.tblname = tblname;
         this.sch = sch;
     }
@@ -33,7 +33,7 @@ public class CreateTableData {
      *
      * @return the schema of the new table
      */
-    public TableSchema newSchema() {
+    public RecordValueSchema newSchema() {
         return sch;
     }
 }

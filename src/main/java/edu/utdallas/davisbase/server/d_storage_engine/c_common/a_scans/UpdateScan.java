@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordId;
+import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordKey;
 
 /**
  * The interface implemented by all updateable scans.
@@ -36,7 +36,7 @@ public interface UpdateScan extends Scan {
     /**
      * Insert a new record somewhere in the scan.
      */
-    public void seekToHead_Update();
+    public void seekToHead_Insert();
 
     /**
      * Delete the current record from the scan.
@@ -48,13 +48,13 @@ public interface UpdateScan extends Scan {
      *
      * @return the id of the current record
      */
-    public RecordId getRid();
+    public RecordKey getRid();
 
     /**
      * Position the scan so that the current record has
      * the specified id.
      *
-     * @param recordID the id of the desired record
+     * @param recordKey the id of the desired record
      */
-    public void moveToRid(RecordId recordID);
+    public void moveToRid(RecordKey recordKey);
 }

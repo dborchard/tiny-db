@@ -5,7 +5,7 @@ import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.B_Term;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.C_Expression;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.*;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.TableSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordValueSchema;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -164,39 +164,39 @@ public class Parser {
         lex.eatKeyword("table");
         String tblname = lex.eatId();
         lex.eatDelim('(');
-        TableSchema sch = fieldDefs();
+        RecordValueSchema sch = fieldDefs();
         lex.eatDelim(')');
         return new CreateTableData(tblname, sch);
     }
 
-    private TableSchema fieldDefs() {
-        TableSchema tableSchema = fieldDef();
+    private RecordValueSchema fieldDefs() {
+        RecordValueSchema recordValueSchema = fieldDef();
         if (lex.matchDelim(',')) {
             lex.eatDelim(',');
-            TableSchema tableSchema2 = fieldDefs();
-            tableSchema.addAll(tableSchema2);
+            RecordValueSchema recordValueSchema2 = fieldDefs();
+            recordValueSchema.addAll(recordValueSchema2);
         }
-        return tableSchema;
+        return recordValueSchema;
     }
 
-    private TableSchema fieldDef() {
+    private RecordValueSchema fieldDef() {
         String fldname = field();
         return fieldType(fldname);
     }
 
-    private TableSchema fieldType(String fldname) {
-        TableSchema tableSchema = new TableSchema();
+    private RecordValueSchema fieldType(String fldname) {
+        RecordValueSchema recordValueSchema = new RecordValueSchema();
         if (lex.matchKeyword("int")) {
             lex.eatKeyword("int");
-            tableSchema.addIntField(fldname);
+            recordValueSchema.addIntField(fldname);
         } else {
             lex.eatKeyword("varchar");
             lex.eatDelim('(');
             int strLen = lex.eatIntConstant();
             lex.eatDelim(')');
-            tableSchema.addStringField(fldname, strLen);
+            recordValueSchema.addStringField(fldname, strLen);
         }
-        return tableSchema;
+        return recordValueSchema;
     }
 
 
