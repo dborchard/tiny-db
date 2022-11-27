@@ -6,8 +6,8 @@ import edu.utdallas.davisbase.server.b_query_engine.c_catalog.index.IndexInfo;
 import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.SelectUsingIndexScan;
 import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.TableScan;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
-import edu.utdallas.davisbase.server.d_storage_engine.b_index.Index;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.b_index.Index;
+import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordValueSchema;
 
 /**
  * The Plan class corresponding to the <i>indexselect</i>

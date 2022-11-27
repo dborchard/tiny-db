@@ -1,10 +1,10 @@
 package edu.utdallas.davisbase.server.d_storage_engine;
 
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordValueLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordValueSchema;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.IRecordIterator;
+import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.IRecordIterator;
 
 import static java.sql.Types.INTEGER;
 

@@ -3,14 +3,14 @@ package edu.utdallas.davisbase.server.d_storage_engine;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
-import edu.utdallas.davisbase.server.d_storage_engine.b_index.Index;
-import edu.utdallas.davisbase.server.d_storage_engine.b_index.btree.BTreeDir;
-import edu.utdallas.davisbase.server.d_storage_engine.b_index.btree.BTreeLeaf;
-import edu.utdallas.davisbase.server.d_storage_engine.b_index.btree.common.BTPage;
-import edu.utdallas.davisbase.server.d_storage_engine.b_index.btree.common.DirEntry;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordKey;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordValueLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.b_index.Index;
+import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.b_index.btree.BTreeDir;
+import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.b_index.btree.BTreeLeaf;
+import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.b_index.btree.common.BTPage;
+import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.b_index.btree.common.DirEntry;
+import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordKey;
+import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordValueSchema;
 
 import static java.sql.Types.INTEGER;
 

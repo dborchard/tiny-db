@@ -1,7 +1,7 @@
-package edu.utdallas.davisbase.server.d_storage_engine.b_index;
+package edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.b_index;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
-import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordKey;
+import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordKey;
 
 /**
  * This interface contains methods to traverse an index.
