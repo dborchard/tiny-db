@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.d_storage_engine.a_disk.b_index.hash;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
-import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.TableScan;
+import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.regular.TableScan;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordKey;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueLayout;

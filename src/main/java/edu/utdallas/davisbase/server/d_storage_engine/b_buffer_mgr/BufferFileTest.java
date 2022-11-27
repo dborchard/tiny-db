@@ -1,20 +1,7 @@
 package edu.utdallas.davisbase.server.d_storage_engine.b_buffer_mgr;
 
 import edu.utdallas.davisbase.server.b_query_engine.SimpleDB;
-import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.Planner;
-import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.Plan;
-import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.QueryPlanner;
-import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.UpdatePlanner;
-import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.b_rule_base.BetterQueryPlanner;
-import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.b_rule_base.BetterUpdatePlanner;
-import edu.utdallas.davisbase.server.b_query_engine.c_catalog.MetadataMgr;
-import edu.utdallas.davisbase.server.b_query_engine.e_dto.Table;
-import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.LogMgr;
-import edu.utdallas.davisbase.server.d_storage_engine.b_buffer_mgr.BufferMgr;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.FileMgr;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.Page;
 
 import java.io.IOException;

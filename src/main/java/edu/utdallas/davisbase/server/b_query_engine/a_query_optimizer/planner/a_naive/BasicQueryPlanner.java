@@ -2,9 +2,9 @@ package edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.a
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.QueryData;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.Plan;
-import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.impl.ProjectPlan;
-import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.impl.SelectPlan;
-import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.impl.TablePlan;
+import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.regular.ProjectPlan;
+import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.regular.SelectPlan;
+import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.regular.TablePlan;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.QueryPlanner;
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;

@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.b_query_engine.d_sql_scans;
+package edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.regular;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;

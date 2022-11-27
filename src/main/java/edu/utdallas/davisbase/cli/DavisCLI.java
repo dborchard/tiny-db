@@ -2,7 +2,7 @@ package edu.utdallas.davisbase.cli;
 
 import edu.utdallas.davisbase.cli.utils.TablePrinter;
 import edu.utdallas.davisbase.server.b_query_engine.SimpleDB;
-import edu.utdallas.davisbase.server.b_query_engine.e_dto.Table;
+import edu.utdallas.davisbase.server.b_query_engine.f_dto.Table;
 
 import java.util.Scanner;
 

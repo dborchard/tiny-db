@@ -3,10 +3,10 @@ package edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.b
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.QueryData;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.Plan;
-import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.impl.ProjectPlan;
-import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.impl.SelectPlan;
-import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.impl.SelectWithIndexPlan;
-import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.impl.TablePlan;
+import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.regular.ProjectPlan;
+import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.regular.SelectPlan;
+import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.regular.SelectWithIndexPlan;
+import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.regular.TablePlan;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.QueryPlanner;
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.index.IndexInfo;

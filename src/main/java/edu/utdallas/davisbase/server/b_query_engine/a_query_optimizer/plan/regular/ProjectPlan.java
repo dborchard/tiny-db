@@ -1,7 +1,7 @@
-package edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.impl;
+package edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.regular;
 
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.Plan;
-import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.ProjectScan;
+import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.regular.ProjectScan;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueSchema;
 
@@ -33,4 +33,25 @@ public class ProjectPlan implements Plan {
     public int blocksAccessed() {
         return p.blocksAccessed();
     }
+
+
+    /**
+     * Estimates the number of output records in the projection,
+     * which is the same as in the underlying query.
+     * @see simpledb.plan.Plan#recordsOutput()
+     */
+    public int recordsOutput() {
+        return p.recordsOutput();
+    }
+
+    /**
+     * Estimates the number of distinct field values
+     * in the projection,
+     * which is the same as in the underlying query.
+     * @see simpledb.plan.Plan#distinctValues(java.lang.String)
+     */
+    public int distinctValues(String fldname) {
+        return p.distinctValues(fldname);
+    }
+
 }

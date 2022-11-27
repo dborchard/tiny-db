@@ -3,7 +3,7 @@ package edu.utdallas.davisbase.server.d_storage_engine.a_disk.b_index;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.b_query_engine.SimpleDB;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.Plan;
-import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.impl.TablePlan;
+import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.regular.TablePlan;
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.index.IndexInfo;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
