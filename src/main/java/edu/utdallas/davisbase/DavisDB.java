@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase;
 
-import edu.utdallas.davisbase.storage_engine.f_tx.Transaction;
-import edu.utdallas.davisbase.query_engine.a_server.SimpleDB;
+import edu.utdallas.davisbase.db.query_engine.SimpleDB;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.Transaction;
 
 import java.util.Scanner;
 
@@ -13,13 +13,13 @@ public class DavisDB {
         SimpleDB db = new SimpleDB(dirname);
 
         // Parse Queries
-        parseInput(db);
+        cliLoop(db);
 
         // Close Database
         db.close();
     }
 
-    private static void parseInput(SimpleDB db) {
+    private static void cliLoop(SimpleDB db) {
         Scanner scanner = new Scanner(System.in).useDelimiter(";");
         while (true) {
             System.out.print("davisql> ");
