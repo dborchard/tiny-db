@@ -9,7 +9,6 @@ import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.BTreeDir;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.BTreeLeaf;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.common.BTPage;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.common.DirEntry;
-import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
 import edu.utdallas.davisbase.db.storage_engine.d_file.BlockId;
 
 import static java.sql.Types.INTEGER;

@@ -6,7 +6,7 @@ import edu.utdallas.davisbase.db.query_engine.c_scans.Scan;
 import edu.utdallas.davisbase.db.query_engine.c_scans.impl.TableScan;
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableFileLayout;
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableSchema;
-import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.Transaction;
 
 /**
  * The Plan class corresponding to a table.

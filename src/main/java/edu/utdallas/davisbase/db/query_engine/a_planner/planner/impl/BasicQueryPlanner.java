@@ -2,7 +2,7 @@ package edu.utdallas.davisbase.db.query_engine.a_planner.planner.impl;
 
 import edu.utdallas.davisbase.db.query_engine.a_planner.plan.impl.ProjectPlan;
 import edu.utdallas.davisbase.db.query_engine.a_planner.plan.impl.SelectPlan;
-import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.Transaction;
 import edu.utdallas.davisbase.db.query_engine.a_planner.plan.Plan;
 import edu.utdallas.davisbase.db.query_engine.a_planner.plan.impl.TablePlan;
 import edu.utdallas.davisbase.db.query_engine.a_planner.planner.QueryPlanner;

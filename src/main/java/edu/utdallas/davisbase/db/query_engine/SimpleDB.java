@@ -9,7 +9,7 @@ import edu.utdallas.davisbase.db.query_engine.a_planner.planner.impl.BetterUpdat
 import edu.utdallas.davisbase.db.query_engine.b_metadata.MetadataMgr;
 import edu.utdallas.davisbase.db.query_engine.c_scans.Scan;
 import edu.utdallas.davisbase.db.query_engine.d_dto.Table;
-import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.Transaction;
 import edu.utdallas.davisbase.db.storage_engine.d_file.FileMgr;
 
 import java.io.File;

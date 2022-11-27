@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.db.storage_engine.b_transaction;
+package edu.utdallas.davisbase.db.storage_engine;
 
 import edu.utdallas.davisbase.db.storage_engine.d_file.BlockId;
 import edu.utdallas.davisbase.db.storage_engine.d_file.FileMgr;

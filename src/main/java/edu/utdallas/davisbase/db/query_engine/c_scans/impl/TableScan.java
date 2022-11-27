@@ -5,7 +5,7 @@ import edu.utdallas.davisbase.db.query_engine.c_scans.UpdateScan;
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableFileLayout;
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.RecordId;
 import edu.utdallas.davisbase.db.storage_engine.TablePage_Heap;
-import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.Transaction;
 import edu.utdallas.davisbase.db.storage_engine.d_file.BlockId;
 
 import static java.sql.Types.INTEGER;

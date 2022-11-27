@@ -2,7 +2,7 @@ package edu.utdallas.davisbase.db.query_engine.b_metadata.index;
 
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableFileLayout;
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableSchema;
-import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.Transaction;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.Index;
 import edu.utdallas.davisbase.db.storage_engine.Index_BTree;
 

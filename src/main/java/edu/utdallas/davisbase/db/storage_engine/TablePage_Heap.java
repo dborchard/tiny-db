@@ -3,7 +3,6 @@ package edu.utdallas.davisbase.db.storage_engine;
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.TablePage;
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableFileLayout;
 import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableSchema;
-import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
 import edu.utdallas.davisbase.db.storage_engine.d_file.BlockId;
 
 import static java.sql.Types.INTEGER;
