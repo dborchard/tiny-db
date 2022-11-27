@@ -6,7 +6,7 @@ import edu.utdallas.davisbase.db.query_engine.b_metadata.index.IndexInfo;
 import edu.utdallas.davisbase.db.query_engine.c_scans.Scan;
 import edu.utdallas.davisbase.db.query_engine.c_scans.impl.SelectOnIndexScan;
 import edu.utdallas.davisbase.db.query_engine.c_scans.impl.TableScan;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableSchema;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.Index;
 
 /**

@@ -2,8 +2,9 @@ package edu.utdallas.davisbase.db.storage_engine;
 
 
 
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TablePage;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableFileLayout;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableSchema;
 import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
 import edu.utdallas.davisbase.db.storage_engine.d_file.BlockId;
 
@@ -13,13 +14,13 @@ import static java.sql.Types.INTEGER;
  * Store a record at a given location in a block. 
  * @author Edward Sciore
  */
-public class DataRecordPage {
+public class TablePage_Heap implements TablePage {
    public static final int EMPTY = 0, USED = 1;
    private Transaction tx;
    private BlockId blk;
    private TableFileLayout tableFileLayout;
 
-   public DataRecordPage(Transaction tx, BlockId blk, TableFileLayout tableFileLayout) {
+   public TablePage_Heap(Transaction tx, BlockId blk, TableFileLayout tableFileLayout) {
       this.tx = tx;
       this.blk = blk;
       this.tableFileLayout = tableFileLayout;
@@ -104,7 +105,7 @@ public class DataRecordPage {
       return newslot;
    }
   
-   public BlockId block() {
+   public BlockId getBlockId() {
       return blk;
    }
    

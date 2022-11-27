@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.db.query_engine.c_scans;
 
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.RecordId;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.RecordId;
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 
 /**

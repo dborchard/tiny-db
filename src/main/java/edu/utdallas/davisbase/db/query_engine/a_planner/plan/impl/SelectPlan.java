@@ -4,7 +4,7 @@ import edu.utdallas.davisbase.db.query_engine.a_planner.plan.Plan;
 import edu.utdallas.davisbase.db.query_engine.c_scans.Scan;
 import edu.utdallas.davisbase.db.query_engine.c_scans.impl.SelectScan;
 import edu.utdallas.davisbase.db.frontend.domain.clause.A_Predicate;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableSchema;
 
 /**
  * The Plan class corresponding to the <i>select</i>

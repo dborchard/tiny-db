@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.db.storage_engine.a_io.index.btree;
 
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableFileLayout;
 import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.common.BTPage;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.common.DirEntry;

@@ -2,9 +2,9 @@ package edu.utdallas.davisbase.db.query_engine.c_scans.impl;
 
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 import edu.utdallas.davisbase.db.query_engine.c_scans.UpdateScan;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.RecordId;
-import edu.utdallas.davisbase.db.storage_engine.DataRecordPage;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableFileLayout;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.RecordId;
+import edu.utdallas.davisbase.db.storage_engine.TablePage_Heap;
 import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
 import edu.utdallas.davisbase.db.storage_engine.d_file.BlockId;
 
@@ -19,7 +19,7 @@ import static java.sql.Types.INTEGER;
 public class TableScan implements UpdateScan {
     private Transaction tx;
     private TableFileLayout tableFileLayout;
-    private DataRecordPage rp;
+    private TablePage_Heap rp;
     private String filename;
     private int currentSlot;
 
@@ -41,7 +41,7 @@ public class TableScan implements UpdateScan {
         currentSlot = rp.nextAfter(currentSlot);
         while (currentSlot < 0) {
             if (atLastBlock()) return false;
-            moveToBlock(rp.block().number() + 1);
+            moveToBlock(rp.getBlockId().number() + 1);
             currentSlot = rp.nextAfter(currentSlot);
         }
         return true;
@@ -65,7 +65,7 @@ public class TableScan implements UpdateScan {
     }
 
     public void close() {
-        if (rp != null) tx.unpin(rp.block());
+        if (rp != null) tx.unpin(rp.getBlockId());
     }
 
     // Methods that implement UpdateScan
@@ -87,7 +87,7 @@ public class TableScan implements UpdateScan {
         currentSlot = rp.insertAfter(currentSlot);
         while (currentSlot < 0) {
             if (atLastBlock()) moveToNewBlock();
-            else moveToBlock(rp.block().number() + 1);
+            else moveToBlock(rp.getBlockId().number() + 1);
             currentSlot = rp.insertAfter(currentSlot);
         }
     }
@@ -99,12 +99,12 @@ public class TableScan implements UpdateScan {
     public void moveToRid(RecordId recordID) {
         close();
         BlockId blk = new BlockId(filename, recordID.blockNumber());
-        rp = new DataRecordPage(tx, blk, tableFileLayout);
+        rp = new TablePage_Heap(tx, blk, tableFileLayout);
         currentSlot = recordID.slot();
     }
 
     public RecordId getRid() {
-        return new RecordId(rp.block().number(), currentSlot);
+        return new RecordId(rp.getBlockId().number(), currentSlot);
     }
 
     // Private auxiliary methods
@@ -112,19 +112,19 @@ public class TableScan implements UpdateScan {
     private void moveToBlock(int blknum) {
         close();
         BlockId blk = new BlockId(filename, blknum);
-        rp = new DataRecordPage(tx, blk, tableFileLayout);
+        rp = new TablePage_Heap(tx, blk, tableFileLayout);
         currentSlot = -1;
     }
 
     private void moveToNewBlock() {
         close();
         BlockId blk = tx.append(filename);
-        rp = new DataRecordPage(tx, blk, tableFileLayout);
+        rp = new TablePage_Heap(tx, blk, tableFileLayout);
         rp.format();
         currentSlot = -1;
     }
 
     private boolean atLastBlock() {
-        return rp.block().number() == tx.size(filename) - 1;
+        return rp.getBlockId().number() == tx.size(filename) - 1;
     }
 }

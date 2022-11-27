@@ -2,7 +2,7 @@ package edu.utdallas.davisbase.db.query_engine.c_scans.impl;
 
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 import edu.utdallas.davisbase.db.query_engine.c_scans.Scan;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.RecordId;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.RecordId;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.Index;
 
 
@@ -28,7 +28,7 @@ public class SelectOnIndexScan implements Scan {
     public boolean next() {
         boolean ok = idx.next();
         if (ok) {
-            RecordId recordID = idx.getDataRid();
+            RecordId recordID = idx.getRecordId();
             ts.moveToRid(recordID);
         }
         return ok;

@@ -11,7 +11,7 @@ import edu.utdallas.davisbase.db.query_engine.b_metadata.MetadataMgr;
 import edu.utdallas.davisbase.db.query_engine.b_metadata.index.IndexInfo;
 import edu.utdallas.davisbase.db.query_engine.c_scans.UpdateScan;
 import edu.utdallas.davisbase.db.storage_engine.b_transaction.Transaction;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.RecordId;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.RecordId;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.Index;
 
 import java.util.Iterator;

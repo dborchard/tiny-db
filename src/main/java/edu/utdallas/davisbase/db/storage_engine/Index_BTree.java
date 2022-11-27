@@ -1,8 +1,8 @@
 package edu.utdallas.davisbase.db.storage_engine;
 
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.RecordId;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableFileLayout;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.RecordId;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableSchema;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.Index;
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.BTreeDir;
@@ -19,7 +19,7 @@ import static java.sql.Types.INTEGER;
  *
  * @author Edward Sciore
  */
-public class IndexBTreePage implements Index {
+public class Index_BTree implements Index {
     private Transaction tx;
     private TableFileLayout dirTableFileLayout, leafTableFileLayout;
     private String leaftbl;
@@ -27,7 +27,7 @@ public class IndexBTreePage implements Index {
     private BlockId rootblk;
 
 
-    public IndexBTreePage(Transaction tx, String idxname, TableFileLayout leafTableFileLayout) {
+    public Index_BTree(Transaction tx, String idxname, TableFileLayout leafTableFileLayout) {
         this.tx = tx;
         // deal with the leaves
         leaftbl = idxname + "leaf";
@@ -82,9 +82,9 @@ public class IndexBTreePage implements Index {
     /**
      * Return the dataRID value from the current leaf record.
      *
-     * @see Index#getDataRid()
+     * @see Index#getRecordId()
      */
-    public RecordId getDataRid() {
+    public RecordId getRecordId() {
         return leaf.getDataRid();
     }
 
