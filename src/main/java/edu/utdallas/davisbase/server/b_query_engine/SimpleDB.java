@@ -9,8 +9,8 @@ import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.b_
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.b_query_engine.e_dto.Table;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.common.a_scans.Scan;
-import edu.utdallas.davisbase.server.d_storage_engine.common.b_file.FileMgr;
+import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
+import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.FileMgr;
 
 import java.io.File;
 import java.util.ArrayList;

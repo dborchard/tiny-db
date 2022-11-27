@@ -1,7 +1,7 @@
-package edu.utdallas.davisbase.server.d_storage_engine.common.a_scans;
+package edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans;
 
 import edu.utdallas.davisbase.server.a_frontend.domain.clause.D_Constant;
-import edu.utdallas.davisbase.server.d_storage_engine.file_organization.heap.RecordId;
+import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordId;
 
 /**
  * The interface implemented by all updateable scans.

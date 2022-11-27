@@ -1,8 +1,8 @@
-package edu.utdallas.davisbase.server.d_storage_engine.file_organization.heap;
+package edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap;
 
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.common.b_file.BlockId;
-import edu.utdallas.davisbase.server.d_storage_engine.file_organization.TablePage;
+import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
+import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.TablePage;
 
 import static java.sql.Types.INTEGER;
 
@@ -11,13 +11,13 @@ import static java.sql.Types.INTEGER;
  *
  * @author Edward Sciore
  */
-public class HeapTablePage implements TablePage {
+public class HeapTablePageImpl implements TablePage {
     public static final int EMPTY = 0, USED = 1;
     private Transaction tx;
     private BlockId blk;
     private TableFileLayout tableFileLayout;
 
-    public HeapTablePage(Transaction tx, BlockId blk, TableFileLayout tableFileLayout) {
+    public HeapTablePageImpl(Transaction tx, BlockId blk, TableFileLayout tableFileLayout) {
         this.tx = tx;
         this.blk = blk;
         this.tableFileLayout = tableFileLayout;

@@ -10,9 +10,9 @@ import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.Up
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.index.IndexInfo;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.common.a_scans.UpdateScan;
-import edu.utdallas.davisbase.server.d_storage_engine.index.Index;
-import edu.utdallas.davisbase.server.d_storage_engine.file_organization.heap.RecordId;
+import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.UpdateScan;
+import edu.utdallas.davisbase.server.d_storage_engine.b_index.Index;
+import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.RecordId;
 
 import java.util.Iterator;
 import java.util.Map;

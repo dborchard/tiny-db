@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.d_storage_engine.file_organization.heap;
+package edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap;
 
 /**
  * An identifier for a record within a file.

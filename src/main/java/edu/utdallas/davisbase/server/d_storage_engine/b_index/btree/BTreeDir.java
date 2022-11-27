@@ -1,11 +1,11 @@
-package edu.utdallas.davisbase.server.d_storage_engine.index.btree;
+package edu.utdallas.davisbase.server.d_storage_engine.b_index.btree;
 
 import edu.utdallas.davisbase.server.a_frontend.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.common.b_file.BlockId;
-import edu.utdallas.davisbase.server.d_storage_engine.index.btree.common.BTPage;
-import edu.utdallas.davisbase.server.d_storage_engine.index.btree.common.DirEntry;
-import edu.utdallas.davisbase.server.d_storage_engine.file_organization.heap.TableFileLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
+import edu.utdallas.davisbase.server.d_storage_engine.b_index.btree.common.BTPage;
+import edu.utdallas.davisbase.server.d_storage_engine.b_index.btree.common.DirEntry;
+import edu.utdallas.davisbase.server.d_storage_engine.a_file_organization.heap.TableFileLayout;
 
 /**
  * A B-tree directory block.
