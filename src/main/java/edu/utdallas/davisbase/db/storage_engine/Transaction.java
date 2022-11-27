@@ -1,9 +1,9 @@
 package edu.utdallas.davisbase.db.storage_engine;
 
-import edu.utdallas.davisbase.db.storage_engine.c_buffercache.BufferMgr;
-import edu.utdallas.davisbase.db.storage_engine.d_file.BlockId;
-import edu.utdallas.davisbase.db.storage_engine.d_file.FileMgr;
-import edu.utdallas.davisbase.db.storage_engine.d_file.Page;
+import edu.utdallas.davisbase.db.storage_engine.d_buffercache.BufferMgr;
+import edu.utdallas.davisbase.db.storage_engine.e_file.BlockId;
+import edu.utdallas.davisbase.db.storage_engine.e_file.FileMgr;
+import edu.utdallas.davisbase.db.storage_engine.e_file.Page;
 
 
 /**

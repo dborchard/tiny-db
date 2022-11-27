@@ -2,8 +2,8 @@ package edu.utdallas.davisbase.db.query_engine.b_metadata;
 
 import edu.utdallas.davisbase.db.query_engine.b_metadata.index.IndexInfo;
 import edu.utdallas.davisbase.db.query_engine.b_metadata.index.IndexMgr;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableFileLayout;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableSchema;
+import edu.utdallas.davisbase.db.storage_engine.b_io.data.heap.TableFileLayout;
+import edu.utdallas.davisbase.db.storage_engine.b_io.data.heap.TableSchema;
 import edu.utdallas.davisbase.db.storage_engine.Transaction;
 import edu.utdallas.davisbase.db.query_engine.b_metadata.table.TableMgr;
 

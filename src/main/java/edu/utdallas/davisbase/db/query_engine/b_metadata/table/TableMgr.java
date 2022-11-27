@@ -1,9 +1,9 @@
 package edu.utdallas.davisbase.db.query_engine.b_metadata.table;
 
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableFileLayout;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableSchema;
+import edu.utdallas.davisbase.db.storage_engine.b_io.data.heap.TableFileLayout;
+import edu.utdallas.davisbase.db.storage_engine.b_io.data.heap.TableSchema;
 import edu.utdallas.davisbase.db.storage_engine.Transaction;
-import edu.utdallas.davisbase.db.query_engine.c_scans.impl.TableScan;
+import edu.utdallas.davisbase.db.storage_engine.Scan_TableScan;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,13 +59,13 @@ public class TableMgr {
     public void createTable(String tblname, TableSchema sch, Transaction tx) {
         TableFileLayout tableFileLayout = new TableFileLayout(sch);
 
-        TableScan tcat = new TableScan(tx, "davisbase_tables", tcatTableFileLayout);
+        Scan_TableScan tcat = new Scan_TableScan(tx, "davisbase_tables", tcatTableFileLayout);
         tcat.seekToHead_Update();
         tcat.setString("tblname", tblname);
         tcat.setInt("slotsize", tableFileLayout.slotSize());
         tcat.close();
 
-        TableScan fcat = new TableScan(tx, "davisbase_columns", fcatTableFileLayout);
+        Scan_TableScan fcat = new Scan_TableScan(tx, "davisbase_columns", fcatTableFileLayout);
         for (String fldname : sch.fields()) {
             fcat.seekToHead_Update();
             fcat.setString("tblname", tblname);
@@ -87,7 +87,7 @@ public class TableMgr {
      */
     public TableFileLayout getLayout(String tblname, Transaction tx) {
         int size = -1;
-        TableScan tcat = new TableScan(tx, "davisbase_tables", tcatTableFileLayout);
+        Scan_TableScan tcat = new Scan_TableScan(tx, "davisbase_tables", tcatTableFileLayout);
         while (tcat.next())
             if (tcat.getString("tblname").equals(tblname)) {
                 size = tcat.getInt("slotsize");
@@ -97,7 +97,7 @@ public class TableMgr {
 
         TableSchema sch = new TableSchema();
         Map<String, Integer> offsets = new HashMap<String, Integer>();
-        TableScan fcat = new TableScan(tx, "davisbase_columns", fcatTableFileLayout);
+        Scan_TableScan fcat = new Scan_TableScan(tx, "davisbase_columns", fcatTableFileLayout);
         while (fcat.next())
             if (fcat.getString("tblname").equals(tblname)) {
                 String fldname = fcat.getString("fldname");

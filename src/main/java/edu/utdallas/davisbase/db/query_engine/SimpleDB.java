@@ -7,10 +7,10 @@ import edu.utdallas.davisbase.db.query_engine.a_planner.planner.UpdatePlanner;
 import edu.utdallas.davisbase.db.query_engine.a_planner.planner.impl.BetterQueryPlanner;
 import edu.utdallas.davisbase.db.query_engine.a_planner.planner.impl.BetterUpdatePlanner;
 import edu.utdallas.davisbase.db.query_engine.b_metadata.MetadataMgr;
-import edu.utdallas.davisbase.db.query_engine.c_scans.Scan;
+import edu.utdallas.davisbase.db.storage_engine.a_scans.Scan;
 import edu.utdallas.davisbase.db.query_engine.d_dto.Table;
 import edu.utdallas.davisbase.db.storage_engine.Transaction;
-import edu.utdallas.davisbase.db.storage_engine.d_file.FileMgr;
+import edu.utdallas.davisbase.db.storage_engine.e_file.FileMgr;
 
 import java.io.File;
 import java.util.ArrayList;

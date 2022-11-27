@@ -1,9 +1,9 @@
 package edu.utdallas.davisbase.db.query_engine.b_metadata.index;
 
 import edu.utdallas.davisbase.db.query_engine.b_metadata.table.TableMgr;
-import edu.utdallas.davisbase.db.query_engine.c_scans.impl.TableScan;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableFileLayout;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableSchema;
+import edu.utdallas.davisbase.db.storage_engine.Scan_TableScan;
+import edu.utdallas.davisbase.db.storage_engine.b_io.data.heap.TableFileLayout;
+import edu.utdallas.davisbase.db.storage_engine.b_io.data.heap.TableSchema;
 import edu.utdallas.davisbase.db.storage_engine.Transaction;
 
 import java.util.HashMap;
@@ -50,7 +50,7 @@ public class IndexMgr {
      * @param tx      the calling transaction
      */
     public void createIndex(String idxname, String tblname, String fldname, Transaction tx) {
-        TableScan ts = new TableScan(tx, "idxcat", tableFileLayout);
+        Scan_TableScan ts = new Scan_TableScan(tx, "idxcat", tableFileLayout);
         ts.seekToHead_Update();
         ts.setString("indexname", idxname);
         ts.setString("tablename", tblname);
@@ -68,7 +68,7 @@ public class IndexMgr {
      */
     public Map<String, IndexInfo> getIndexInfo(String tblname, Transaction tx) {
         Map<String, IndexInfo> result = new HashMap<String, IndexInfo>();
-        TableScan ts = new TableScan(tx, "idxcat", tableFileLayout);
+        Scan_TableScan ts = new Scan_TableScan(tx, "idxcat", tableFileLayout);
         while (ts.next()) if (ts.getString("tablename").equals(tblname)) {
             String idxname = ts.getString("indexname");
             String fldname = ts.getString("fieldname");

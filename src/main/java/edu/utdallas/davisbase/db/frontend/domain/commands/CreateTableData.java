@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.db.frontend.domain.commands;
 
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableSchema;
+import edu.utdallas.davisbase.db.storage_engine.b_io.data.heap.TableSchema;
 
 /**
  * Data for the SQL <i>create table</i> statement.

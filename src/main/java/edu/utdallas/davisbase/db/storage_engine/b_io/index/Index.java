@@ -1,7 +1,7 @@
-package edu.utdallas.davisbase.db.storage_engine.a_io.index;
+package edu.utdallas.davisbase.db.storage_engine.b_io.index;
 
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.RecordId;
+import edu.utdallas.davisbase.db.storage_engine.b_io.data.heap.RecordId;
 
 /**
  * This interface contains methods to traverse an index.

@@ -1,9 +1,10 @@
-package edu.utdallas.davisbase.db.storage_engine;
+package edu.utdallas.davisbase.db.storage_engine.b_io.data.heap;
 
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.TablePage;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableFileLayout;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableSchema;
-import edu.utdallas.davisbase.db.storage_engine.d_file.BlockId;
+import edu.utdallas.davisbase.db.storage_engine.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.b_io.data.TablePage;
+import edu.utdallas.davisbase.db.storage_engine.b_io.data.heap.TableFileLayout;
+import edu.utdallas.davisbase.db.storage_engine.b_io.data.heap.TableSchema;
+import edu.utdallas.davisbase.db.storage_engine.e_file.BlockId;
 
 import static java.sql.Types.INTEGER;
 
@@ -12,13 +13,13 @@ import static java.sql.Types.INTEGER;
  *
  * @author Edward Sciore
  */
-public class TablePage_Heap implements TablePage {
+public class HeapTablePage implements TablePage {
     public static final int EMPTY = 0, USED = 1;
     private Transaction tx;
     private BlockId blk;
     private TableFileLayout tableFileLayout;
 
-    public TablePage_Heap(Transaction tx, BlockId blk, TableFileLayout tableFileLayout) {
+    public HeapTablePage(Transaction tx, BlockId blk, TableFileLayout tableFileLayout) {
         this.tx = tx;
         this.blk = blk;
         this.tableFileLayout = tableFileLayout;

@@ -2,10 +2,10 @@ package edu.utdallas.davisbase.db.query_engine.a_planner.plan.impl;
 
 import edu.utdallas.davisbase.db.query_engine.a_planner.plan.Plan;
 import edu.utdallas.davisbase.db.query_engine.b_metadata.MetadataMgr;
-import edu.utdallas.davisbase.db.query_engine.c_scans.Scan;
-import edu.utdallas.davisbase.db.query_engine.c_scans.impl.TableScan;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableFileLayout;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableSchema;
+import edu.utdallas.davisbase.db.storage_engine.a_scans.Scan;
+import edu.utdallas.davisbase.db.storage_engine.Scan_TableScan;
+import edu.utdallas.davisbase.db.storage_engine.b_io.data.heap.TableFileLayout;
+import edu.utdallas.davisbase.db.storage_engine.b_io.data.heap.TableSchema;
 import edu.utdallas.davisbase.db.storage_engine.Transaction;
 
 /**
@@ -26,7 +26,7 @@ public class TablePlan implements Plan {
     }
 
     public Scan open() {
-        return new TableScan(tx, tblname, tableFileLayout);
+        return new Scan_TableScan(tx, tblname, tableFileLayout);
     }
 
 

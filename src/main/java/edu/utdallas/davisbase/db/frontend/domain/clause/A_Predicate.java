@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.db.frontend.domain.clause;
 
-import edu.utdallas.davisbase.db.query_engine.c_scans.Scan;
+import edu.utdallas.davisbase.db.storage_engine.a_scans.Scan;
 
 import java.util.ArrayList;
 import java.util.Iterator;

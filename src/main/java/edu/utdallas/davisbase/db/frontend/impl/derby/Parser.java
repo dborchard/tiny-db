@@ -5,7 +5,7 @@ import edu.utdallas.davisbase.db.frontend.domain.clause.B_Term;
 import edu.utdallas.davisbase.db.frontend.domain.clause.C_Expression;
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 import edu.utdallas.davisbase.db.frontend.domain.commands.*;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.TableSchema;
+import edu.utdallas.davisbase.db.storage_engine.b_io.data.heap.TableSchema;
 
 import java.util.ArrayList;
 import java.util.List;

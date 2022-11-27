@@ -1,20 +1,21 @@
-package edu.utdallas.davisbase.db.query_engine.c_scans.impl;
+package edu.utdallas.davisbase.db.query_engine.c_sql_scans;
 
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
-import edu.utdallas.davisbase.db.query_engine.c_scans.Scan;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.heap.RecordId;
-import edu.utdallas.davisbase.db.storage_engine.a_io.index.Index;
+import edu.utdallas.davisbase.db.storage_engine.a_scans.Scan;
+import edu.utdallas.davisbase.db.storage_engine.Scan_TableScan;
+import edu.utdallas.davisbase.db.storage_engine.b_io.data.heap.RecordId;
+import edu.utdallas.davisbase.db.storage_engine.b_io.index.Index;
 
 
-public class SelectOnIndexScan implements Scan {
-    private final TableScan ts;
+public class SelectUsingIndexScan implements Scan {
+    private final Scan_TableScan ts;
     private final Index idx;
 
     // Start value of Index Field.
     private final D_Constant val;
 
 
-    public SelectOnIndexScan(TableScan ts, Index idx, D_Constant val) {
+    public SelectUsingIndexScan(Scan_TableScan ts, Index idx, D_Constant val) {
         this.ts = ts;
         this.idx = idx;
         this.val = val;
