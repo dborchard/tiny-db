@@ -1,9 +1,11 @@
 package edu.utdallas.davisbase.db.storage_engine.a_io.index.btree;
 
-import edu.utdallas.davisbase.db.query_engine.e_record.Layout;
-import edu.utdallas.davisbase.db.query_engine.e_record.RID;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.Transaction;
-import edu.utdallas.davisbase.db.storage_engine.b_file.BlockId;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.RID;
+import edu.utdallas.davisbase.db.storage_engine.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.common.BTPage;
+import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.common.DirEntry;
+import edu.utdallas.davisbase.db.storage_engine.c_file.BlockId;
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 
 /**
@@ -12,7 +14,7 @@ import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
  */
 public class BTreeLeaf {
    private Transaction tx;
-   private Layout layout;
+   private TableFileLayout tableFileLayout;
    private D_Constant searchkey;
    private BTPage contents;
    private int currentslot;
@@ -23,15 +25,15 @@ public class BTreeLeaf {
     * The buffer is positioned immediately before the first record
     * having the specified search key (if any).
     * @param blk a reference to the disk block
-    * @param layout the metadata of the B-tree leaf file
+    * @param tableFileLayout the metadata of the B-tree leaf file
     * @param searchkey the search key value
     * @param tx the calling transaction
     */
-   public BTreeLeaf(Transaction tx, BlockId blk, Layout layout, D_Constant searchkey) {
+   public BTreeLeaf(Transaction tx, BlockId blk, TableFileLayout tableFileLayout, D_Constant searchkey) {
       this.tx = tx;
-      this.layout = layout;
+      this.tableFileLayout = tableFileLayout;
       this.searchkey = searchkey;
-      contents = new BTPage(tx, blk, layout);
+      contents = new BTPage(tx, blk, tableFileLayout);
       currentslot = contents.findSlotBefore(searchkey);
       filename = blk.fileName();            
    }
@@ -141,7 +143,7 @@ public class BTreeLeaf {
          return false;
       contents.close();
       BlockId nextblk = new BlockId(filename, flag);
-      contents = new BTPage(tx, nextblk, layout);
+      contents = new BTPage(tx, nextblk, tableFileLayout);
       currentslot = 0;
       return true;
    }

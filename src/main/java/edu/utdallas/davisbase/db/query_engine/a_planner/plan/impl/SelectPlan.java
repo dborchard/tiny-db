@@ -1,10 +1,10 @@
 package edu.utdallas.davisbase.db.query_engine.a_planner.plan.impl;
 
 import edu.utdallas.davisbase.db.query_engine.a_planner.plan.Plan;
-import edu.utdallas.davisbase.db.query_engine.d_scans.Scan;
-import edu.utdallas.davisbase.db.query_engine.d_scans.impl.SelectScan;
+import edu.utdallas.davisbase.db.query_engine.c_scans.Scan;
+import edu.utdallas.davisbase.db.query_engine.c_scans.impl.SelectScan;
 import edu.utdallas.davisbase.db.frontend.domain.clause.A_Predicate;
-import edu.utdallas.davisbase.db.query_engine.e_record.Schema;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
 
 /**
  * The Plan class corresponding to the <i>select</i>
@@ -27,7 +27,7 @@ public class SelectPlan implements Plan {
     }
 
 
-    public Schema schema() {
+    public TableSchema schema() {
         return p.schema();
     }
 }

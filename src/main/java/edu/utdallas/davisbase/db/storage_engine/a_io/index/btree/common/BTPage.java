@@ -1,10 +1,10 @@
-package edu.utdallas.davisbase.db.storage_engine.a_io.index.btree;
+package edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.common;
 
-import edu.utdallas.davisbase.db.query_engine.e_record.Layout;
-import edu.utdallas.davisbase.db.query_engine.e_record.RID;
-import edu.utdallas.davisbase.db.query_engine.e_record.Schema;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.Transaction;
-import edu.utdallas.davisbase.db.storage_engine.b_file.BlockId;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.RID;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
+import edu.utdallas.davisbase.db.storage_engine.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.c_file.BlockId;
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 
 import static java.sql.Types.INTEGER;
@@ -19,18 +19,18 @@ import static java.sql.Types.INTEGER;
 public class BTPage {
    private Transaction tx;
    private BlockId currentblk;
-   private Layout layout;
+   private TableFileLayout tableFileLayout;
    
    /**
     * Open a node for the specified B-tree block.
     * @param currentblk a reference to the B-tree block
-    * @param layout the metadata for the particular B-tree file
+    * @param tableFileLayout the metadata for the particular B-tree file
     * @param tx the calling transaction
     */
-   public BTPage(Transaction tx, BlockId currentblk, Layout layout) {
+   public BTPage(Transaction tx, BlockId currentblk, TableFileLayout tableFileLayout) {
       this.tx = tx;
       this.currentblk = currentblk;
-      this.layout = layout;
+      this.tableFileLayout = tableFileLayout;
       tx.pin(currentblk);
    }
    
@@ -75,7 +75,7 @@ public class BTPage {
     */
    public BlockId split(int splitpos, int flag) {
       BlockId newblk = appendNew(flag);
-      BTPage newpage = new BTPage(tx, newblk, layout);
+      BTPage newpage = new BTPage(tx, newblk, tableFileLayout);
       transferRecs(splitpos, newpage);
       newpage.setFlag(flag);
       newpage.close();
@@ -123,15 +123,15 @@ public class BTPage {
    public void format(BlockId blk, int flag) {
       tx.setInt(blk, 0, flag);
       tx.setInt(blk, Integer.BYTES, 0);  // #records = 0
-      int recsize = layout.slotSize();
+      int recsize = tableFileLayout.slotSize();
       for (int pos=2*Integer.BYTES; pos+recsize<=tx.blockSize(); pos += recsize)
          makeDefaultRecord(blk, pos);
    }
    
    private void makeDefaultRecord(BlockId blk, int pos) {
-      for (String fldname : layout.schema().fields()) {
-         int offset = layout.offset(fldname);
-         if (layout.schema().type(fldname) == INTEGER)
+      for (String fldname : tableFileLayout.schema().fields()) {
+         int offset = tableFileLayout.offset(fldname);
+         if (tableFileLayout.schema().type(fldname) == INTEGER)
             tx.setInt(blk, pos + offset, 0);
          else
             tx.setString(blk, pos + offset, "");
@@ -217,7 +217,7 @@ public class BTPage {
    }
    
    private D_Constant getVal(int slot, String fldname) {
-      int type = layout.schema().type(fldname);
+      int type = tableFileLayout.schema().type(fldname);
       if (type == INTEGER)
          return new D_Constant(getInt(slot, fldname));
       else
@@ -235,7 +235,7 @@ public class BTPage {
    }
    
    private void setVal(int slot, String fldname, D_Constant val) {
-      int type = layout.schema().type(fldname);
+      int type = tableFileLayout.schema().type(fldname);
       if (type == INTEGER)
          setInt(slot, fldname, val.asInt());
       else
@@ -253,7 +253,7 @@ public class BTPage {
    }
    
    private void copyRecord(int from, int to) {
-      Schema sch = layout.schema();
+      TableSchema sch = tableFileLayout.schema();
       for (String fldname : sch.fields())
          setVal(to, fldname, getVal(from, fldname));
    }
@@ -262,7 +262,7 @@ public class BTPage {
       int destslot = 0;
       while (slot < getNumRecs()) {
          dest.insert(destslot);
-         Schema sch = layout.schema();
+         TableSchema sch = tableFileLayout.schema();
          for (String fldname : sch.fields())
             dest.setVal(destslot, fldname, getVal(slot, fldname));
          delete(slot);
@@ -271,12 +271,12 @@ public class BTPage {
    }
    
    private int fldpos(int slot, String fldname) {
-      int offset = layout.offset(fldname);
+      int offset = tableFileLayout.offset(fldname);
       return slotpos(slot) + offset;
    }
    
    private int slotpos(int slot) {
-      int slotsize = layout.slotSize();
+      int slotsize = tableFileLayout.slotSize();
       return Integer.BYTES + Integer.BYTES + (slot * slotsize);
    }
 }

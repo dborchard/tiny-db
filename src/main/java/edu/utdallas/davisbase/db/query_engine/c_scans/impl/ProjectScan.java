@@ -1,6 +1,6 @@
-package edu.utdallas.davisbase.db.query_engine.d_scans.impl;
+package edu.utdallas.davisbase.db.query_engine.c_scans.impl;
 
-import edu.utdallas.davisbase.db.query_engine.d_scans.Scan;
+import edu.utdallas.davisbase.db.query_engine.c_scans.Scan;
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 
 import java.util.List;
@@ -13,8 +13,8 @@ import java.util.List;
  * @author Edward Sciore
  */
 public class ProjectScan implements Scan {
-   private Scan s;
-   private List<String> fieldlist;
+   private final Scan s;
+   private final List<String> fieldlist;
    
    /**
     * Create a project scan having the specified
@@ -27,8 +27,8 @@ public class ProjectScan implements Scan {
       this.fieldlist = fieldlist;
    }
    
-   public void seekToHead() {
-      s.seekToHead();
+   public void seekToHead_Query() {
+      s.seekToHead_Query();
    }
    
    public boolean next() {

@@ -1,6 +1,6 @@
-package edu.utdallas.davisbase.db.query_engine.d_scans;
+package edu.utdallas.davisbase.db.query_engine.c_scans;
 
-import edu.utdallas.davisbase.db.query_engine.e_record.RID;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.RID;
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 
 /**
@@ -32,7 +32,7 @@ public interface UpdateScan extends Scan {
    /**
     * Insert a new record somewhere in the scan.
     */
-   public void insert();
+   public void seekToHead_Update();
    
    /**
     * Delete the current record from the scan.

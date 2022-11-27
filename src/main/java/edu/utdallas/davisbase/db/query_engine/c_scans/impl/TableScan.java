@@ -1,12 +1,12 @@
-package edu.utdallas.davisbase.db.query_engine.d_scans.impl;
+package edu.utdallas.davisbase.db.query_engine.c_scans.impl;
 
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
-import edu.utdallas.davisbase.db.query_engine.d_scans.UpdateScan;
-import edu.utdallas.davisbase.db.query_engine.e_record.Layout;
-import edu.utdallas.davisbase.db.query_engine.e_record.RID;
-import edu.utdallas.davisbase.db.query_engine.e_record.RecordPage;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.Transaction;
-import edu.utdallas.davisbase.db.storage_engine.b_file.BlockId;
+import edu.utdallas.davisbase.db.query_engine.c_scans.UpdateScan;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.RID;
+import edu.utdallas.davisbase.db.storage_engine.RecordPage;
+import edu.utdallas.davisbase.db.storage_engine.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.c_file.BlockId;
 
 import static java.sql.Types.INTEGER;
 
@@ -18,14 +18,14 @@ import static java.sql.Types.INTEGER;
  */
 public class TableScan implements UpdateScan {
     private Transaction tx;
-    private Layout layout;
+    private TableFileLayout tableFileLayout;
     private RecordPage rp;
     private String filename;
     private int currentSlot;
 
-    public TableScan(Transaction tx, String tblname, Layout layout) {
+    public TableScan(Transaction tx, String tblname, TableFileLayout tableFileLayout) {
         this.tx = tx;
-        this.layout = layout;
+        this.tableFileLayout = tableFileLayout;
         filename = tblname + ".tbl";
         if (tx.size(filename) == 0) moveToNewBlock();
         else moveToBlock(0);
@@ -33,7 +33,7 @@ public class TableScan implements UpdateScan {
 
     // Methods that implement Scan
 
-    public void seekToHead() {
+    public void seekToHead_Query() {
         moveToBlock(0);
     }
 
@@ -56,12 +56,12 @@ public class TableScan implements UpdateScan {
     }
 
     public D_Constant getVal(String fldname) {
-        if (layout.schema().type(fldname) == INTEGER) return new D_Constant(getInt(fldname));
+        if (tableFileLayout.schema().type(fldname) == INTEGER) return new D_Constant(getInt(fldname));
         else return new D_Constant(getString(fldname));
     }
 
     public boolean hasField(String fldname) {
-        return layout.schema().hasField(fldname);
+        return tableFileLayout.schema().hasField(fldname);
     }
 
     public void close() {
@@ -79,11 +79,11 @@ public class TableScan implements UpdateScan {
     }
 
     public void setVal(String fldname, D_Constant val) {
-        if (layout.schema().type(fldname) == INTEGER) setInt(fldname, val.asInt());
+        if (tableFileLayout.schema().type(fldname) == INTEGER) setInt(fldname, val.asInt());
         else setString(fldname, val.asString());
     }
 
-    public void insert() {
+    public void seekToHead_Update() {
         currentSlot = rp.insertAfter(currentSlot);
         while (currentSlot < 0) {
             if (atLastBlock()) moveToNewBlock();
@@ -99,7 +99,7 @@ public class TableScan implements UpdateScan {
     public void moveToRid(RID rid) {
         close();
         BlockId blk = new BlockId(filename, rid.blockNumber());
-        rp = new RecordPage(tx, blk, layout);
+        rp = new RecordPage(tx, blk, tableFileLayout);
         currentSlot = rid.slot();
     }
 
@@ -112,14 +112,14 @@ public class TableScan implements UpdateScan {
     private void moveToBlock(int blknum) {
         close();
         BlockId blk = new BlockId(filename, blknum);
-        rp = new RecordPage(tx, blk, layout);
+        rp = new RecordPage(tx, blk, tableFileLayout);
         currentSlot = -1;
     }
 
     private void moveToNewBlock() {
         close();
         BlockId blk = tx.append(filename);
-        rp = new RecordPage(tx, blk, layout);
+        rp = new RecordPage(tx, blk, tableFileLayout);
         rp.format();
         currentSlot = -1;
     }

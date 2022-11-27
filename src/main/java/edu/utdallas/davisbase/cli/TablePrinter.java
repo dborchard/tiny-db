@@ -1,5 +1,7 @@
 package edu.utdallas.davisbase.cli;
 
+import edu.utdallas.davisbase.db.query_engine.d_dto.Table;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,6 +132,10 @@ public class TablePrinter {
         }
     }
 
+
+    public void print(Table table) {
+        print(table.columnNames, table.rowValues);
+    }
 
     public void print(List<String> columnNames, List<List<String>> rows) {
         TablePrinter table = new TablePrinter();

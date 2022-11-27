@@ -1,8 +1,10 @@
 package edu.utdallas.davisbase.db.storage_engine.a_io.index.btree;
 
-import edu.utdallas.davisbase.db.query_engine.e_record.Layout;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.Transaction;
-import edu.utdallas.davisbase.db.storage_engine.b_file.BlockId;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
+import edu.utdallas.davisbase.db.storage_engine.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.common.BTPage;
+import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.common.DirEntry;
+import edu.utdallas.davisbase.db.storage_engine.c_file.BlockId;
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 
 /**
@@ -11,7 +13,7 @@ import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
  */
 public class BTreeDir {
    private Transaction tx;
-   private Layout layout;
+   private TableFileLayout tableFileLayout;
    private BTPage contents;
    private String filename;
 
@@ -19,13 +21,13 @@ public class BTreeDir {
     * Creates an object to hold the contents of the specified
     * B-tree block.
     * @param blk a reference to the specified B-tree block
-    * @param layout the metadata of the B-tree directory file
+    * @param tableFileLayout the metadata of the B-tree directory file
     * @param tx the calling transaction
     */
-   BTreeDir(Transaction tx, BlockId blk, Layout layout) {
+   BTreeDir(Transaction tx, BlockId blk, TableFileLayout tableFileLayout) {
       this.tx = tx;
-      this.layout = layout;
-      contents = new BTPage(tx, blk, layout);
+      this.tableFileLayout = tableFileLayout;
+      contents = new BTPage(tx, blk, tableFileLayout);
       filename = blk.fileName();
    }
 
@@ -46,7 +48,7 @@ public class BTreeDir {
       BlockId childblk = findChildBlock(searchkey);
       while (contents.getFlag() > 0) {
          contents.close();
-         contents = new BTPage(tx, childblk, layout);
+         contents = new BTPage(tx, childblk, tableFileLayout);
          childblk = findChildBlock(searchkey);
       }
       return childblk.number();
@@ -88,7 +90,7 @@ public class BTreeDir {
       if (contents.getFlag() == 0)
          return insertEntry(e);
       BlockId childblk = findChildBlock(e.dataVal());
-      BTreeDir child = new BTreeDir(tx, childblk, layout);
+      BTreeDir child = new BTreeDir(tx, childblk, tableFileLayout);
       DirEntry myentry = child.insert(e);
       child.close();
       return (myentry != null) ? insertEntry(myentry) : null;

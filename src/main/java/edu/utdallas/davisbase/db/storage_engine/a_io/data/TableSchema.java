@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.db.query_engine.e_record;
+package edu.utdallas.davisbase.db.storage_engine.a_io.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ import static java.sql.Types.VARCHAR;
  * @author Edward Sciore
  *
  */
-public class Schema {
+public class TableSchema {
    private List<String> fields = new ArrayList<>();
    private Map<String,FieldInfo> info = new HashMap<>();
    
@@ -61,7 +61,7 @@ public class Schema {
     * @param fldname the name of the field
     * @param sch the other schema
     */
-   public void add(String fldname, Schema sch) {
+   public void add(String fldname, TableSchema sch) {
       int type   = sch.type(fldname);
       int length = sch.length(fldname);
       addField(fldname, type, length);
@@ -72,7 +72,7 @@ public class Schema {
     * to the current schema.
     * @param sch the other schema
     */
-   public void addAll(Schema sch) {
+   public void addAll(TableSchema sch) {
       for (String fldname : sch.fields())
       add(fldname, sch);
    }

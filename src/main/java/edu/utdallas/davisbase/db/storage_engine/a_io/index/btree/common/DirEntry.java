@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.db.storage_engine.a_io.index.btree;
+package edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.common;
 
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 

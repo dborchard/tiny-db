@@ -1,13 +1,13 @@
 package edu.utdallas.davisbase.db.query_engine.a_planner.plan.impl;
 
-import edu.utdallas.davisbase.db.query_engine.e_record.Schema;
-import edu.utdallas.davisbase.db.query_engine.a_planner.plan.Plan;
-import edu.utdallas.davisbase.db.query_engine.d_scans.Scan;
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
-import edu.utdallas.davisbase.db.query_engine.d_scans.impl.SelectOnIndexScan;
-import edu.utdallas.davisbase.db.query_engine.d_scans.impl.TableScan;
-import edu.utdallas.davisbase.db.storage_engine.a_io.index.Index;
+import edu.utdallas.davisbase.db.query_engine.a_planner.plan.Plan;
 import edu.utdallas.davisbase.db.query_engine.b_metadata.index.IndexInfo;
+import edu.utdallas.davisbase.db.query_engine.c_scans.Scan;
+import edu.utdallas.davisbase.db.query_engine.c_scans.impl.SelectOnIndexScan;
+import edu.utdallas.davisbase.db.query_engine.c_scans.impl.TableScan;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
+import edu.utdallas.davisbase.db.storage_engine.a_io.index.Index;
 
 /**
  * The Plan class corresponding to the <i>indexselect</i>
@@ -35,7 +35,7 @@ public class SelectWithIndexPlan implements Plan {
         return new SelectOnIndexScan(ts, idx, val);
     }
 
-    public Schema schema() {
+    public TableSchema schema() {
         return p.schema();
     }
 }

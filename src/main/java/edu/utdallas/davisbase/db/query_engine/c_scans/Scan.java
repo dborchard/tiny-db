@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.db.query_engine.d_scans;
+package edu.utdallas.davisbase.db.query_engine.c_scans;
 
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 
@@ -14,7 +14,7 @@ public interface Scan {
     * Position the scan before its first record. A
     * subsequent call to next() will return the first record.
     */
-   public void seekToHead();
+   public void seekToHead_Query();
    
    /**
     * Move the scan to the next record.

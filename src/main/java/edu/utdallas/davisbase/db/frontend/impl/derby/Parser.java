@@ -1,14 +1,11 @@
-package edu.utdallas.davisbase.db.frontend.impl.sqlite;
+package edu.utdallas.davisbase.db.frontend.impl.derby;
 
-import edu.utdallas.davisbase.c_parse.domain.commands.*;
-import edu.utdallas.davisbase.db.frontend.domain.commands.*;
-import edu.utdallas.davisbase.db.query_engine.e_record.Schema;
 import edu.utdallas.davisbase.db.frontend.domain.clause.A_Predicate;
 import edu.utdallas.davisbase.db.frontend.domain.clause.B_Term;
 import edu.utdallas.davisbase.db.frontend.domain.clause.C_Expression;
-import edu.utdallas.davisbase.frontend.domain.commands.*;
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
-import edu.utdallas.davisbase.query_engine.c_parse.domain.commands.*;
+import edu.utdallas.davisbase.db.frontend.domain.commands.*;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -167,39 +164,39 @@ public class Parser {
         lex.eatKeyword("table");
         String tblname = lex.eatId();
         lex.eatDelim('(');
-        Schema sch = fieldDefs();
+        TableSchema sch = fieldDefs();
         lex.eatDelim(')');
         return new CreateTableData(tblname, sch);
     }
 
-    private Schema fieldDefs() {
-        Schema schema = fieldDef();
+    private TableSchema fieldDefs() {
+        TableSchema tableSchema = fieldDef();
         if (lex.matchDelim(',')) {
             lex.eatDelim(',');
-            Schema schema2 = fieldDefs();
-            schema.addAll(schema2);
+            TableSchema tableSchema2 = fieldDefs();
+            tableSchema.addAll(tableSchema2);
         }
-        return schema;
+        return tableSchema;
     }
 
-    private Schema fieldDef() {
+    private TableSchema fieldDef() {
         String fldname = field();
         return fieldType(fldname);
     }
 
-    private Schema fieldType(String fldname) {
-        Schema schema = new Schema();
+    private TableSchema fieldType(String fldname) {
+        TableSchema tableSchema = new TableSchema();
         if (lex.matchKeyword("int")) {
             lex.eatKeyword("int");
-            schema.addIntField(fldname);
+            tableSchema.addIntField(fldname);
         } else {
             lex.eatKeyword("varchar");
             lex.eatDelim('(');
             int strLen = lex.eatIntConstant();
             lex.eatDelim(')');
-            schema.addStringField(fldname, strLen);
+            tableSchema.addStringField(fldname, strLen);
         }
-        return schema;
+        return tableSchema;
     }
 
 

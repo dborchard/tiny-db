@@ -1,19 +1,18 @@
 package edu.utdallas.davisbase.db.query_engine.a_planner.planner.impl;
 
 
+import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 import edu.utdallas.davisbase.db.frontend.domain.commands.*;
-import edu.utdallas.davisbase.db.query_engine.a_planner.plan.impl.SelectPlan;
-import edu.utdallas.davisbase.db.query_engine.b_metadata.index.IndexInfo;
-import edu.utdallas.davisbase.db.query_engine.e_record.RID;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.Transaction;
-import edu.utdallas.davisbase.frontend.domain.commands.*;
 import edu.utdallas.davisbase.db.query_engine.a_planner.plan.Plan;
+import edu.utdallas.davisbase.db.query_engine.a_planner.plan.impl.SelectPlan;
 import edu.utdallas.davisbase.db.query_engine.a_planner.plan.impl.TablePlan;
 import edu.utdallas.davisbase.db.query_engine.a_planner.planner.UpdatePlanner;
 import edu.utdallas.davisbase.db.query_engine.b_metadata.MetadataMgr;
+import edu.utdallas.davisbase.db.query_engine.b_metadata.index.IndexInfo;
+import edu.utdallas.davisbase.db.query_engine.c_scans.UpdateScan;
+import edu.utdallas.davisbase.db.storage_engine.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.RID;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.Index;
-import edu.utdallas.davisbase.db.query_engine.d_scans.UpdateScan;
-import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -49,10 +48,10 @@ public class BetterUpdatePlanner implements UpdatePlanner {
 
         // first, insert the record
         UpdateScan s = (UpdateScan) p.open();
-        s.insert();
-        RID rid = s.getRid();
+        s.seekToHead_Update();
 
         // then modify each field, inserting an index record if appropriate
+        RID rid = s.getRid();
         Map<String, IndexInfo> indexes = mdm.getIndexInfo(tblname, tx);
         Iterator<D_Constant> valIter = data.vals().iterator();
         for (String fldname : data.fields()) {

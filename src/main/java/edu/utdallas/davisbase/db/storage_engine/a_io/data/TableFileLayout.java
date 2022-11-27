@@ -1,7 +1,7 @@
-package edu.utdallas.davisbase.db.query_engine.e_record;
+package edu.utdallas.davisbase.db.storage_engine.a_io.data;
 
 
-import edu.utdallas.davisbase.db.storage_engine.b_file.Page;
+import edu.utdallas.davisbase.db.storage_engine.c_file.Page;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,8 +15,8 @@ import static java.sql.Types.INTEGER;
  * @author Edward Sciore
  *
  */
-public class Layout {
-   private Schema schema;
+public class TableFileLayout {
+   private TableSchema tableSchema;
    private Map<String,Integer> offsets;
    private int slotsize;
 
@@ -26,13 +26,13 @@ public class Layout {
     * is created. It determines the physical offset of 
     * each field within the record.
     * @param tblname the name of the table
-    * @param schema the schema of the table's records
+    * @param tableSchema the schema of the table's records
     */
-   public Layout(Schema schema) {
-      this.schema = schema;
+   public TableFileLayout(TableSchema tableSchema) {
+      this.tableSchema = tableSchema;
       offsets  = new HashMap<>();
       int pos = Integer.BYTES; // leave space for the empty/inuse flag
-      for (String fldname : schema.fields()) {
+      for (String fldname : tableSchema.fields()) {
          offsets.put(fldname, pos);
          pos += lengthInBytes(fldname);
       }
@@ -44,12 +44,12 @@ public class Layout {
     * This constructor is used when the metadata
     * is retrieved from the catalog.
     * @param tblname the name of the table
-    * @param schema the schema of the table's records
+    * @param tableSchema the schema of the table's records
     * @param offsets the already-calculated offsets of the fields within a record
     * @param recordlen the already-calculated length of each record
     */
-   public Layout(Schema schema, Map<String,Integer> offsets, int slotsize) {
-      this.schema    = schema;
+   public TableFileLayout(TableSchema tableSchema, Map<String,Integer> offsets, int slotsize) {
+      this.tableSchema = tableSchema;
       this.offsets   = offsets;
       this.slotsize = slotsize;
    }
@@ -58,8 +58,8 @@ public class Layout {
     * Return the schema of the table's records
     * @return the table's record schema
     */
-   public Schema schema() {
-      return schema;
+   public TableSchema schema() {
+      return tableSchema;
    }
 
    /**
@@ -80,11 +80,11 @@ public class Layout {
    }
 
    private int lengthInBytes(String fldname) {
-      int fldtype = schema.type(fldname);
+      int fldtype = tableSchema.type(fldname);
       if (fldtype == INTEGER)
          return Integer.BYTES;
       else
-         return Page.maxBytesRequiredForString(schema.length(fldname));
+         return Page.maxBytesRequiredForString(tableSchema.length(fldname));
    }
 }
 

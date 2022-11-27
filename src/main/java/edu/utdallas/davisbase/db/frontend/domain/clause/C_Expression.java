@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.db.frontend.domain.clause;
 
-import edu.utdallas.davisbase.db.query_engine.d_scans.Scan;
-import edu.utdallas.davisbase.db.query_engine.e_record.Schema;
+import edu.utdallas.davisbase.db.query_engine.c_scans.Scan;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
 
 /**
  * The interface corresponding to SQL expressions.
@@ -64,7 +64,7 @@ public class C_Expression {
     * @param sch the schema
     * @return true if all fields in the expression are in the schema
     */
-   public boolean appliesTo(Schema sch) {
+   public boolean appliesTo(TableSchema sch) {
       return (val != null) ? true : sch.hasField(fldname);
    }
    

@@ -1,9 +1,10 @@
-package edu.utdallas.davisbase.db.query_engine.e_record;
+package edu.utdallas.davisbase.db.storage_engine;
 
 
 
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.Transaction;
-import edu.utdallas.davisbase.db.storage_engine.b_file.BlockId;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
+import edu.utdallas.davisbase.db.storage_engine.c_file.BlockId;
 
 import static java.sql.Types.INTEGER;
 
@@ -15,12 +16,12 @@ public class RecordPage {
    public static final int EMPTY = 0, USED = 1;
    private Transaction tx;
    private BlockId blk;
-   private Layout layout;
+   private TableFileLayout tableFileLayout;
 
-   public RecordPage(Transaction tx, BlockId blk, Layout layout) {
+   public RecordPage(Transaction tx, BlockId blk, TableFileLayout tableFileLayout) {
       this.tx = tx;
       this.blk = blk;
-      this.layout = layout;
+      this.tableFileLayout = tableFileLayout;
    }
 
    /**
@@ -30,7 +31,7 @@ public class RecordPage {
     * @return the integer stored in that field
     */
    public int getInt(int slot, String fldname) {
-      int fldpos = offset(slot) + layout.offset(fldname);
+      int fldpos = offset(slot) + tableFileLayout.offset(fldname);
       return tx.getInt(blk, fldpos);
    }
 
@@ -41,7 +42,7 @@ public class RecordPage {
     * @return the string stored in that field
     */
    public String getString(int slot, String fldname) {
-      int fldpos = offset(slot) + layout.offset(fldname);
+      int fldpos = offset(slot) + tableFileLayout.offset(fldname);
       return tx.getString(blk, fldpos);
    }
 
@@ -52,7 +53,7 @@ public class RecordPage {
     * @param val the integer value stored in that field
     */
    public void setInt(int slot, String fldname, int val) {
-      int fldpos = offset(slot) + layout.offset(fldname);
+      int fldpos = offset(slot) + tableFileLayout.offset(fldname);
       tx.setInt(blk, fldpos, val);
    }
 
@@ -63,7 +64,7 @@ public class RecordPage {
     * @param val the string value stored in that field
     */
    public void setString(int slot, String fldname, String val) {
-      int fldpos = offset(slot) + layout.offset(fldname);
+      int fldpos = offset(slot) + tableFileLayout.offset(fldname);
       tx.setString(blk, fldpos, val);
    }
    
@@ -79,9 +80,9 @@ public class RecordPage {
       int slot = 0;
       while (isValidSlot(slot)) {
          tx.setInt(blk, offset(slot), EMPTY);
-         Schema sch = layout.schema();
+         TableSchema sch = tableFileLayout.schema();
          for (String fldname : sch.fields()) {
-            int fldpos = offset(slot) + layout.offset(fldname);
+            int fldpos = offset(slot) + tableFileLayout.offset(fldname);
             if (sch.type(fldname) == INTEGER)
                tx.setInt(blk, fldpos, 0);
             else
@@ -130,7 +131,7 @@ public class RecordPage {
    }
 
    private int offset(int slot) {
-      return slot * layout.slotSize();
+      return slot * tableFileLayout.slotSize();
    }
 }
 

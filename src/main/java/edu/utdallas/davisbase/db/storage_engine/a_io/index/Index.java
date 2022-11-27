@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.db.storage_engine.a_io.index;
 
-import edu.utdallas.davisbase.db.query_engine.e_record.RID;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.RID;
 import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 
 /**

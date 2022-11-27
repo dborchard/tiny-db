@@ -1,10 +1,10 @@
 package edu.utdallas.davisbase.db.query_engine.b_metadata.index;
 
-import edu.utdallas.davisbase.db.query_engine.e_record.Layout;
-import edu.utdallas.davisbase.db.query_engine.e_record.Schema;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
+import edu.utdallas.davisbase.db.storage_engine.Transaction;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.Index;
 import edu.utdallas.davisbase.db.storage_engine.a_io.index.btree.BTreeIndex;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.Transaction;
 
 import static java.sql.Types.INTEGER;
 
@@ -21,33 +21,34 @@ import static java.sql.Types.INTEGER;
 public class IndexInfo {
     private String idxname, fldname;
     private Transaction tx;
-    private Schema tblSchema;
-    private Layout idxLayout;
+    private TableSchema tblTableSchema;
+    private TableFileLayout idxTableFileLayout;
 
 
-    public IndexInfo(String idxname, String fldname, Schema tblSchema, Transaction tx) {
+    public IndexInfo(String idxname, String fldname, TableSchema tblTableSchema, Transaction tx) {
         this.idxname = idxname;
         this.fldname = fldname;
         this.tx = tx;
-        this.tblSchema = tblSchema;
-        this.idxLayout = createIdxLayout();
+        this.tblTableSchema = tblTableSchema;
+        this.idxTableFileLayout = createIdxLayout();
     }
 
 
     public Index open() {
-        return new BTreeIndex(tx, idxname, idxLayout);
+        return new BTreeIndex(tx, idxname, idxTableFileLayout);
     }
 
 
-    private Layout createIdxLayout() {
-        Schema sch = new Schema();
+    private TableFileLayout createIdxLayout() {
+        // Schema contains Block, Id, DataValue
+        TableSchema sch = new TableSchema();
         sch.addIntField("block");
         sch.addIntField("id");
-        if (tblSchema.type(fldname) == INTEGER) sch.addIntField("dataval");
+        if (tblTableSchema.type(fldname) == INTEGER) sch.addIntField("dataval");
         else {
-            int fldlen = tblSchema.length(fldname);
+            int fldlen = tblTableSchema.length(fldname);
             sch.addStringField("dataval", fldlen);
         }
-        return new Layout(sch);
+        return new TableFileLayout(sch);
     }
 }

@@ -2,9 +2,9 @@ package edu.utdallas.davisbase.db.query_engine.b_metadata;
 
 import edu.utdallas.davisbase.db.query_engine.b_metadata.index.IndexInfo;
 import edu.utdallas.davisbase.db.query_engine.b_metadata.index.IndexMgr;
-import edu.utdallas.davisbase.db.query_engine.e_record.Layout;
-import edu.utdallas.davisbase.db.query_engine.e_record.Schema;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
+import edu.utdallas.davisbase.db.storage_engine.Transaction;
 import edu.utdallas.davisbase.db.query_engine.b_metadata.table.TableMgr;
 
 import java.util.Map;
@@ -18,11 +18,11 @@ public class MetadataMgr {
       idxmgr  = new IndexMgr(isnew, tblmgr, tx);
    }
    
-   public void createTable(String tblname, Schema sch, Transaction tx) {
+   public void createTable(String tblname, TableSchema sch, Transaction tx) {
       tblmgr.createTable(tblname, sch, tx);
    }
    
-   public Layout getLayout(String tblname, Transaction tx) {
+   public TableFileLayout getLayout(String tblname, Transaction tx) {
       return tblmgr.getLayout(tblname, tx);
    }
    

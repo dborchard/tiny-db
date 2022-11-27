@@ -1,10 +1,10 @@
 package edu.utdallas.davisbase.db.query_engine.b_metadata.index;
 
 import edu.utdallas.davisbase.db.query_engine.b_metadata.table.TableMgr;
-import edu.utdallas.davisbase.db.query_engine.d_scans.impl.TableScan;
-import edu.utdallas.davisbase.db.query_engine.e_record.Layout;
-import edu.utdallas.davisbase.db.query_engine.e_record.Schema;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.Transaction;
+import edu.utdallas.davisbase.db.query_engine.c_scans.impl.TableScan;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
+import edu.utdallas.davisbase.db.storage_engine.Transaction;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +16,7 @@ import java.util.Map;
  * @author Edward Sciore
  */
 public class IndexMgr {
-    private Layout layout;
+    private TableFileLayout tableFileLayout;
     private TableMgr tblmgr;
 
     /**
@@ -29,14 +29,14 @@ public class IndexMgr {
      */
     public IndexMgr(boolean isnew, TableMgr tblmgr, Transaction tx) {
         if (isnew) {
-            Schema sch = new Schema();
+            TableSchema sch = new TableSchema();
             sch.addStringField("indexname", TableMgr.MAX_NAME);
             sch.addStringField("tablename", TableMgr.MAX_NAME);
             sch.addStringField("fieldname", TableMgr.MAX_NAME);
             tblmgr.createTable("idxcat", sch, tx);
         }
         this.tblmgr = tblmgr;
-        layout = tblmgr.getLayout("idxcat", tx);
+        tableFileLayout = tblmgr.getLayout("idxcat", tx);
     }
 
     /**
@@ -50,8 +50,8 @@ public class IndexMgr {
      * @param tx      the calling transaction
      */
     public void createIndex(String idxname, String tblname, String fldname, Transaction tx) {
-        TableScan ts = new TableScan(tx, "idxcat", layout);
-        ts.insert();
+        TableScan ts = new TableScan(tx, "idxcat", tableFileLayout);
+        ts.seekToHead_Update();
         ts.setString("indexname", idxname);
         ts.setString("tablename", tblname);
         ts.setString("fieldname", fldname);
@@ -68,12 +68,12 @@ public class IndexMgr {
      */
     public Map<String, IndexInfo> getIndexInfo(String tblname, Transaction tx) {
         Map<String, IndexInfo> result = new HashMap<String, IndexInfo>();
-        TableScan ts = new TableScan(tx, "idxcat", layout);
+        TableScan ts = new TableScan(tx, "idxcat", tableFileLayout);
         while (ts.next()) if (ts.getString("tablename").equals(tblname)) {
             String idxname = ts.getString("indexname");
             String fldname = ts.getString("fieldname");
-            Layout tblLayout = tblmgr.getLayout(tblname, tx);
-            IndexInfo ii = new IndexInfo(idxname, fldname, tblLayout.schema(), tx);
+            TableFileLayout tblTableFileLayout = tblmgr.getLayout(tblname, tx);
+            IndexInfo ii = new IndexInfo(idxname, fldname, tblTableFileLayout.schema(), tx);
             result.put(fldname, ii);
         }
         ts.close();

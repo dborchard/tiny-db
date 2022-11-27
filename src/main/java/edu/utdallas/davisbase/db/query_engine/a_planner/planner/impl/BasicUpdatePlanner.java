@@ -1,15 +1,14 @@
 package edu.utdallas.davisbase.db.query_engine.a_planner.planner.impl;
 
+import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
 import edu.utdallas.davisbase.db.frontend.domain.commands.*;
-import edu.utdallas.davisbase.db.query_engine.a_planner.plan.impl.SelectPlan;
-import edu.utdallas.davisbase.db.query_engine.b_metadata.MetadataMgr;
-import edu.utdallas.davisbase.db.query_engine.d_scans.UpdateScan;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.Transaction;
-import edu.utdallas.davisbase.frontend.domain.commands.*;
 import edu.utdallas.davisbase.db.query_engine.a_planner.plan.Plan;
+import edu.utdallas.davisbase.db.query_engine.a_planner.plan.impl.SelectPlan;
 import edu.utdallas.davisbase.db.query_engine.a_planner.plan.impl.TablePlan;
 import edu.utdallas.davisbase.db.query_engine.a_planner.planner.UpdatePlanner;
-import edu.utdallas.davisbase.db.frontend.domain.clause.D_Constant;
+import edu.utdallas.davisbase.db.query_engine.b_metadata.MetadataMgr;
+import edu.utdallas.davisbase.db.query_engine.c_scans.UpdateScan;
+import edu.utdallas.davisbase.db.storage_engine.Transaction;
 
 import java.util.Iterator;
 
@@ -38,7 +37,7 @@ public class BasicUpdatePlanner implements UpdatePlanner {
     public int executeInsert(InsertData data, Transaction tx) {
         Plan p = new TablePlan(tx, data.tableName(), mdm);
         UpdateScan us = (UpdateScan) p.open();
-        us.insert();
+        us.seekToHead_Update();
         Iterator<D_Constant> iter = data.vals().iterator();
         for (String fldname : data.fields()) {
             D_Constant val = iter.next();

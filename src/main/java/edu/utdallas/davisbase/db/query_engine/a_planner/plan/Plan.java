@@ -1,13 +1,12 @@
 package edu.utdallas.davisbase.db.query_engine.a_planner.plan;
 
-import edu.utdallas.davisbase.db.query_engine.d_scans.Scan;
-import edu.utdallas.davisbase.db.query_engine.e_record.Schema;
+import edu.utdallas.davisbase.db.query_engine.c_scans.Scan;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
 
 
 public interface Plan {
 
-
     Scan open();
 
-    Schema schema();
+    TableSchema schema();
 }

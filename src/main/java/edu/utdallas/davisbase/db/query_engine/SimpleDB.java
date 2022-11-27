@@ -1,16 +1,16 @@
 package edu.utdallas.davisbase.db.query_engine;
 
-import edu.utdallas.davisbase.db.query_engine.a_planner.planner.impl.BetterUpdatePlanner;
-import edu.utdallas.davisbase.db.query_engine.b_metadata.MetadataMgr;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.Transaction;
-import edu.utdallas.davisbase.db.storage_engine.b_file.FileMgr;
 import edu.utdallas.davisbase.db.query_engine.a_planner.Planner;
 import edu.utdallas.davisbase.db.query_engine.a_planner.plan.Plan;
 import edu.utdallas.davisbase.db.query_engine.a_planner.planner.QueryPlanner;
 import edu.utdallas.davisbase.db.query_engine.a_planner.planner.UpdatePlanner;
 import edu.utdallas.davisbase.db.query_engine.a_planner.planner.impl.BetterQueryPlanner;
-import edu.utdallas.davisbase.db.query_engine.d_scans.Scan;
-import edu.utdallas.davisbase.cli.TablePrinter;
+import edu.utdallas.davisbase.db.query_engine.a_planner.planner.impl.BetterUpdatePlanner;
+import edu.utdallas.davisbase.db.query_engine.b_metadata.MetadataMgr;
+import edu.utdallas.davisbase.db.query_engine.c_scans.Scan;
+import edu.utdallas.davisbase.db.query_engine.d_dto.Table;
+import edu.utdallas.davisbase.db.storage_engine.Transaction;
+import edu.utdallas.davisbase.db.storage_engine.c_file.FileMgr;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -36,7 +36,8 @@ public class SimpleDB {
     }
 
 
-    public void doQuery(String sql, Transaction tx) {
+    public Table doQuery(String sql) {
+        Transaction tx = newTx();
         Plan p = planner.createQueryPlan(sql, tx);
         Scan s = p.open();
 
@@ -48,16 +49,21 @@ public class SimpleDB {
             for (String field : columnNames) row.add(s.getVal(field).toString());
             rows.add(row);
         }
-
-        new TablePrinter().print(columnNames, rows);
+        
         s.close();
+        tx.commit();
+
+        return new Table(columnNames, rows);
     }
 
 
-    public void doUpdate(String sql, Transaction tx) {
+    public Table doUpdate(String sql) {
+        Transaction tx = newTx();
         int updatedRows = planner.executeUpdate(sql, tx);
+        tx.commit();
+
         String message = updatedRows + " " + (updatedRows == 1 ? "row" : "rows") + " updated.";
-        System.out.println(message);
+        return new Table(message);
     }
 
     public void close() {

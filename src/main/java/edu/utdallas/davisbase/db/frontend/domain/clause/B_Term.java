@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.db.frontend.domain.clause;
 
-import edu.utdallas.davisbase.db.query_engine.d_scans.Scan;
-import edu.utdallas.davisbase.db.query_engine.e_record.Schema;
+import edu.utdallas.davisbase.db.query_engine.c_scans.Scan;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
 
 /**
  * A term is a comparison between two expressions.
@@ -83,7 +83,7 @@ public class B_Term {
     * @param sch the schema
     * @return true if both expressions apply to the schema
     */
-   public boolean appliesTo(Schema sch) {
+   public boolean appliesTo(TableSchema sch) {
       return lhs.appliesTo(sch) && rhs.appliesTo(sch);
    }
    

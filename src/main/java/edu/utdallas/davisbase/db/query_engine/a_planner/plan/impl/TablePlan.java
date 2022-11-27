@@ -2,11 +2,11 @@ package edu.utdallas.davisbase.db.query_engine.a_planner.plan.impl;
 
 import edu.utdallas.davisbase.db.query_engine.a_planner.plan.Plan;
 import edu.utdallas.davisbase.db.query_engine.b_metadata.MetadataMgr;
-import edu.utdallas.davisbase.db.query_engine.d_scans.Scan;
-import edu.utdallas.davisbase.db.query_engine.d_scans.impl.TableScan;
-import edu.utdallas.davisbase.db.query_engine.e_record.Layout;
-import edu.utdallas.davisbase.db.query_engine.e_record.Schema;
-import edu.utdallas.davisbase.db.storage_engine.a_io.data.Transaction;
+import edu.utdallas.davisbase.db.query_engine.c_scans.Scan;
+import edu.utdallas.davisbase.db.query_engine.c_scans.impl.TableScan;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableFileLayout;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
+import edu.utdallas.davisbase.db.storage_engine.Transaction;
 
 /**
  * The Plan class corresponding to a table.
@@ -16,21 +16,21 @@ import edu.utdallas.davisbase.db.storage_engine.a_io.data.Transaction;
 public class TablePlan implements Plan {
     private String tblname;
     private Transaction tx;
-    private Layout layout;
+    private TableFileLayout tableFileLayout;
 
 
     public TablePlan(Transaction tx, String tblname, MetadataMgr md) {
         this.tblname = tblname;
         this.tx = tx;
-        layout = md.getLayout(tblname, tx);
+        tableFileLayout = md.getLayout(tblname, tx);
     }
 
     public Scan open() {
-        return new TableScan(tx, tblname, layout);
+        return new TableScan(tx, tblname, tableFileLayout);
     }
 
 
-    public Schema schema() {
-        return layout.schema();
+    public TableSchema schema() {
+        return tableFileLayout.schema();
     }
 }

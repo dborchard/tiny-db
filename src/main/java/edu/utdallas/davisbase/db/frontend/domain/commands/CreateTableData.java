@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.db.frontend.domain.commands;
 
-import edu.utdallas.davisbase.db.query_engine.e_record.Schema;
+import edu.utdallas.davisbase.db.storage_engine.a_io.data.TableSchema;
 
 /**
  * Data for the SQL <i>create table</i> statement.
@@ -8,12 +8,12 @@ import edu.utdallas.davisbase.db.query_engine.e_record.Schema;
  */
 public class CreateTableData {
    private String tblname;
-   private Schema sch;
+   private TableSchema sch;
    
    /**
     * Saves the table name and schema.
     */
-   public CreateTableData(String tblname, Schema sch) {
+   public CreateTableData(String tblname, TableSchema sch) {
       this.tblname = tblname;
       this.sch = sch;
    }
@@ -30,7 +30,7 @@ public class CreateTableData {
     * Returns the schema of the new table.
     * @return the schema of the new table
     */
-   public Schema newSchema() {
+   public TableSchema newSchema() {
       return sch;
    }
 }
