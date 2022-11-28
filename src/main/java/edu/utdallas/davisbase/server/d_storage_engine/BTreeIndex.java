@@ -2,15 +2,15 @@ package edu.utdallas.davisbase.server.d_storage_engine;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
+import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordKey;
+import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordValueSchema;
 import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.b_index.Index;
 import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.b_index.btree.BTreeDir;
 import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.b_index.btree.BTreeLeaf;
 import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.b_index.btree.common.BTPage;
 import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.b_index.btree.common.DirEntry;
-import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordKey;
-import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordValueLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
 
 import static java.sql.Types.INTEGER;
 
@@ -71,13 +71,13 @@ public class BTreeIndex implements Index {
         return 1 + (int) (Math.log(numblocks) / Math.log(rpb));
     }
 
-    public void seek(D_Constant searchkey) {
+    public void seek(D_Constant key) {
         close();
         BTreeDir root = new BTreeDir(tx, rootblk, dirRecordValueLayout);
-        int blknum = root.search(searchkey);
+        int blknum = root.search(key);
         root.close();
         BlockId leafblk = new BlockId(leaftbl, blknum);
-        leaf = new BTreeLeaf(tx, leafblk, leafRecordValueLayout, searchkey);
+        leaf = new BTreeLeaf(tx, leafblk, leafRecordValueLayout, key);
     }
 
     /**
@@ -100,11 +100,12 @@ public class BTreeIndex implements Index {
         return leaf.getDataRid();
     }
 
-    public void insert(D_Constant dataval, RecordKey datarid) {
-        seek(dataval);
-        DirEntry e = leaf.insert(datarid);
+    public void insert(D_Constant key, RecordKey value) {
+        seek(key);
+        DirEntry e = leaf.insert(value);
         leaf.close();
         if (e == null) return;
+
         BTreeDir root = new BTreeDir(tx, rootblk, dirRecordValueLayout);
         DirEntry e2 = root.insert(e);
         if (e2 != null) root.makeNewRoot(e2);
@@ -116,12 +117,10 @@ public class BTreeIndex implements Index {
      * The method first traverses the directory to find
      * the leaf page containing that record; then it
      * deletes the record from the page.
-     *
-     * @see Index#delete(simpledb.d_scans.Constant, RecordKey)
      */
-    public void delete(D_Constant dataval, RecordKey datarid) {
-        seek(dataval);
-        leaf.delete(datarid);
+    public void delete(D_Constant key, RecordKey value) {
+        seek(key);
+        leaf.delete(value);
         leaf.close();
     }
 

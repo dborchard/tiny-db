@@ -76,11 +76,11 @@ public class BTreeLeaf {
     /**
      * Deletes the leaf record having the specified dataRID
      *
-     * @param datarid the dataRId whose record is to be deleted
+     * @param value the dataRId whose record is to be deleted
      */
-    public void delete(RecordKey datarid) {
+    public void delete(RecordKey value) {
         while (next())
-            if (getDataRid().equals(datarid)) {
+            if (getDataRid().equals(value)) {
                 contents.delete(currentslot);
                 return;
             }
@@ -89,29 +89,31 @@ public class BTreeLeaf {
     /**
      * Inserts a new leaf record having the specified dataRID
      * and the previously-specified search key.
-     * If the record does not fit in the page, then
+     *
+     * DONE: If the record does not fit in the page, then
      * the page splits and the method returns the
      * directory entry for the new page;
      * otherwise, the method returns null.
-     * If all of the records in the page have the same dataval,
+     *
+     * DONE: If all of the records in the page have the same dataval,
      * then the block does not split; instead, all but one of the
      * records are placed into an overflow block.
      *
-     * @param datarid the dataRID value of the new record
+     * @param value the dataRID value of the new record
      * @return the directory entry of the newly-split page, if one exists.
      */
-    public DirEntry insert(RecordKey datarid) {
+    public DirEntry insert(RecordKey value) {
         if (contents.getFlag() >= 0 && contents.getDataVal(0).compareTo(searchkey) > 0) {
             D_Constant firstval = contents.getDataVal(0);
             BlockId newblk = contents.split(0, contents.getFlag());
             currentslot = 0;
             contents.setFlag(-1);
-            contents.insertLeaf(currentslot, searchkey, datarid);
+            contents.insertLeaf(currentslot, searchkey, value);
             return new DirEntry(firstval, newblk.number());
         }
 
         currentslot++;
-        contents.insertLeaf(currentslot, searchkey, datarid);
+        contents.insertLeaf(currentslot, searchkey, value);
         if (!contents.isFull())
             return null;
         // else page is full, so split it
