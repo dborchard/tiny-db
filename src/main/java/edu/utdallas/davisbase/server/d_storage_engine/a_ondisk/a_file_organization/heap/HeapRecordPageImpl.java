@@ -1,10 +1,8 @@
-package edu.utdallas.davisbase.server.d_storage_engine;
+package edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap;
 
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordValueLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordValueSchema;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
-import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.IRecordIterator;
+import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.IRecordPage;
 
 import static java.sql.Types.INTEGER;
 
@@ -13,13 +11,13 @@ import static java.sql.Types.INTEGER;
  *
  * @author Edward Sciore
  */
-public class HeapRecordIteratorImpl implements IRecordIterator {
+public class HeapRecordPageImpl implements IRecordPage {
     public static final int EMPTY = 0, USED = 1;
     private Transaction tx;
     private BlockId blk;
     private RecordValueLayout recordValueLayout;
 
-    public HeapRecordIteratorImpl(Transaction tx, BlockId blk, RecordValueLayout recordValueLayout) {
+    public HeapRecordPageImpl(Transaction tx, BlockId blk, RecordValueLayout recordValueLayout) {
         this.tx = tx;
         this.blk = blk;
         this.recordValueLayout = recordValueLayout;

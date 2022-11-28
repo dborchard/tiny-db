@@ -4,7 +4,7 @@ import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.Plan;
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.index.IndexInfo;
 import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.SelectUsingIndexScan;
-import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.TableScan;
+import edu.utdallas.davisbase.server.d_storage_engine.TableScan;
 import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
 import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.b_index.Index;
 import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordValueSchema;
