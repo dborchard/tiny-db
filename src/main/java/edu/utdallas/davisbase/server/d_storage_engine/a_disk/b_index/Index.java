@@ -11,12 +11,12 @@ import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization
 public interface Index {
 
     // CRUD
-    public void insert(D_Constant dataval, RecordKey datarid);
+    public void insert(D_Constant key, RecordKey value);
 
-    public void delete(D_Constant dataval, RecordKey datarid);
+    public void delete(D_Constant key, RecordKey value);
 
     // Iterator
-    public void seek(D_Constant searchkey);
+    public void seek(D_Constant key);
 
     public boolean next();
 

@@ -71,13 +71,13 @@ public class BTreeIndex implements Index {
         return 1 + (int) (Math.log(numblocks) / Math.log(rpb));
     }
 
-    public void seek(D_Constant searchkey) {
+    public void seek(D_Constant key) {
         close();
         BTreeDir root = new BTreeDir(tx, rootblk, dirRecordValueLayout);
-        int blknum = root.search(searchkey);
+        int blknum = root.search(key);
         root.close();
         BlockId leafblk = new BlockId(leaftbl, blknum);
-        leaf = new BTreeLeaf(tx, leafblk, leafRecordValueLayout, searchkey);
+        leaf = new BTreeLeaf(tx, leafblk, leafRecordValueLayout, key);
     }
 
     /**
@@ -100,9 +100,9 @@ public class BTreeIndex implements Index {
         return leaf.getDataRid();
     }
 
-    public void insert(D_Constant dataval, RecordKey datarid) {
-        seek(dataval);
-        DirEntry e = leaf.insert(datarid);
+    public void insert(D_Constant key, RecordKey value) {
+        seek(key);
+        DirEntry e = leaf.insert(value);
         leaf.close();
         if (e == null) return;
         BTreeDir root = new BTreeDir(tx, rootblk, dirRecordValueLayout);
@@ -119,9 +119,9 @@ public class BTreeIndex implements Index {
      *
      * @see Index#delete(simpledb.d_scans.Constant, RecordKey)
      */
-    public void delete(D_Constant dataval, RecordKey datarid) {
-        seek(dataval);
-        leaf.delete(datarid);
+    public void delete(D_Constant key, RecordKey value) {
+        seek(key);
+        leaf.delete(value);
         leaf.close();
     }
 

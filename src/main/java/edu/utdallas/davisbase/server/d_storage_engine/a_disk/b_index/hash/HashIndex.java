@@ -33,10 +33,10 @@ public class HashIndex implements Index {
         return numblocks / HashIndex.NUM_BUCKETS;
     }
 
-    public void seek(D_Constant searchkey) {
+    public void seek(D_Constant key) {
         close();
-        this.searchkey = searchkey;
-        int bucket = searchkey.hashCode() % NUM_BUCKETS;
+        this.searchkey = key;
+        int bucket = key.hashCode() % NUM_BUCKETS;
         String tblname = idxname + bucket;
         ts = new TableScan(tx, tblname, layout);
     }
@@ -52,17 +52,17 @@ public class HashIndex implements Index {
         return new RecordKey(blknum, id);
     }
 
-    public void insert(D_Constant val, RecordKey rid) {
-        seek(val);
+    public void insert(D_Constant key, RecordKey value) {
+        seek(key);
         ts.seekToHead_Insert();
-        ts.setInt("block", rid.blockNumber());
-        ts.setInt("id", rid.slot());
-        ts.setVal("dataval", val);
+        ts.setInt("block", value.blockNumber());
+        ts.setInt("id", value.slot());
+        ts.setVal("dataval", key);
     }
 
-    public void delete(D_Constant val, RecordKey rid) {
-        seek(val);
-        while (next()) if (getRecordId().equals(rid)) {
+    public void delete(D_Constant key, RecordKey value) {
+        seek(key);
+        while (next()) if (getRecordId().equals(value)) {
             ts.delete();
             return;
         }
