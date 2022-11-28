@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.server.b_query_engine.c_catalog.table;
 
-import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.regular.TableScan;
+import edu.utdallas.davisbase.server.d_storage_engine.TableRowScan;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueLayout;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueSchema;
@@ -59,14 +59,14 @@ public class TableMgr {
     public void createTable(String tblname, RecordValueSchema sch, Transaction tx) {
         RecordValueLayout layout = new RecordValueLayout(sch);
         // insert one record into tblcat
-        TableScan tcat = new TableScan(tx, "tblcat", tcatLayout);
+        TableRowScan tcat = new TableRowScan(tx, "tblcat", tcatLayout);
         tcat.seekToHead_Insert();
         tcat.setString("tblname", tblname);
         tcat.setInt("slotsize", layout.slotSize());
         tcat.close();
 
         // insert a record into fldcat for each field
-        TableScan fcat = new TableScan(tx, "fldcat", fcatLayout);
+        TableRowScan fcat = new TableRowScan(tx, "fldcat", fcatLayout);
         for (String fldname : sch.fields()) {
             fcat.seekToHead_Insert();
             fcat.setString("tblname", tblname);
@@ -88,7 +88,7 @@ public class TableMgr {
      */
     public RecordValueLayout getLayout(String tblname, Transaction tx) {
         int size = -1;
-        TableScan tcat = new TableScan(tx, "tblcat", tcatLayout);
+        TableRowScan tcat = new TableRowScan(tx, "tblcat", tcatLayout);
         while (tcat.next()) if (tcat.getString("tblname").equals(tblname)) {
             size = tcat.getInt("slotsize");
             break;
@@ -97,7 +97,7 @@ public class TableMgr {
 
         RecordValueSchema sch = new RecordValueSchema();
         Map<String, Integer> offsets = new HashMap<String, Integer>();
-        TableScan fcat = new TableScan(tx, "fldcat", fcatLayout);
+        TableRowScan fcat = new TableRowScan(tx, "fldcat", fcatLayout);
         while (fcat.next()) if (fcat.getString("tblname").equals(tblname)) {
             String fldname = fcat.getString("fldname");
             int fldtype = fcat.getInt("type");

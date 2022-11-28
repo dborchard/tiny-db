@@ -2,7 +2,7 @@ package edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organizatio
 
 import edu.utdallas.davisbase.server.d_storage_engine.b_common.b_file.BlockId;
 
-public interface IRecordIterator {
+public interface IRecordPage {
     // CRUD
     public int getInt(int slot, String fldname);
 

@@ -4,7 +4,7 @@ import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.Plan;
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.index.IndexInfo;
 import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.regular.SelectUsingIndexScan;
-import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.regular.TableScan;
+import edu.utdallas.davisbase.server.d_storage_engine.TableRowScan;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueSchema;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.b_index.Index;
 import edu.utdallas.davisbase.server.d_storage_engine.b_common.a_scans.Scan;
@@ -30,7 +30,7 @@ public class SelectWithIndexPlan implements Plan {
 
     public Scan open() {
         // throws an exception if p is not a tableplan.
-        TableScan ts = (TableScan) p.open();
+        TableRowScan ts = (TableRowScan) p.open();
         Index idx = ii.open();
         return new SelectUsingIndexScan(ts, idx, val);
     }

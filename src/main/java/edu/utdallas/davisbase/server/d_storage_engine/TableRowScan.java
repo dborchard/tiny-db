@@ -1,8 +1,8 @@
-package edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.regular;
+package edu.utdallas.davisbase.server.d_storage_engine;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.RecordIteratorImpl_Heap;
+import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.HeapRecordPage;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordKey;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueLayout;
 import edu.utdallas.davisbase.server.d_storage_engine.b_common.a_scans.UpdateScan;
@@ -16,14 +16,14 @@ import static java.sql.Types.INTEGER;
  *
  * @author sciore
  */
-public class TableScan implements UpdateScan {
+public class TableRowScan implements UpdateScan {
     private Transaction tx;
     private RecordValueLayout layout;
-    private RecordIteratorImpl_Heap rp;
+    private HeapRecordPage rp;
     private String filename;
     private int currentslot;
 
-    public TableScan(Transaction tx, String tblname, RecordValueLayout layout) {
+    public TableRowScan(Transaction tx, String tblname, RecordValueLayout layout) {
         this.tx = tx;
         this.layout = layout;
         filename = tblname + ".tbl";
@@ -98,11 +98,11 @@ public class TableScan implements UpdateScan {
         rp.delete(currentslot);
     }
 
-    public void moveToRid(RecordKey rid) {
+    public void moveToRid(RecordKey key) {
         close();
-        BlockId blk = new BlockId(filename, rid.blockNumber());
-        rp = new RecordIteratorImpl_Heap(tx, blk, layout);
-        currentslot = rid.slot();
+        BlockId blk = new BlockId(filename, key.blockNumber());
+        rp = new HeapRecordPage(tx, blk, layout);
+        currentslot = key.slot();
     }
 
     public RecordKey getRid() {
@@ -114,14 +114,14 @@ public class TableScan implements UpdateScan {
     private void moveToBlock(int blknum) {
         close();
         BlockId blk = new BlockId(filename, blknum);
-        rp = new RecordIteratorImpl_Heap(tx, blk, layout);
+        rp = new HeapRecordPage(tx, blk, layout);
         currentslot = -1;
     }
 
     private void moveToNewBlock() {
         close();
         BlockId blk = tx.append(filename);
-        rp = new RecordIteratorImpl_Heap(tx, blk, layout);
+        rp = new HeapRecordPage(tx, blk, layout);
         rp.format();
         currentslot = -1;
     }

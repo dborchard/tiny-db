@@ -3,7 +3,7 @@ package edu.utdallas.davisbase.server.b_query_engine.c_catalog;
 import edu.utdallas.davisbase.server.b_query_engine.SimpleDB;
 import edu.utdallas.davisbase.server.b_query_engine.b_stats_manager.domain.StatInfo;
 import edu.utdallas.davisbase.server.b_query_engine.c_catalog.index.IndexInfo;
-import edu.utdallas.davisbase.server.b_query_engine.d_sql_scans.regular.TableScan;
+import edu.utdallas.davisbase.server.d_storage_engine.TableRowScan;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueLayout;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueSchema;
@@ -41,7 +41,7 @@ public class MetadataMgrTest {
         }
 
         // Part 2: Statistics Metadata
-        TableScan ts = new TableScan(tx, "MyTable", layout);
+        TableRowScan ts = new TableRowScan(tx, "MyTable", layout);
         for (int i = 0; i < 50; i++) {
             ts.seekToHead_Insert();
             int n = (int) Math.round(Math.random() * 50);
