@@ -2,8 +2,8 @@ package edu.utdallas.davisbase.server.b_query_engine.impl.basic.d_sql_scans;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.A_Predicate;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
-import edu.utdallas.davisbase.server.d_storage_engine.common.a_scans.Scan;
-import edu.utdallas.davisbase.server.d_storage_engine.common.a_scans.UpdateScan;
+import edu.utdallas.davisbase.server.d_storage_engine.common.scans.Scan;
+import edu.utdallas.davisbase.server.d_storage_engine.common.scans.UpdateScan;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordKey;
 
 /**

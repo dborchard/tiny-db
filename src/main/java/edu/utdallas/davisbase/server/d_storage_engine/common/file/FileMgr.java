@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.d_storage_engine.common.b_file;
+package edu.utdallas.davisbase.server.d_storage_engine.common.file;
 
 import java.io.File;
 import java.io.FileNotFoundException;

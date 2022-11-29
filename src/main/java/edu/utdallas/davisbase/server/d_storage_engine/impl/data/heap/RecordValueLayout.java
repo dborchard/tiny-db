@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap;
 
 
-import edu.utdallas.davisbase.server.d_storage_engine.common.b_file.Page;
+import edu.utdallas.davisbase.server.d_storage_engine.common.file.Page;
 
 import java.util.HashMap;
 import java.util.Map;

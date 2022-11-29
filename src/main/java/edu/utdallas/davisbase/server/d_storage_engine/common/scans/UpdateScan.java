@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.d_storage_engine.common.a_scans;
+package edu.utdallas.davisbase.server.d_storage_engine.common.scans;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordKey;

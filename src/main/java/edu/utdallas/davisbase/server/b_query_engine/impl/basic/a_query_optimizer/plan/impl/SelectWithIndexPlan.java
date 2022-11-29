@@ -5,7 +5,7 @@ import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.c_catalog.index.IndexInfo;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.d_sql_scans.SelectUsingIndexScan;
 import edu.utdallas.davisbase.server.d_storage_engine.TableRowScan;
-import edu.utdallas.davisbase.server.d_storage_engine.common.a_scans.Scan;
+import edu.utdallas.davisbase.server.d_storage_engine.common.scans.Scan;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.index.IIndex;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueSchema;
 
