@@ -9,7 +9,7 @@ import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
  *
  * @author Edward Sciore
  */
-public interface Scan {
+public interface RScan {
 
     /**
      * Position the scan before its first record. A

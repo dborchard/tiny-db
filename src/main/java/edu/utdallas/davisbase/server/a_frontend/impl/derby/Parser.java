@@ -6,7 +6,7 @@ import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.C_Expressio
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.*;
 import edu.utdallas.davisbase.server.a_frontend.IParser;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,8 +2,8 @@ package edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimize
 
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.Plan;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.d_sql_scans.ProjectScan;
-import edu.utdallas.davisbase.server.d_storage_engine.common.scans.Scan;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.common.scans.RScan;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
 
 import java.util.List;
 
@@ -20,8 +20,8 @@ public class ProjectPlan implements Plan {
     }
 
 
-    public Scan open() {
-        Scan s = p.open();
+    public RScan open() {
+        RScan s = p.open();
         return new ProjectScan(s, recordValueSchema.fields());
     }
 

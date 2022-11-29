@@ -1,8 +1,8 @@
-package edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap;
+package edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap;
 
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.common.file.BlockId;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.IStorageEngine;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.IRecordPage;
 
 import static java.sql.Types.INTEGER;
 
@@ -11,13 +11,13 @@ import static java.sql.Types.INTEGER;
  *
  * @author Edward Sciore
  */
-public class HeapStorageEngineImpl implements IStorageEngine {
+public class HeapRecordPageImpl implements IRecordPage {
     public static final int EMPTY = 0, USED = 1;
     private Transaction tx;
     private BlockId blk;
     private RecordValueLayout recordValueLayout;
 
-    public HeapStorageEngineImpl(Transaction tx, BlockId blk, RecordValueLayout recordValueLayout) {
+    public HeapRecordPageImpl(Transaction tx, BlockId blk, RecordValueLayout recordValueLayout) {
         this.tx = tx;
         this.blk = blk;
         this.recordValueLayout = recordValueLayout;

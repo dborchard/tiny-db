@@ -1,21 +1,21 @@
 package edu.utdallas.davisbase.server.b_query_engine.impl.basic.d_sql_scans;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
-import edu.utdallas.davisbase.server.d_storage_engine.TableRowScan;
-import edu.utdallas.davisbase.server.d_storage_engine.common.scans.Scan;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.index.IIndex;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordKey;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.iterator.heap.HeapRecordScan;
+import edu.utdallas.davisbase.server.d_storage_engine.common.scans.RScan;
+import edu.utdallas.davisbase.server.d_storage_engine.RWIndexScan;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordKey;
 
 
-public class SelectUsingIndexScan implements Scan {
-    private final TableRowScan ts;
-    private final IIndex idx;
+public class SelectUsingIndexScan implements RScan {
+    private final HeapRecordScan ts;
+    private final RWIndexScan idx;
 
     // Start value of Index Field.
     private final D_Constant val;
 
 
-    public SelectUsingIndexScan(TableRowScan ts, IIndex idx, D_Constant val) {
+    public SelectUsingIndexScan(HeapRecordScan ts, RWIndexScan idx, D_Constant val) {
         this.ts = ts;
         this.idx = idx;
         this.val = val;

@@ -4,10 +4,10 @@ import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.b_stats_manager.domain.StatInfo;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.c_catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.TableRowScan;
-import edu.utdallas.davisbase.server.d_storage_engine.common.scans.Scan;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.iterator.heap.HeapRecordScan;
+import edu.utdallas.davisbase.server.d_storage_engine.common.scans.RScan;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
 
 /**
  * The Plan class corresponding to a table.
@@ -26,8 +26,8 @@ public class TablePlan implements Plan {
         recordValueLayout = md.getLayout(tblname, tx);
     }
 
-    public Scan open() {
-        return new TableRowScan(tx, tblname, recordValueLayout);
+    public RScan open() {
+        return new HeapRecordScan(tx, tblname, recordValueLayout);
     }
 
 

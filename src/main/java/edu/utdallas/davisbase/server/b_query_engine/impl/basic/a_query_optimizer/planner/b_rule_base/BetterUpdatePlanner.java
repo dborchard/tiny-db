@@ -10,9 +10,9 @@ import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.c_catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.c_catalog.index.IndexInfo;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.common.scans.UpdateScan;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.index.IIndex;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordKey;
+import edu.utdallas.davisbase.server.d_storage_engine.RWDataScan;
+import edu.utdallas.davisbase.server.d_storage_engine.RWIndexScan;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordKey;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -47,7 +47,7 @@ public class BetterUpdatePlanner implements UpdatePlanner {
         Plan p = new TablePlan(tx, tblname, mdm);
 
         // first, insert the record
-        UpdateScan s = (UpdateScan) p.open();
+        RWDataScan s = (RWDataScan) p.open();
         s.seekToHead_Insert();
 
         // then modify each field, inserting an index record if appropriate
@@ -60,7 +60,7 @@ public class BetterUpdatePlanner implements UpdatePlanner {
 
             IndexInfo ii = indexes.get(fldname);
             if (ii != null) {
-                IIndex idx = ii.open();
+                RWIndexScan idx = ii.open();
                 idx.insert(val, recordKey);
                 idx.close();
             }
@@ -75,14 +75,14 @@ public class BetterUpdatePlanner implements UpdatePlanner {
         p = new SelectPlan(p, data.pred());
         Map<String, IndexInfo> indexes = mdm.getIndexInfo(tblname, tx);
 
-        UpdateScan s = (UpdateScan) p.open();
+        RWDataScan s = (RWDataScan) p.open();
         int count = 0;
         while (s.next()) {
             // first, delete the record's RID from every index
             RecordKey recordKey = s.getRid();
             for (String fldname : indexes.keySet()) {
                 D_Constant val = s.getVal(fldname);
-                IIndex idx = indexes.get(fldname).open();
+                RWIndexScan idx = indexes.get(fldname).open();
                 idx.delete(val, recordKey);
                 idx.close();
             }
@@ -101,9 +101,9 @@ public class BetterUpdatePlanner implements UpdatePlanner {
         p = new SelectPlan(p, data.pred());
 
         IndexInfo ii = mdm.getIndexInfo(tblname, tx).get(fldname);
-        IIndex idx = (ii == null) ? null : ii.open();
+        RWIndexScan idx = (ii == null) ? null : ii.open();
 
-        UpdateScan s = (UpdateScan) p.open();
+        RWDataScan s = (RWDataScan) p.open();
         int count = 0;
         while (s.next()) {
             // first, update the record

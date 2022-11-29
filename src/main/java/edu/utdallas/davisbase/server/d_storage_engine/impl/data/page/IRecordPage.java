@@ -1,8 +1,8 @@
-package edu.utdallas.davisbase.server.d_storage_engine.impl.data;
+package edu.utdallas.davisbase.server.d_storage_engine.impl.data.page;
 
 import edu.utdallas.davisbase.server.d_storage_engine.common.file.BlockId;
 
-public interface IStorageEngine {
+public interface IRecordPage {
     // CRUD
     public int getInt(int slot, String fldname);
 

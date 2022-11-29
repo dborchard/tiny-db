@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.a_frontend.common.domain.clause;
 
-import edu.utdallas.davisbase.server.d_storage_engine.common.scans.Scan;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.common.scans.RScan;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
 
 /**
  * The interface corresponding to SQL expressions.
@@ -27,7 +27,7 @@ public class C_Expression {
      * @param s the scan
      * @return the value of the expression, as a Constant
      */
-    public D_Constant evaluate(Scan s) {
+    public D_Constant evaluate(RScan s) {
         return (val != null) ? val : s.getVal(fldname);
     }
 

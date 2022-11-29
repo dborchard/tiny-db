@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.server.a_frontend.common.domain.clause;
 
-import edu.utdallas.davisbase.server.d_storage_engine.common.scans.Scan;
+import edu.utdallas.davisbase.server.d_storage_engine.common.scans.RScan;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -46,7 +46,7 @@ public class A_Predicate {
      * @param s the scan
      * @return true if the predicate is true in the scan
      */
-    public boolean isSatisfied(Scan s) {
+    public boolean isSatisfied(RScan s) {
         for (B_Term t : terms)
             if (!t.isSatisfied(s)) return false;
         return true;

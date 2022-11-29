@@ -4,9 +4,9 @@ import edu.utdallas.davisbase.server.b_query_engine.impl.basic.b_stats_manager.S
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.b_stats_manager.domain.StatInfo;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.c_catalog.table.TableMgr;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.TableRowScan;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.iterator.heap.HeapRecordScan;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,7 +54,7 @@ public class IndexMgr {
      * @param tx      the calling transaction
      */
     public void createIndex(String idxname, String tblname, String fldname, Transaction tx) {
-        TableRowScan ts = new TableRowScan(tx, "idxcat", recordValueLayout);
+        HeapRecordScan ts = new HeapRecordScan(tx, "idxcat", recordValueLayout);
         ts.seekToHead_Insert();
         ts.setString("indexname", idxname);
         ts.setString("tablename", tblname);
@@ -72,7 +72,7 @@ public class IndexMgr {
      */
     public Map<String, IndexInfo> getIndexInfo(String tblname, Transaction tx) {
         Map<String, IndexInfo> result = new HashMap<String, IndexInfo>();
-        TableRowScan ts = new TableRowScan(tx, "idxcat", recordValueLayout);
+        HeapRecordScan ts = new HeapRecordScan(tx, "idxcat", recordValueLayout);
         while (ts.next()) if (ts.getString("tablename").equals(tblname)) {
             String idxname = ts.getString("indexname");
             String fldname = ts.getString("fieldname");

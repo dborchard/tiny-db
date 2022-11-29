@@ -5,8 +5,8 @@ import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.common.file.BlockId;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree.common.BTPage;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree.common.DirEntry;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordKey;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordKey;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueLayout;
 
 /**
  * An object that holds the contents of a B-tree leaf block.

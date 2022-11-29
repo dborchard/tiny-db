@@ -1,14 +1,15 @@
-package edu.utdallas.davisbase.server.d_storage_engine.common.scans;
+package edu.utdallas.davisbase.server.d_storage_engine;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordKey;
+import edu.utdallas.davisbase.server.d_storage_engine.common.scans.RScan;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordKey;
 
 /**
  * The interface implemented by all updateable scans.
  *
  * @author Edward Sciore
  */
-public interface UpdateScan extends Scan {
+public interface RWDataScan extends RScan {
     /**
      * Modify the field value of the current record.
      *

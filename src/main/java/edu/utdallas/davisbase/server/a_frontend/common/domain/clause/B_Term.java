@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.a_frontend.common.domain.clause;
 
-import edu.utdallas.davisbase.server.d_storage_engine.common.scans.Scan;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.common.scans.RScan;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
 
 /**
  * A term is a comparison between two expressions.
@@ -31,7 +31,7 @@ public class B_Term {
      * @param s the scan
      * @return true if both expressions have the same value in the scan
      */
-    public boolean isSatisfied(Scan s) {
+    public boolean isSatisfied(RScan s) {
         D_Constant lhsval = lhs.evaluate(s);
         D_Constant rhsval = rhs.evaluate(s);
         return rhsval.equals(lhsval);

@@ -6,8 +6,8 @@ import edu.utdallas.davisbase.server.b_query_engine.impl.basic.c_catalog.index.I
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.c_catalog.index.IndexMgr;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.c_catalog.table.TableMgr;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
 
 import java.util.Map;
 

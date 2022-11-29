@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap;
+package edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap;
 
 import java.util.ArrayList;
 import java.util.HashMap;

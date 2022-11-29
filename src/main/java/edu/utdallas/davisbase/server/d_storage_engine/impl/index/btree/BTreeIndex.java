@@ -1,13 +1,11 @@
-package edu.utdallas.davisbase.server.d_storage_engine;
+package edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordKey;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueSchema;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.index.IIndex;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree.BTreeDir;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree.BTreeLeaf;
+import edu.utdallas.davisbase.server.d_storage_engine.RWIndexScan;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordKey;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree.common.BTPage;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree.common.DirEntry;
 import edu.utdallas.davisbase.server.d_storage_engine.common.file.BlockId;
@@ -19,7 +17,7 @@ import static java.sql.Types.INTEGER;
  *
  * @author Edward Sciore
  */
-public class BTreeIndex implements IIndex {
+public class BTreeIndex implements RWIndexScan {
     private Transaction tx;
     private RecordValueLayout dirRecordValueLayout, leafRecordValueLayout;
     private String leaftbl;
@@ -85,7 +83,7 @@ public class BTreeIndex implements IIndex {
      * previously-specified search key.
      * Returns false if there are no more such leaf records.
      *
-     * @see IIndex#next()
+     * @see RWIndexScan#next()
      */
     public boolean next() {
         return leaf.next();
@@ -94,7 +92,7 @@ public class BTreeIndex implements IIndex {
     /**
      * Return the dataRID value from the current leaf record.
      *
-     * @see IIndex#getRecordId()
+     * @see RWIndexScan#getRecordId()
      */
     public RecordKey getRecordId() {
         return leaf.getDataRid();
@@ -128,7 +126,7 @@ public class BTreeIndex implements IIndex {
      * Close the index by closing its open leaf page,
      * if necessary.
      *
-     * @see IIndex#close()
+     * @see RWIndexScan#close()
      */
     public void close() {
         if (leaf != null) leaf.close();
