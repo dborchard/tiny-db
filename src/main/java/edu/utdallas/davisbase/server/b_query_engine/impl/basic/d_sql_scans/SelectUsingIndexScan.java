@@ -2,9 +2,9 @@ package edu.utdallas.davisbase.server.b_query_engine.impl.basic.d_sql_scans;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.d_storage_engine.TableScan;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
-import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.b_index.IIndex;
-import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordKey;
+import edu.utdallas.davisbase.server.d_storage_engine.common.a_scans.Scan;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.b_index.IIndex;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.a_file_organization.heap.RecordKey;
 
 
 public class SelectUsingIndexScan implements Scan {

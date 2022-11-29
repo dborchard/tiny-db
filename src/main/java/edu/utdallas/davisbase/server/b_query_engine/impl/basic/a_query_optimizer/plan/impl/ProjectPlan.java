@@ -2,8 +2,8 @@ package edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimize
 
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.Plan;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.d_sql_scans.ProjectScan;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.a_scans.Scan;
-import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.common.a_scans.Scan;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.a_file_organization.heap.RecordValueSchema;
 
 import java.util.List;
 

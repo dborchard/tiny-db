@@ -1,8 +1,8 @@
-package edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap;
+package edu.utdallas.davisbase.server.d_storage_engine.impl.a_file_organization.heap;
 
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.c_common.b_file.BlockId;
-import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.IStorageEngine;
+import edu.utdallas.davisbase.server.d_storage_engine.common.b_file.BlockId;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.a_file_organization.IStorageEngine;
 
 import static java.sql.Types.INTEGER;
 
