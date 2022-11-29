@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.a_frontend.impl.derby;
+package edu.utdallas.davisbase.server.a_frontend.impl.mysql;
 
 
 import edu.utdallas.davisbase.server.a_frontend.common.exception.BadSyntaxException;
@@ -14,7 +14,7 @@ import java.util.Collection;
  *
  * @author Edward Sciore
  */
-public class Lexer {
+public class DerbyLexer {
     private Collection<String> keywords;
     private StreamTokenizer tok;
 
@@ -23,7 +23,7 @@ public class Lexer {
      *
      * @param s the SQL statement
      */
-    public Lexer(String s) {
+    public DerbyLexer(String s) {
         initKeywords();
         tok = new StreamTokenizer(new StringReader(s));
         tok.ordinaryChar('.');   //disallow "." in identifiers

@@ -1,21 +1,22 @@
-package edu.utdallas.davisbase.server.a_frontend.impl.derby;
+package edu.utdallas.davisbase.server.a_frontend.impl.mysql;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.A_Predicate;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.B_Term;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.C_Expression;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.*;
+import edu.utdallas.davisbase.server.a_frontend.impl.IParser;
 import edu.utdallas.davisbase.server.d_storage_engine.a_disk.a_file_organization.heap.RecordValueSchema;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Parser {
-    private Lexer lex;
+public class DerbyParser implements IParser {
+    private DerbyLexer lex;
 
-    public Parser(String s) {
-        lex = new Lexer(s);
+    public DerbyParser(String s) {
+        lex = new DerbyLexer(s);
     }
 
     public String field() {

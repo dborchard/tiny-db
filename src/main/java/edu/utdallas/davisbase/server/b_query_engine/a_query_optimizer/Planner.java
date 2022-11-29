@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.*;
-import edu.utdallas.davisbase.server.a_frontend.impl.derby.Parser;
+import edu.utdallas.davisbase.server.a_frontend.impl.mysql.DerbyParser;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.Plan;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.QueryPlanner;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.UpdatePlanner;
@@ -18,13 +18,13 @@ public class Planner {
     }
 
     public Plan createQueryPlan(String qry, Transaction tx) {
-        Parser parser = new Parser(qry);
+        DerbyParser parser = new DerbyParser(qry);
         QueryData data = parser.queryCmd();
         return queryPlanner.createPlan(data, tx);
     }
 
     public int executeUpdate(String cmd, Transaction tx) {
-        Parser parser = new Parser(cmd);
+        DerbyParser parser = new DerbyParser(cmd);
         Object data = parser.updateCmd();
         if (data instanceof InsertData) return updatePlanner.executeInsert((InsertData) data, tx);
         else if (data instanceof DeleteData) return updatePlanner.executeDelete((DeleteData) data, tx);
