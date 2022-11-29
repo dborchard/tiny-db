@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.a_frontend.impl.mysql;
+package edu.utdallas.davisbase.server.a_frontend.impl.derby;
 
 
 import edu.utdallas.davisbase.server.a_frontend.common.exception.BadSyntaxException;

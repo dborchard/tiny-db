@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.*;
-import edu.utdallas.davisbase.server.a_frontend.impl.mysql.DerbyParser;
+import edu.utdallas.davisbase.server.a_frontend.impl.derby.DerbyParser;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.plan.Plan;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.QueryPlanner;
 import edu.utdallas.davisbase.server.b_query_engine.a_query_optimizer.planner.UpdatePlanner;
