@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.a_frontend.impl.mysql;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.*;
-import edu.utdallas.davisbase.server.a_frontend.impl.IParser;
+import edu.utdallas.davisbase.server.a_frontend.IParser;
 import edu.utdallas.davisbase.server.a_frontend.impl.mysql.visitors.QueryStatementVisitor;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;

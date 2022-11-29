@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.cli.utils;
 
-import edu.utdallas.davisbase.server.b_query_engine.e_dto.Table;
+import edu.utdallas.davisbase.server.b_query_engine.common.TableDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +103,7 @@ public class TablePrinter {
         this.maxColumnWidth = maxColumnWidth;
     }
 
-    public void print(Table table) {
+    public void print(TableDto table) {
         print(table.columnNames, table.rowValues);
     }
 

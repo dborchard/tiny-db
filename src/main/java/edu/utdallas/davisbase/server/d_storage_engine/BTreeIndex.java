@@ -5,7 +5,7 @@ import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordKey;
 import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordValueLayout;
 import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.a_file_organization.heap.RecordValueSchema;
-import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.b_index.Index;
+import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.b_index.IIndex;
 import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.b_index.btree.BTreeDir;
 import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.b_index.btree.BTreeLeaf;
 import edu.utdallas.davisbase.server.d_storage_engine.a_ondisk.b_index.btree.common.BTPage;
@@ -19,7 +19,7 @@ import static java.sql.Types.INTEGER;
  *
  * @author Edward Sciore
  */
-public class BTreeIndex implements Index {
+public class BTreeIndex implements IIndex {
     private Transaction tx;
     private RecordValueLayout dirRecordValueLayout, leafRecordValueLayout;
     private String leaftbl;
@@ -85,7 +85,7 @@ public class BTreeIndex implements Index {
      * previously-specified search key.
      * Returns false if there are no more such leaf records.
      *
-     * @see Index#next()
+     * @see IIndex#next()
      */
     public boolean next() {
         return leaf.next();
@@ -94,7 +94,7 @@ public class BTreeIndex implements Index {
     /**
      * Return the dataRID value from the current leaf record.
      *
-     * @see Index#getRecordId()
+     * @see IIndex#getRecordId()
      */
     public RecordKey getRecordId() {
         return leaf.getDataRid();
@@ -128,7 +128,7 @@ public class BTreeIndex implements Index {
      * Close the index by closing its open leaf page,
      * if necessary.
      *
-     * @see Index#close()
+     * @see IIndex#close()
      */
     public void close() {
         if (leaf != null) leaf.close();
