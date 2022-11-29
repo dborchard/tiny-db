@@ -1,14 +1,11 @@
 package edu.utdallas.davisbase.server.a_frontend.common.domain.commands;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.A_Predicate;
+import lombok.ToString;
 
 import java.util.List;
 
-/**
- * Data for the SQL <i>select</i> statement.
- *
- * @author Edward Sciore
- */
+@ToString
 public class QueryData {
     private List<String> fields;
     private String table;
