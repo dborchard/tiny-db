@@ -4,7 +4,7 @@ import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.b_stats_manager.domain.StatInfo;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.c_catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.TableScan;
+import edu.utdallas.davisbase.server.d_storage_engine.TableRowScan;
 import edu.utdallas.davisbase.server.d_storage_engine.common.a_scans.Scan;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.a_file_organization.heap.RecordValueLayout;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.a_file_organization.heap.RecordValueSchema;
@@ -27,7 +27,7 @@ public class TablePlan implements Plan {
     }
 
     public Scan open() {
-        return new TableScan(tx, tblname, recordValueLayout);
+        return new TableRowScan(tx, tblname, recordValueLayout);
     }
 
 

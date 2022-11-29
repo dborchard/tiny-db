@@ -16,14 +16,14 @@ import static java.sql.Types.INTEGER;
  *
  * @author sciore
  */
-public class TableScan implements UpdateScan {
+public class TableRowScan implements UpdateScan {
     private Transaction tx;
     private RecordValueLayout recordValueLayout;
     private HeapStorageEngineImpl rp;
     private String filename;
     private int currentSlot;
 
-    public TableScan(Transaction tx, String tblname, RecordValueLayout recordValueLayout) {
+    public TableRowScan(Transaction tx, String tblname, RecordValueLayout recordValueLayout) {
         this.tx = tx;
         this.recordValueLayout = recordValueLayout;
         filename = tblname + ".tbl";
