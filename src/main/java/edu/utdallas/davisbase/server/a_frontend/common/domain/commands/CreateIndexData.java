@@ -1,10 +1,13 @@
 package edu.utdallas.davisbase.server.a_frontend.common.domain.commands;
 
+import lombok.ToString;
+
 /**
  * The parser for the <i>create index</i> statement.
  *
  * @author Edward Sciore
  */
+@ToString
 public class CreateIndexData {
     private String idxname, tblname, fldname;
 

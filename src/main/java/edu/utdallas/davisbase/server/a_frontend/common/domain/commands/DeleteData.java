@@ -1,12 +1,14 @@
 package edu.utdallas.davisbase.server.a_frontend.common.domain.commands;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.A_Predicate;
+import lombok.ToString;
 
 /**
  * Data for the SQL <i>delete</i> statement.
  *
  * @author Edward Sciore
  */
+@ToString
 public class DeleteData {
     private String tblname;
     private A_Predicate pred;
