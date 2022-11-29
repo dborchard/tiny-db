@@ -10,12 +10,11 @@ import org.apache.shardingsphere.sql.parser.autogen.MySQLStatementParser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class QueryStatementVisitor extends MySQLStatementBaseVisitor {
     private final MySQLStatementParser parser;
-    private List<String> fields;
+    private final List<String> fields;
     private String table;
     private A_Predicate pred;
 
@@ -24,6 +23,8 @@ public class QueryStatementVisitor extends MySQLStatementBaseVisitor {
 
         this.table = "";
         this.fields = new ArrayList<>();
+        this.pred = new A_Predicate();
+
     }
 
     @Override
@@ -39,24 +40,17 @@ public class QueryStatementVisitor extends MySQLStatementBaseVisitor {
         return super.visitProjection(ctx);
     }
 
+
     @Override
-    public Object visitWhereClause(MySQLStatementParser.WhereClauseContext ctx) {
-        System.out.println("Point 2" + ctx.toStringTree(parser));
-
-        if (ctx.expr().expr().size() == 0) {
-            B_Term term = getTerm(ctx);
-            this.pred = new A_Predicate(term);
-        } else {
-            this.pred = new A_Predicate();
-            List<B_Term> terms = ctx.expr().expr().stream().map(e -> getTerm(ctx)).collect(Collectors.toList());
-            terms.forEach(e -> pred.conjoinWith(new A_Predicate(e)));
+    public Object visitExpr(MySQLStatementParser.ExprContext ctx) {
+        if (ctx.booleanPrimary() != null && ctx.booleanPrimary().comparisonOperator() != null && ctx.booleanPrimary().comparisonOperator() != null && ctx.booleanPrimary().comparisonOperator().getText().equals("=")) {
+            B_Term term = getTerm(ctx.booleanPrimary());
+            pred.conjoinWith(new A_Predicate(term));
         }
-
-        return super.visitWhereClause(ctx);
+        return super.visitExpr(ctx);
     }
 
-    private static B_Term getTerm(MySQLStatementParser.WhereClauseContext ctx) {
-        MySQLStatementParser.BooleanPrimaryContext term = ctx.expr().booleanPrimary();
+    private B_Term getTerm(MySQLStatementParser.BooleanPrimaryContext term) {
         MySQLStatementParser.BooleanPrimaryContext lhs = term.booleanPrimary();
         MySQLStatementParser.PredicateContext rhs = term.predicate();
 
@@ -64,6 +58,7 @@ public class QueryStatementVisitor extends MySQLStatementBaseVisitor {
         C_Expression rhsExp = new C_Expression(rhs.getText());
         return new B_Term(lhsExp, rhsExp);
     }
+
 
     public QueryData getValue() {
         return new QueryData(fields, table, pred);

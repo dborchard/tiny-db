@@ -9,7 +9,7 @@ import org.apache.shardingsphere.sql.parser.mysql.parser.MySQLLexer;
 public class AntlrTest {
 
     public static void main(String[] args) throws Exception {
-        String sql = "SELECT A,B from T1 where A=10;";
+        String sql = "SELECT A,B,C from T1 where A=10 AND B=15 AND C=1;";
         MySQLLexer lexer = new MySQLLexer(CharStreams.fromString(sql));
         MySQLStatementParser parser = new MySQLStatementParser(new CommonTokenStream(lexer));
 
