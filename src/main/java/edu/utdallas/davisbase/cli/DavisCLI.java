@@ -1,8 +1,9 @@
 package edu.utdallas.davisbase.cli;
 
 import edu.utdallas.davisbase.cli.utils.TablePrinter;
-import edu.utdallas.davisbase.server.b_query_engine.impl.basic.BasicQueryEngine;
+import edu.utdallas.davisbase.server.b_query_engine.IQueryEngine;
 import edu.utdallas.davisbase.server.b_query_engine.common.TableDto;
+import edu.utdallas.davisbase.server.b_query_engine.impl.basic.BasicQueryEngine;
 
 import java.util.Scanner;
 
@@ -11,7 +12,7 @@ public class DavisCLI {
     public static void run(String[] args) {
         // Create Database
         String dirname = (args.length == 0) ? "davisdb" : args[0];
-        BasicQueryEngine db = new BasicQueryEngine(dirname);
+        IQueryEngine db = new BasicQueryEngine(dirname);
 
         // Parse Queries
         cliLoop(db);
@@ -20,7 +21,7 @@ public class DavisCLI {
         db.close();
     }
 
-    private static void cliLoop(BasicQueryEngine db) {
+    private static void cliLoop(IQueryEngine db) {
         Scanner scanner = new Scanner(System.in).useDelimiter(";");
         TablePrinter tablePrinter = new TablePrinter();
         while (true) {
