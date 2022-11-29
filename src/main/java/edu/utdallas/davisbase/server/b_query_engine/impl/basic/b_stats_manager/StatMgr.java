@@ -3,7 +3,7 @@ package edu.utdallas.davisbase.server.b_query_engine.impl.basic.b_stats_manager;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.b_stats_manager.domain.StatInfo;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.c_catalog.table.TableMgr;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.a_file_organization.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueLayout;
 
 import java.util.HashMap;
 import java.util.Map;

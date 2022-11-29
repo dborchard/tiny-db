@@ -4,9 +4,9 @@ import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.common.a_scans.UpdateScan;
 import edu.utdallas.davisbase.server.d_storage_engine.common.b_file.BlockId;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.a_file_organization.heap.HeapStorageEngineImpl;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.a_file_organization.heap.RecordKey;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.a_file_organization.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.HeapStorageEngineImpl;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordKey;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueLayout;
 
 import static java.sql.Types.INTEGER;
 

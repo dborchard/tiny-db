@@ -4,7 +4,7 @@ import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.A_Predicate
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.Plan;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.d_sql_scans.SelectScan;
 import edu.utdallas.davisbase.server.d_storage_engine.common.a_scans.Scan;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.a_file_organization.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueSchema;
 
 /**
  * The Plan class corresponding to the <i>select</i>

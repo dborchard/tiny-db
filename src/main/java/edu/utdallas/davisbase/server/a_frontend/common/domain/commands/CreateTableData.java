@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.server.a_frontend.common.domain.commands;
 
-import edu.utdallas.davisbase.server.d_storage_engine.impl.a_file_organization.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueSchema;
 
 /**
  * Data for the SQL <i>create table</i> statement.

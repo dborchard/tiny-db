@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.a_frontend.common.domain.clause;
 
 import edu.utdallas.davisbase.server.d_storage_engine.common.a_scans.Scan;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.a_file_organization.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueSchema;
 
 /**
  * A term is a comparison between two expressions.

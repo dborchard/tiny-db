@@ -6,8 +6,8 @@ import edu.utdallas.davisbase.server.b_query_engine.impl.basic.c_catalog.Metadat
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.TableRowScan;
 import edu.utdallas.davisbase.server.d_storage_engine.common.a_scans.Scan;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.a_file_organization.heap.RecordValueLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.a_file_organization.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.RecordValueSchema;
 
 /**
  * The Plan class corresponding to a table.

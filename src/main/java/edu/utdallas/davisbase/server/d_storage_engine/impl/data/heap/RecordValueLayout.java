@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.d_storage_engine.impl.a_file_organization.heap;
+package edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap;
 
 
 import edu.utdallas.davisbase.server.d_storage_engine.common.b_file.Page;
