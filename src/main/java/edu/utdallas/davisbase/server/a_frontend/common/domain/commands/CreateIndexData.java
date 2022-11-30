@@ -47,4 +47,4 @@ public class CreateIndexData {
         return fldname;
     }
 }
-
+//ok

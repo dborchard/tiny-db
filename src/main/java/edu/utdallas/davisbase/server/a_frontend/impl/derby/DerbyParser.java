@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Parser implements IParser {
-    private Lexer lex;
+public class DerbyParser implements IParser {
+    private DerbyLexer lex;
 
-    public Parser(String s) {
-        lex = new Lexer(s);
+    public DerbyParser(String s) {
+        lex = new DerbyLexer(s);
     }
 
     public String field() {

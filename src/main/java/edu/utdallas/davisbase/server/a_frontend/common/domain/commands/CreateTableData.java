@@ -1,12 +1,14 @@
 package edu.utdallas.davisbase.server.a_frontend.common.domain.commands;
 
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
+import lombok.ToString;
 
 /**
  * Data for the SQL <i>create table</i> statement.
  *
  * @author Edward Sciore
  */
+@ToString
 public class CreateTableData {
     private String tblname;
     private RecordValueSchema sch;

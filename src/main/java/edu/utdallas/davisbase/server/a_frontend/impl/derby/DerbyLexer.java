@@ -14,7 +14,7 @@ import java.util.Collection;
  *
  * @author Edward Sciore
  */
-public class Lexer {
+public class DerbyLexer {
     private Collection<String> keywords;
     private StreamTokenizer tok;
 
@@ -23,7 +23,7 @@ public class Lexer {
      *
      * @param s the SQL statement
      */
-    public Lexer(String s) {
+    public DerbyLexer(String s) {
         initKeywords();
         tok = new StreamTokenizer(new StringReader(s));
         tok.ordinaryChar('.');   //disallow "." in identifiers

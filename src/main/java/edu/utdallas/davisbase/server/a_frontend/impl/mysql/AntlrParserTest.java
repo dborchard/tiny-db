@@ -8,21 +8,24 @@ import org.apache.shardingsphere.sql.parser.mysql.parser.MySQLLexer;
 public class AntlrParserTest {
 
     public static void main(String[] args) {
-        outputCommand("SELECT A,B,C from T1 where A=10 AND B=15 AND C=1;");
-        outputCommand("DELETE from T1 where A=10;");
-        outputCommand("CREATE INDEX A_IDX on T2(A);");
+        outputCommand("SELECT A,B,C from T1 where A=1;");
+//        outputCommand("DELETE from T1 where A=10;");
+//        outputCommand("CREATE INDEX A_IDX on T2(A);");
+//        outputCommand("insert into T2 (A, B) values (1, 'Alice');");
+//        outputCommand("update T1 SET A=1 where A=2;");
+//        outputCommand("create table T2 ( A int, B varchar(9) );");
     }
 
-    private static void outputCommand(String sql1) {
-        MySQLLexer lexer = new MySQLLexer(CharStreams.fromString(sql1));
+    private static void outputCommand(String sql) {
+        MySQLLexer lexer = new MySQLLexer(CharStreams.fromString(sql));
         MySQLStatementParser parser = new MySQLStatementParser(new CommonTokenStream(lexer));
-
-        SQLStatementVisitor tableNameListener = new SQLStatementVisitor(parser);
         MySQLStatementParser.ExecuteContext execute = parser.execute();
-        System.out.println(execute.toStringTree(parser));
-        tableNameListener.visit(execute);
 
-        System.out.println(tableNameListener.getValue().toString());
+        SQLStatementVisitor sqlStatementVisitor = new SQLStatementVisitor(parser);
+        System.out.println(execute.toStringTree(parser));
+        sqlStatementVisitor.visit(execute);
+
+        System.out.println(sqlStatementVisitor.getValue().toString());
     }
 
 }

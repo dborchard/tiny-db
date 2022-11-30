@@ -1,6 +1,7 @@
 package edu.utdallas.davisbase.server.a_frontend.common.domain.commands;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
  *
  * @author Edward Sciore
  */
+@ToString
 public class InsertData {
     private String tblname;
     private List<String> flds;

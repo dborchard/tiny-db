@@ -20,7 +20,9 @@ public interface RWIndexScan {
 
     public boolean next();
 
+    public RecordKey getRecordId();
+
+
     public void close();
 
-    public RecordKey getRecordId();
 }

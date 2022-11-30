@@ -4,9 +4,9 @@ package edu.utdallas.davisbase.server.a_frontend.impl.mysql;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.A_Predicate;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.B_Term;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.C_Expression;
-import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.CreateIndexData;
-import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.DeleteData;
-import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.QueryData;
+import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
+import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.*;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
 import org.apache.shardingsphere.sql.parser.autogen.MySQLStatementBaseVisitor;
 import org.apache.shardingsphere.sql.parser.autogen.MySQLStatementParser;
 
@@ -29,6 +29,18 @@ public class SQLStatementVisitor extends MySQLStatementBaseVisitor {
     private String indexName;
     private String indexFieldName;
 
+    // Insert
+    private final List<String> insertFields;
+    private final List<D_Constant> insertValues;
+
+    // Modify
+    private C_Expression updateFieldValue;
+    private String updateFieldName;
+
+
+    // Create Table
+    private RecordValueSchema schema;
+
     public SQLStatementVisitor(MySQLStatementParser parser) {
         this.parser = parser;
 
@@ -39,6 +51,13 @@ public class SQLStatementVisitor extends MySQLStatementBaseVisitor {
 
         this.indexName = "";
         this.indexFieldName = "";
+
+        this.insertFields = new ArrayList<>();
+        this.insertValues = new ArrayList<>();
+
+        this.updateFieldName = "";
+
+        this.schema = new RecordValueSchema();
     }
 
     // COMMAND TYPE
@@ -109,13 +128,22 @@ public class SQLStatementVisitor extends MySQLStatementBaseVisitor {
         MySQLStatementParser.PredicateContext rhs = term.predicate();
 
         C_Expression lhsExp = new C_Expression(lhs.getText());
-        C_Expression rhsExp = new C_Expression(rhs.getText());
+        C_Expression rhsExp = null;
+
+        System.out.println(rhs.toStringTree(parser));
+        if (rhs.bitExpr() != null && rhs.bitExpr(0).simpleExpr() != null && rhs.bitExpr(0).simpleExpr().literals() != null && rhs.bitExpr(0).simpleExpr().literals().numberLiterals() != null && !rhs.bitExpr(0).simpleExpr().literals().numberLiterals().isEmpty()) {
+            // Number
+            Integer num = Integer.parseInt(rhs.getText());
+            rhsExp = new C_Expression(new D_Constant(num));
+        } else if (rhs.bitExpr() != null && rhs.bitExpr(0).simpleExpr() != null && rhs.bitExpr(0).simpleExpr().literals() != null && rhs.bitExpr(0).simpleExpr().literals().stringLiterals() != null && !rhs.bitExpr(0).simpleExpr().literals().stringLiterals().isEmpty()) {
+            // String
+            rhsExp = new C_Expression(new D_Constant(rhs.getText()));
+        }
+
         return new B_Term(lhsExp, rhsExp);
     }
 
     // Command Attributes for CreateIndex
-
-
     @Override
     public Object visitIndexName(MySQLStatementParser.IndexNameContext ctx) {
         this.indexName = ctx.getText();
@@ -128,6 +156,56 @@ public class SQLStatementVisitor extends MySQLStatementBaseVisitor {
         return super.visitKeyPart(ctx);
     }
 
+    // Command Attributes for Insert & Part of Update
+    @Override
+    public Object visitInsertIdentifier(MySQLStatementParser.InsertIdentifierContext ctx) {
+        this.insertFields.add(ctx.getText());
+        return super.visitInsertIdentifier(ctx);
+    }
+
+    @Override
+    public Object visitNumberLiterals(MySQLStatementParser.NumberLiteralsContext ctx) {
+        this.insertValues.add(new D_Constant(Integer.parseInt(ctx.getText())));
+        this.updateFieldValue = new C_Expression(new D_Constant(Integer.parseInt(ctx.getText())));
+
+        return super.visitNumberLiterals(ctx);
+    }
+
+    @Override
+    public Object visitStringLiterals(MySQLStatementParser.StringLiteralsContext ctx) {
+        this.insertValues.add(new D_Constant(ctx.getText()));
+        this.updateFieldValue = new C_Expression(new D_Constant(ctx.getText()));
+
+        return super.visitStringLiterals(ctx);
+    }
+
+    // Command Attributes for Update
+    @Override
+    public Object visitAssignment(MySQLStatementParser.AssignmentContext ctx) {
+        this.updateFieldName = ctx.columnRef().getText();
+        return super.visitAssignment(ctx);
+    }
+
+
+    // Command Create Table
+    @Override
+    public Object visitColumnDefinition(MySQLStatementParser.ColumnDefinitionContext ctx) {
+        String fieldName = ctx.column_name.getText();
+        String dataType = ctx.fieldDefinition().dataType().getText();
+        if (dataType.equals("int")) {
+            schema.addIntField(fieldName);
+        } else if (dataType.startsWith("varchar")) {
+            dataType = dataType.substring("varchar".length());
+            dataType = dataType.replace("(", "");
+            dataType = dataType.replace(")", "");
+            int length = Integer.parseInt(dataType);
+            schema.addStringField(fieldName, length);
+        } else {
+            throw new RuntimeException("Unsupported Column Type");
+        }
+        return super.visitColumnDefinition(ctx);
+    }
+
     public Object getValue() {
         switch (commandType) {
             case QUERY:
@@ -136,6 +214,12 @@ public class SQLStatementVisitor extends MySQLStatementBaseVisitor {
                 return new DeleteData(tableName, predicate);
             case CREATE_INDEX:
                 return new CreateIndexData(indexName, tableName, indexFieldName);
+            case INSERT:
+                return new InsertData(tableName, insertFields, insertValues);
+            case MODIFY:
+                return new ModifyData(tableName, updateFieldName, updateFieldValue, predicate);
+            case CREATE_TABLE:
+                return new CreateTableData(tableName, schema);
         }
         return new QueryData(selectFields, tableName, predicate);
     }

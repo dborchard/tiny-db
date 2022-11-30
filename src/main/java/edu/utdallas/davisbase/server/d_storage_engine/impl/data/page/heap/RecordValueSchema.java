@@ -1,5 +1,7 @@
 package edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap;
 
+import lombok.ToString;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +18,7 @@ import static java.sql.Types.VARCHAR;
  *
  * @author Edward Sciore
  */
+@ToString
 public class RecordValueSchema {
     private final List<String> fields = new ArrayList<>();
     private final Map<String, FieldInfo> info = new HashMap<>();
@@ -126,6 +129,7 @@ public class RecordValueSchema {
         return info.get(fldname).length;
     }
 
+    @ToString
     class FieldInfo {
         int type, length;
 

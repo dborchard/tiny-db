@@ -29,6 +29,15 @@ public class BetterQueryPlanner implements QueryPlanner {
 
     public Plan createPlan(QueryData data, Transaction tx) {
 
+        //TODO: issue with SELECT with Index and NonIndex field
+        /*
+        create table T2 ( A int, B varchar(9) );
+        create index A_IDX on T2(A);
+        insert into T2 (A, B) values (1, 'Alice');
+        insert into T2 (A, B) values (2, 'Bob');
+        select A,B from T2;
+        select A,B from T2 where A=2 and B='Alice';
+        * */
         Plan p = new TablePlan(tx, data.table(), mdm);
 
         boolean indexFound = false;
