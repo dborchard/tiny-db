@@ -21,14 +21,14 @@ public class Planner {
     public Plan createQueryPlan(String qry, Transaction tx) {
         IParser parser = new SqlLiteParser(qry);
         QueryData data = parser.queryCmd();
-        System.out.println(data);
+//        System.out.println(data);
         return queryPlanner.createPlan(data, tx);
     }
 
     public int executeUpdate(String cmd, Transaction tx) {
         IParser parser = new SqlLiteParser(cmd);
         Object data = parser.updateCmd();
-        System.out.println(data);
+//        System.out.println(data);
         if (data instanceof InsertData) return updatePlanner.executeInsert((InsertData) data, tx);
         else if (data instanceof DeleteData) return updatePlanner.executeDelete((DeleteData) data, tx);
         else if (data instanceof ModifyData) return updatePlanner.executeModify((ModifyData) data, tx);

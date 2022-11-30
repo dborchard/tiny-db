@@ -130,7 +130,6 @@ public class SQLStatementVisitor extends MySQLStatementBaseVisitor {
         C_Expression lhsExp = new C_Expression(lhs.getText());
         C_Expression rhsExp = null;
 
-        System.out.println(rhs.toStringTree(parser));
         if (rhs.bitExpr() != null && rhs.bitExpr(0).simpleExpr() != null && rhs.bitExpr(0).simpleExpr().literals() != null && rhs.bitExpr(0).simpleExpr().literals().numberLiterals() != null && !rhs.bitExpr(0).simpleExpr().literals().numberLiterals().isEmpty()) {
             // Number
             Integer num = Integer.parseInt(rhs.getText());
