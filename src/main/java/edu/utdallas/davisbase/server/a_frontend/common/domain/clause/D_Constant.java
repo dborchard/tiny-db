@@ -21,7 +21,7 @@ public class D_Constant implements Comparable<D_Constant> , Serializable {
         this.sval = sval;
     }
 
-    public int asInt() {
+    public Integer asInt() {
         return ival;
     }
 

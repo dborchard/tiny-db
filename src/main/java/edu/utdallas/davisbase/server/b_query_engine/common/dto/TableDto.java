@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.b_query_engine.common;
+package edu.utdallas.davisbase.server.b_query_engine.common.dto;
 
 import java.util.List;
 

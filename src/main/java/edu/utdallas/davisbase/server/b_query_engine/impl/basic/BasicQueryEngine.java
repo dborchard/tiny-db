@@ -1,14 +1,14 @@
 package edu.utdallas.davisbase.server.b_query_engine.impl.basic;
 
 import edu.utdallas.davisbase.server.b_query_engine.IQueryEngine;
-import edu.utdallas.davisbase.server.b_query_engine.common.TableDto;
-import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.Planner;
+import edu.utdallas.davisbase.server.b_query_engine.common.dto.TableDto;
+import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.BasicPlanner;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.Plan;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.planner.QueryPlanner;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.planner.UpdatePlanner;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.planner.b_rule_base.BetterQueryPlanner;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.planner.b_rule_base.BetterUpdatePlanner;
-import edu.utdallas.davisbase.server.b_query_engine.impl.basic.c_catalog.MetadataMgr;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.common.scans.RScan;
 import edu.utdallas.davisbase.server.d_storage_engine.common.file.FileMgr;
@@ -25,7 +25,7 @@ public class BasicQueryEngine implements IQueryEngine {
     public static int BLOCK_SIZE = 512;
 
     private final FileMgr fm;
-    private final Planner planner;
+    private final BasicPlanner planner;
 
     public BasicQueryEngine(String dirname) {
         File dbDirectory = new File(dirname);
@@ -35,7 +35,7 @@ public class BasicQueryEngine implements IQueryEngine {
         MetadataMgr mdm = new MetadataMgr(fm.isNew(), tx);
         QueryPlanner qp = new BetterQueryPlanner(mdm);
         UpdatePlanner up = new BetterUpdatePlanner(mdm);
-        planner = new Planner(qp, up);
+        planner = new BasicPlanner(qp, up);
 
         tx.commit();
     }

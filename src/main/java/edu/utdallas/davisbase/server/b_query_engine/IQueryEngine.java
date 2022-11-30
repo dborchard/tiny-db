@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.server.b_query_engine;
 
-import edu.utdallas.davisbase.server.b_query_engine.common.TableDto;
+import edu.utdallas.davisbase.server.b_query_engine.common.dto.TableDto;
 
 /**
  * Query Engine interface. We can implement using Calcite or Custom.

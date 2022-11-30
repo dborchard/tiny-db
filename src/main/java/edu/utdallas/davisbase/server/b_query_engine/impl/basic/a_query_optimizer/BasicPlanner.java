@@ -14,11 +14,11 @@ import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
  *
  * @author Edward Sciore
  */
-public class Planner {
+public class BasicPlanner {
     private final QueryPlanner queryPlanner;
     private final UpdatePlanner updatePlanner;
 
-    public Planner(QueryPlanner queryPlanner, UpdatePlanner updatePlanner) {
+    public BasicPlanner(QueryPlanner queryPlanner, UpdatePlanner updatePlanner) {
         this.queryPlanner = queryPlanner;
         this.updatePlanner = updatePlanner;
     }

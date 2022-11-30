@@ -4,7 +4,7 @@ package edu.utdallas.davisbase.cli;
 
 import edu.utdallas.davisbase.cli.utils.TablePrinter;
 import edu.utdallas.davisbase.server.b_query_engine.IQueryEngine;
-import edu.utdallas.davisbase.server.b_query_engine.common.TableDto;
+import edu.utdallas.davisbase.server.b_query_engine.common.dto.TableDto;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.BasicQueryEngine;
 
 import java.util.Scanner;

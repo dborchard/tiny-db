@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.cli.utils;
 
-import edu.utdallas.davisbase.server.b_query_engine.common.TableDto;
+import edu.utdallas.davisbase.server.b_query_engine.common.dto.TableDto;
 
 import java.util.ArrayList;
 import java.util.List;

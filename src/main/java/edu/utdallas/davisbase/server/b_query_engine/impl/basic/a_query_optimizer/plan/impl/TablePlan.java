@@ -2,7 +2,7 @@ package edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimize
 
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.Plan;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.b_stats_manager.domain.StatInfo;
-import edu.utdallas.davisbase.server.b_query_engine.impl.basic.c_catalog.MetadataMgr;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.iterator.heap.HeapRecordScan;
 import edu.utdallas.davisbase.server.d_storage_engine.common.scans.RScan;

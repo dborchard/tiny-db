@@ -23,7 +23,16 @@ public class BPlusTreeIndex implements RWIndexScan {
     Iterator<byte[]> iterator;
 
     public BPlusTreeIndex(Transaction tx, String idxname, RecordValueLayout leafRecordValueLayout) {
-        tree = BPlusTree.file().directory("davisdb").maxLeafKeys(32).maxNonLeafKeys(8).segmentSizeMB(1).keySerializer(Serializer.bytes(100)).valueSerializer(Serializer.bytes(100)).naturalOrder();
+        tree = BPlusTree.file().directory("davisdb").maxLeafKeys(32).maxNonLeafKeys(8).segmentSizeMB(1).keySerializer(Serializer.bytes(100)).valueSerializer(Serializer.bytes(100)).comparator((left, right) -> {
+            for (int i = 0, j = 0; i < left.length && j < right.length; i++, j++) {
+                int a = (left[i] & 0xff);
+                int b = (right[j] & 0xff);
+                if (a != b) {
+                    return a - b;
+                }
+            }
+            return left.length - right.length;
+        });
     }
 
     @Override

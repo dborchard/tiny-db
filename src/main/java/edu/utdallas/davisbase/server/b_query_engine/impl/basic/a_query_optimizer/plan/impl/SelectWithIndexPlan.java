@@ -2,7 +2,7 @@ package edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimize
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.Plan;
-import edu.utdallas.davisbase.server.b_query_engine.impl.basic.c_catalog.index.IndexInfo;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.index.IndexInfo;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.d_sql_scans.SelectUsingIndexScan;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.iterator.heap.HeapRecordScan;
 import edu.utdallas.davisbase.server.d_storage_engine.common.scans.RScan;

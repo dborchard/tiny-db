@@ -8,8 +8,8 @@ import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.impl.SelectWithIndexPlan;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.impl.TablePlan;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.planner.QueryPlanner;
-import edu.utdallas.davisbase.server.b_query_engine.impl.basic.c_catalog.MetadataMgr;
-import edu.utdallas.davisbase.server.b_query_engine.impl.basic.c_catalog.index.IndexInfo;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.MetadataMgr;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.index.IndexInfo;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 
 import java.util.Map;
