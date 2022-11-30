@@ -6,7 +6,7 @@ import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.Record
 /**
  * This interface contains methods to traverse an index.
  *
- * @author Edward Sciore
+ * @author Edward Sciore,Arjun Sunil Kumar
  */
 public interface RWIndexScan {
 

@@ -5,6 +5,11 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.shardingsphere.sql.parser.autogen.MySQLStatementParser;
 import org.apache.shardingsphere.sql.parser.mysql.parser.MySQLLexer;
 
+/**
+ * Test to verify ANTLR is working fine.
+ *
+ * @author Arjun Sunil Kumar
+ */
 public class AntlrParserTest {
 
     public static void main(String[] args) {

@@ -7,7 +7,11 @@ import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.Record
 
 import java.util.List;
 
-
+/**
+ * Projection - Subset of columns.
+ *
+ * @author Edward Sciore, Arjun Sunil Kumar
+ */
 public class ProjectPlan implements Plan {
     private Plan p;
     private RecordValueSchema recordValueSchema = new RecordValueSchema();

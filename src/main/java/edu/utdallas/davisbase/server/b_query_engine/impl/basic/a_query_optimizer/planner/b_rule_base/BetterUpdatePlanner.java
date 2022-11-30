@@ -17,12 +17,11 @@ import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.Record
 import java.util.Iterator;
 import java.util.Map;
 
+
 /**
- * A modification of the basic update planner.
- * It dispatches each update statement to the corresponding
- * index planner.
+ * The Update Planner with Indexes.
  *
- * @author Edward Sciore
+ * @author Edward Sciore, Arjun Sunil Kumar
  */
 public class BetterUpdatePlanner implements UpdatePlanner {
     private MetadataMgr mdm;

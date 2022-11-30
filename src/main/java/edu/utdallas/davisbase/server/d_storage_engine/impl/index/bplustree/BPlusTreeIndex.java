@@ -11,13 +11,19 @@ import edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.utils
 
 import java.util.Iterator;
 
+
+/**
+ * B+ tree index using https://github.com/davidmoten/bplustree
+ *
+ * @author Arjun Sunil Kumar
+ */
 public class BPlusTreeIndex implements RWIndexScan {
 
     BPlusTree<byte[], byte[]> tree;
     Iterator<byte[]> iterator;
 
     public BPlusTreeIndex(Transaction tx, String idxname, RecordValueLayout leafRecordValueLayout) {
-        tree = BPlusTree.file().directory("davisdb").maxLeafKeys(32).maxNonLeafKeys(8).segmentSizeMB(1).keySerializer(Serializer.bytes(20)).valueSerializer(Serializer.bytes(20)).naturalOrder();
+        tree = BPlusTree.file().directory("davisdb").maxLeafKeys(32).maxNonLeafKeys(8).segmentSizeMB(1).keySerializer(Serializer.bytes(100)).valueSerializer(Serializer.bytes(100)).naturalOrder();
     }
 
     @Override

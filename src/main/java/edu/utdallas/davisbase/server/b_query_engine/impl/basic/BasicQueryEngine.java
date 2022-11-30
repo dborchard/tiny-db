@@ -16,7 +16,11 @@ import edu.utdallas.davisbase.server.d_storage_engine.common.file.FileMgr;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * The ANTLR parser for SQLite Dialect.
+ *
+ * @author Edward Sciore, Arjun Sunil Kumar
+ */
 public class BasicQueryEngine implements IQueryEngine {
     public static int BLOCK_SIZE = 512;
 

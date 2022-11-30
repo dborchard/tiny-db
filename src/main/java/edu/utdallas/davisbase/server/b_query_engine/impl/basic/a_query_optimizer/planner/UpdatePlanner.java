@@ -4,6 +4,11 @@ import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.*;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 
 
+/**
+ * The Update Planner
+ *
+ * @author Edward Sciore
+ */
 public interface UpdatePlanner {
 
     int executeCreateTable(CreateTableData data, Transaction tx);

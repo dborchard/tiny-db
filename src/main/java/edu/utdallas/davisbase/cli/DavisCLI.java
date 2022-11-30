@@ -1,3 +1,5 @@
+
+
 package edu.utdallas.davisbase.cli;
 
 import edu.utdallas.davisbase.cli.utils.TablePrinter;
@@ -7,6 +9,11 @@ import edu.utdallas.davisbase.server.b_query_engine.impl.basic.BasicQueryEngine;
 
 import java.util.Scanner;
 
+/**
+ * CLI Driver for accessing this database.
+ *
+ * @author Arjun Sunil Kumar
+ */
 public class DavisCLI {
 
     public static void run(String[] args) {

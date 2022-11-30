@@ -7,7 +7,7 @@ import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
  * There is a Scan class for each relational
  * algebra operator.
  *
- * @author Edward Sciore
+ * @author Edward Sciore, Arjun Sunil Kumar
  */
 public interface RScan {
 

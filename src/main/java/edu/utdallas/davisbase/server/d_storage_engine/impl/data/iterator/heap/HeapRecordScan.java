@@ -14,8 +14,9 @@ import static java.sql.Types.INTEGER;
  * Provides the abstraction of an arbitrarily large array
  * of records.
  *
- * @author sciore
+ * @author Edward Sciore, Arjun Sunil Kumar
  */
+
 public class HeapRecordScan implements RWDataScan {
     private Transaction tx;
     private RecordValueLayout recordValueLayout;

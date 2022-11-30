@@ -1,5 +1,11 @@
 package edu.utdallas.davisbase.server.d_storage_engine.common.file;
 
+
+/**
+ * The BlockId is used as an identifier to the Block in a db file.
+ *
+ * @author Edward Sciore
+ */
 public class BlockId {
     private String filename;
     private int blknum;

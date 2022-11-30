@@ -7,7 +7,7 @@ import java.io.Serializable;
  * A RID consists of the block number in the file,
  * and the location of the record in that block.
  *
- * @author Edward Sciore
+ * @author Edward Sciore, Arjun Sunil Kumar
  */
 public class RecordKey implements Serializable {
 

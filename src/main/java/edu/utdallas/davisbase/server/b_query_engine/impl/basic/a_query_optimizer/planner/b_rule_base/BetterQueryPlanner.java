@@ -15,9 +15,9 @@ import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import java.util.Map;
 
 /**
- * A query planner that optimizes using a heuristic-based algorithm.
+ * The Query Planner without Indexes.
  *
- * @author Edward Sciore
+ * @author Edward Sciore, Arjun Sunil Kumar
  */
 public class BetterQueryPlanner implements QueryPlanner {
     private MetadataMgr mdm;

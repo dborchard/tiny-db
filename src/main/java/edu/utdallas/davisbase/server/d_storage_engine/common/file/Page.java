@@ -4,6 +4,11 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * The Page is an in-memory Block (saved in Storage)
+ *
+ * @author Edward Sciore
+ */
 public class Page {
     public static Charset CHARSET = StandardCharsets.US_ASCII;
     private ByteBuffer bb;

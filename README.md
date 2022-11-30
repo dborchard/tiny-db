@@ -4,11 +4,12 @@ A tiny database that supports Btree Index.
 
 ## Features
 
-- Basic Planners
-- Index Planners
+- ANTLR SQL Parser (ShardingSphere Parser)
+- Basic Planners (Supporting Projection, Selection etc)
+- Rule Based Planners (BTree Index)
+- BTree Index
+- File Manager, Block, Page
 - CLI interface
-- File Manager
-- Record Page
 
 ## Sample Queries
 - Without Index

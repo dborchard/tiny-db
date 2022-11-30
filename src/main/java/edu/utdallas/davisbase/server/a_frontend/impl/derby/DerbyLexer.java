@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
- * The lexical analyzer.
+ * The SimpleDB lexical analyzer.
  *
  * @author Edward Sciore
  */

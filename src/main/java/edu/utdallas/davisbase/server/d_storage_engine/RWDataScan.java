@@ -5,9 +5,9 @@ import edu.utdallas.davisbase.server.d_storage_engine.common.scans.RScan;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordKey;
 
 /**
- * The interface implemented by all updateable scans.
+ * The interface implemented by all updatable scans.
  *
- * @author Edward Sciore
+ * @author Edward Sciore, Arjun Sunil Kumar
  */
 public interface RWDataScan extends RScan {
     /**

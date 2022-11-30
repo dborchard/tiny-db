@@ -13,9 +13,9 @@ import edu.utdallas.davisbase.server.d_storage_engine.RWDataScan;
 import java.util.Iterator;
 
 /**
- * The basic planner for SQL update statements.
+ * The Update Planner without Indexes and cost considerations.
  *
- * @author sciore
+ * @author Edward Sciore, Arjun Sunil Kumar
  */
 public class BasicUpdatePlanner implements UpdatePlanner {
     private MetadataMgr mdm;

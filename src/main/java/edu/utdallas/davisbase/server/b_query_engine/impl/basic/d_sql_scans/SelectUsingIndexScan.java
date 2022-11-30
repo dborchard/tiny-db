@@ -7,6 +7,11 @@ import edu.utdallas.davisbase.server.d_storage_engine.RWIndexScan;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordKey;
 
 
+/**
+ * The Scan using Index. (Invoked by QueryPlanner)
+ *
+ * @author Edward Sciore, Arjun Sunil Kumar
+ */
 public class SelectUsingIndexScan implements RScan {
     private final HeapRecordScan ts;
     private final RWIndexScan idx;

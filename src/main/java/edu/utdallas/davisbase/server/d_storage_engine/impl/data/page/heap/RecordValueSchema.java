@@ -16,7 +16,7 @@ import static java.sql.Types.VARCHAR;
  * each field of the table, as well as the length
  * of each varchar field.
  *
- * @author Edward Sciore
+ * @author Edward Sciore, Arjun Sunil Kumar
  */
 @ToString
 public class RecordValueSchema {

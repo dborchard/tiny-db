@@ -11,6 +11,11 @@ import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.Record
 
 import java.util.Map;
 
+/**
+ * The Composite Manager for Index and Catalog
+ *
+ * @author Edward Sciore
+ */
 public class MetadataMgr {
     private static TableMgr tblmgr;
     private static IndexMgr idxmgr;

@@ -9,7 +9,11 @@ import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.c_catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 
-
+/**
+ * The Query Planner without Indexes and cost considerations.
+ *
+ * @author Edward Sciore, Arjun Sunil Kumar
+ */
 public class BasicQueryPlanner implements QueryPlanner {
     private MetadataMgr mdm;
 

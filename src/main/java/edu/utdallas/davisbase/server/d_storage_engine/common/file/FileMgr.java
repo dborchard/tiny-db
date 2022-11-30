@@ -5,6 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+/**
+ * The File Manager is mainly responsible for all file IO.
+ *
+ * @author Edward Sciore
+ */
 public class FileMgr {
     private final File dbDirectory;
     private final int blockSize;

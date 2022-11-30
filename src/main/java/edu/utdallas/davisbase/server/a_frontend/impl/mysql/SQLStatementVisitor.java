@@ -13,7 +13,11 @@ import org.apache.shardingsphere.sql.parser.autogen.MySQLStatementParser;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * The ANTLR visitor class for Parsing SQL Statements.
+ *
+ * @author Arjun Sunil Kumar
+ */
 public class SQLStatementVisitor extends MySQLStatementBaseVisitor {
     private final MySQLStatementParser parser;
     private COMMAND_TYPE commandType;

@@ -9,6 +9,11 @@ import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 
 
+/**
+ * The composite planner handling Query and Update.
+ *
+ * @author Edward Sciore
+ */
 public class Planner {
     private final QueryPlanner queryPlanner;
     private final UpdatePlanner updatePlanner;

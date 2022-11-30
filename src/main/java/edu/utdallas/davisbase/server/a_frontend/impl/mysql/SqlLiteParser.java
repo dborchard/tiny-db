@@ -7,6 +7,11 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.shardingsphere.sql.parser.autogen.MySQLStatementParser;
 import org.apache.shardingsphere.sql.parser.mysql.parser.MySQLLexer;
 
+/**
+ * The ANTLR parser for SQLite Dialect.
+ *
+ * @author Arjun Sunil Kumar
+ */
 public class SqlLiteParser implements IParser {
 
     SQLStatementVisitor sqlStatementVisitor;

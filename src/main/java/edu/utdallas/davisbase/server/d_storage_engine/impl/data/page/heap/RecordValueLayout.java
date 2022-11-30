@@ -13,7 +13,7 @@ import static java.sql.Types.INTEGER;
  * It contains the name, type, length and offset of
  * each field of the table.
  *
- * @author Edward Sciore
+ * @author Edward Sciore, Arjun Sunil Kumar
  */
 public class RecordValueLayout {
     private RecordValueSchema recordValueSchema;

@@ -9,7 +9,7 @@ import static java.sql.Types.INTEGER;
 /**
  * Store a record at a given location in a block.
  *
- * @author Edward Sciore
+ * @author Edward Sciore, Arjun Sunil Kumar
  */
 public class HeapRecordPageImpl implements IRecordPage {
     public static final int EMPTY = 0, USED = 1;

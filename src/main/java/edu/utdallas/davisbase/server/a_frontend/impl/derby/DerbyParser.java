@@ -1,17 +1,21 @@
 package edu.utdallas.davisbase.server.a_frontend.impl.derby;
 
+import edu.utdallas.davisbase.server.a_frontend.IParser;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.A_Predicate;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.B_Term;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.C_Expression;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.*;
-import edu.utdallas.davisbase.server.a_frontend.IParser;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * The SimpleDB Parser.
+ *
+ * @author Edward Sciore
+ */
 public class DerbyParser implements IParser {
     private DerbyLexer lex;
 

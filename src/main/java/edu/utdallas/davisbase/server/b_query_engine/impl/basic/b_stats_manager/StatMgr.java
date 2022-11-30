@@ -8,6 +8,11 @@ import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.Record
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * State Manager for cost based query planner.
+ *
+ * @author Edward Sciore
+ */
 public class StatMgr {
     private int numcalls;
     private Map<String, StatInfo> tablestats;

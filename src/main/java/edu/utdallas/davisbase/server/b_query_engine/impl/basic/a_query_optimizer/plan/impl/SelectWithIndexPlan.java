@@ -13,7 +13,7 @@ import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.Record
  * The Plan class corresponding to the <i>indexselect</i>
  * relational algebra operator.
  *
- * @author Edward Sciore
+ * @author Edward Sciore, Arjun Sunil Kumar
  */
 public class SelectWithIndexPlan implements Plan {
     private Plan p;

@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Reference:
- * https://stackoverflow.com/a/39705794/1609570
+ * ASCII Table Printer.
+ * Reference: https://stackoverflow.com/a/39705794/1609570
+ *
+ * @author Arjun Sunil Kumar
  */
 public class TablePrinter {
 
