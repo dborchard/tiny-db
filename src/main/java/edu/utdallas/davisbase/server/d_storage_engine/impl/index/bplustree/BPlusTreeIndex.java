@@ -8,7 +8,6 @@ import edu.utdallas.davisbase.server.d_storage_engine.RWIndexScan;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordKey;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueLayout;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.utils.ByteUtils;
-
 import java.util.Iterator;
 
 
@@ -19,59 +18,56 @@ import java.util.Iterator;
  */
 public class BPlusTreeIndex implements RWIndexScan {
 
-    BPlusTree<byte[], byte[]> tree;
-    Iterator<byte[]> iterator;
+  BPlusTree<byte[], byte[]> tree;
+  Iterator<byte[]> iterator;
 
-    public BPlusTreeIndex(Transaction tx, String idxname, RecordValueLayout leafRecordValueLayout) {
-        tree = BPlusTree.file().directory("davisdb").maxLeafKeys(32).maxNonLeafKeys(8).segmentSizeMB(1).keySerializer(Serializer.bytes(100)).valueSerializer(Serializer.bytes(100)).comparator((left, right) -> {
-            for (int i = 0, j = 0; i < left.length && j < right.length; i++, j++) {
-                int a = (left[i] & 0xff);
-                int b = (right[j] & 0xff);
-                if (a != b) {
-                    return a - b;
-                }
-            }
-            return left.length - right.length;
-        });
-    }
+  public BPlusTreeIndex(Transaction tx, String idxname, RecordValueLayout leafRecordValueLayout) {
+    tree = BPlusTree.file().directory("davisdb")
+        .maxLeafKeys(32)
+        .maxNonLeafKeys(8)
+        .segmentSizeMB(1)
+        .keySerializer(Serializer.bytes(100))
+        .valueSerializer(Serializer.bytes(100))
+        .naturalOrder();
+  }
 
-    @Override
-    public void insert(D_Constant key, RecordKey value) {
-        byte[] k = ByteUtils.convertToBytes(key);
-        byte[] v = ByteUtils.convertToBytes(value);
-        tree.insert(k, v);
-    }
+  @Override
+  public void insert(D_Constant key, RecordKey value) {
+    byte[] k = ByteUtils.convertToBytes(key);
+    byte[] v = ByteUtils.convertToBytes(value);
+    tree.insert(k, v);
+  }
 
-    @Override
-    public void delete(D_Constant key, RecordKey value) {
-        throw new RuntimeException("Unimplemented by library. To support later");
-    }
+  @Override
+  public void delete(D_Constant key, RecordKey value) {
+    throw new RuntimeException("Unimplemented by library. To support later");
+  }
 
-    @Override
-    public void seek(D_Constant key) {
-        byte[] k = ByteUtils.convertToBytes(key);
-        iterator = tree.find(k).iterator();
-    }
+  @Override
+  public void seek(D_Constant key) {
+    byte[] k = ByteUtils.convertToBytes(key);
+    iterator = tree.find(k).iterator();
+  }
 
-    @Override
-    public boolean hasNext() {
-        return iterator.hasNext();
-    }
+  @Override
+  public boolean hasNext() {
+    return iterator.hasNext();
+  }
 
-    @Override
-    public RecordKey next() {
-        byte[] result = iterator.next();
-        return (RecordKey) ByteUtils.convertFromBytes(result);
-    }
+  @Override
+  public RecordKey next() {
+    byte[] result = iterator.next();
+    return (RecordKey) ByteUtils.convertFromBytes(result);
+  }
 
-    @Override
-    public void close() {
-        try {
-            tree.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+  @Override
+  public void close() {
+    try {
+      tree.close();
+    } catch (Exception ex) {
+      ex.printStackTrace();
     }
+  }
 
 
 }
