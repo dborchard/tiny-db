@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.b_query_engine.impl.calcite.sample1;
+package edu.utdallas.davisbase.learning.calcite;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;

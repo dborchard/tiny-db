@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.b_query_engine.impl.calcite.sample0;
+package edu.utdallas.davisbase.server.b_query_engine.impl.calcite.core;
 
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;

@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.b_query_engine.impl.calcite.sample0;
+package edu.utdallas.davisbase.server.b_query_engine.impl.calcite.utils;
 
 import com.google.common.collect.ImmutableMap;
 import org.apache.calcite.sql.type.SqlTypeName;
@@ -6,13 +6,13 @@ import org.apache.calcite.sql.type.SqlTypeName;
 import java.sql.Types;
 import java.util.Map;
 
-public class D_SimpleDBToSqlTypeConversionRules {
+public class JavaSqlTypeToCalciteSqlTypeConversionRules {
 
-    private static final D_SimpleDBToSqlTypeConversionRules INSTANCE = new D_SimpleDBToSqlTypeConversionRules();
+    private static final JavaSqlTypeToCalciteSqlTypeConversionRules INSTANCE = new JavaSqlTypeToCalciteSqlTypeConversionRules();
 
     private final Map<Integer, SqlTypeName> rules = ImmutableMap.<Integer, SqlTypeName>builder().put(Types.INTEGER, SqlTypeName.INTEGER).put(Types.VARCHAR, SqlTypeName.VARCHAR).build();
 
-    public static D_SimpleDBToSqlTypeConversionRules instance() {
+    public static JavaSqlTypeToCalciteSqlTypeConversionRules instance() {
         return INSTANCE;
     }
 

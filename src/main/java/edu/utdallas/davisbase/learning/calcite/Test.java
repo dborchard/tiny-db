@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.b_query_engine.impl.calcite.sample1;
+package edu.utdallas.davisbase.learning.calcite;
 
 import org.apache.calcite.jdbc.CalciteConnection;
 import org.apache.calcite.schema.Schema;

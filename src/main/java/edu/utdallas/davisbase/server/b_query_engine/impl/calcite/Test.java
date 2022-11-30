@@ -1,6 +1,11 @@
-package edu.utdallas.davisbase.server.b_query_engine.impl.calcite.sample0;
+package edu.utdallas.davisbase.server.b_query_engine.impl.calcite;
 
+import edu.utdallas.davisbase.cli.utils.TablePrinter;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.MetadataMgr;
+import edu.utdallas.davisbase.server.b_query_engine.common.dto.TableDto;
+import edu.utdallas.davisbase.server.b_query_engine.impl.calcite.core.B_SimpleTable;
+import edu.utdallas.davisbase.server.b_query_engine.impl.calcite.core.C_SimpleSchema;
+import edu.utdallas.davisbase.server.b_query_engine.impl.calcite.utils.JavaSqlTypeToCalciteSqlTypeConversionRules;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.common.file.FileMgr;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueLayout;
@@ -10,6 +15,7 @@ import org.apache.calcite.sql.type.SqlTypeName;
 
 import java.io.File;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
@@ -32,7 +38,7 @@ public class Test {
         RecordValueLayout tableLayout = mdm.getLayout(tableName, tx2);
 
         // 2.b Create List<SqlType>
-        D_SimpleDBToSqlTypeConversionRules dataTypeRules = D_SimpleDBToSqlTypeConversionRules.instance();
+        JavaSqlTypeToCalciteSqlTypeConversionRules dataTypeRules = JavaSqlTypeToCalciteSqlTypeConversionRules.instance();
         List<SqlTypeName> fieldTypes = tableLayout.schema().fields().stream().map(e -> tableLayout.schema().type(e)).map(dataTypeRules::lookup).collect(Collectors.toList());
 
         // 2.c Create CalciteTable Object using fieldNames, fieldTypes etc
@@ -57,14 +63,21 @@ public class Test {
 
         // 5. Execute JDBC Query
         Statement statement = calciteConnection.createStatement();
-        String sql = "select A,B from " + schemaName + "." + tableName + " as e where e.A=1";
+        String sql = "select A,B from " + schemaName + "." + tableName + " as e";
         ResultSet rs = statement.executeQuery(sql);
 
+        // 6. Print
+        List<String> columnNames = tableLayout.schema().fields();
+        List<List<String>> rows = new ArrayList<>();
         while (rs.next()) {
-            String columnA = rs.getString("A");
-            System.out.println("A " + columnA);
+            List<String> row = new ArrayList<>();
+            for (String field : columnNames) row.add(rs.getString(field));
+            rows.add(row);
         }
+        TableDto result = new TableDto(columnNames, rows);
+        new TablePrinter().print(result);
 
+        // 7. Close
         tx2.commit();
         rs.close();
         statement.close();
