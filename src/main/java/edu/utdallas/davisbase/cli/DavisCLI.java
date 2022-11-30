@@ -6,7 +6,6 @@ import edu.utdallas.davisbase.cli.utils.TablePrinter;
 import edu.utdallas.davisbase.server.b_query_engine.IQueryEngine;
 import edu.utdallas.davisbase.server.b_query_engine.common.dto.TableDto;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.BasicQueryEngine;
-import edu.utdallas.davisbase.server.b_query_engine.impl.calcite.CalciteQueryEngine;
 
 import java.util.Scanner;
 
@@ -20,7 +19,7 @@ public class DavisCLI {
     public static void run(String[] args) {
         // Create Database
         String dirname = (args.length == 0) ? "davisdb" : args[0];
-        IQueryEngine db = new CalciteQueryEngine(dirname);
+        IQueryEngine db = new BasicQueryEngine(dirname);
 
         // Parse Queries
         cliLoop(db);

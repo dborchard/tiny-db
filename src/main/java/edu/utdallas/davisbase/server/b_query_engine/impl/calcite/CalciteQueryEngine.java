@@ -5,7 +5,7 @@ import edu.utdallas.davisbase.server.b_query_engine.common.catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.b_query_engine.common.dto.TableDto;
 import edu.utdallas.davisbase.server.b_query_engine.impl.calcite.core.B_SimpleTable;
 import edu.utdallas.davisbase.server.b_query_engine.impl.calcite.core.C_SimpleSchema;
-import edu.utdallas.davisbase.server.b_query_engine.impl.calcite.utils.JavaSqlTypeToCalciteSqlTypeConversionRules;
+import edu.utdallas.davisbase.server.b_query_engine.impl.calcite.core.D_JavaSqlTypeToCalciteSqlTypeConversionRules;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.common.file.FileMgr;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueLayout;
@@ -66,7 +66,7 @@ public class CalciteQueryEngine implements IQueryEngine {
         RecordValueLayout tableLayout = mdm.getLayout(tableName, tx2);
 
         // 2.b Create List<SqlType>
-        JavaSqlTypeToCalciteSqlTypeConversionRules dataTypeRules = JavaSqlTypeToCalciteSqlTypeConversionRules.instance();
+        D_JavaSqlTypeToCalciteSqlTypeConversionRules dataTypeRules = D_JavaSqlTypeToCalciteSqlTypeConversionRules.instance();
         List<SqlTypeName> fieldTypes = tableLayout.schema().fields().stream().map(e -> tableLayout.schema().type(e)).map(dataTypeRules::lookup).collect(Collectors.toList());
 
         // 2.c Create CalciteTable Object using fieldNames, fieldTypes etc
