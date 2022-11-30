@@ -27,9 +27,9 @@ public class SelectUsingIndexScan implements RScan {
     }
 
     public boolean next() {
-        boolean ok = idx.next();
+        boolean ok = idx.hasNext();
         if (ok) {
-            RecordKey recordKey = idx.getRecordId();
+            RecordKey recordKey = idx.next();
             ts.moveToRid(recordKey);
         }
         return ok;

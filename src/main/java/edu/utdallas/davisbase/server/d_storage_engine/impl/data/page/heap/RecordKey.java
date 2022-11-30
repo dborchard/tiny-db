@@ -1,5 +1,7 @@
 package edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap;
 
+import java.io.Serializable;
+
 /**
  * An identifier for a record within a file.
  * A RID consists of the block number in the file,
@@ -7,7 +9,11 @@ package edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap;
  *
  * @author Edward Sciore
  */
-public class RecordKey {
+public class RecordKey implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+
     private int blknum;
     private int slot;
 
@@ -49,4 +55,5 @@ public class RecordKey {
     public String toString() {
         return "[" + blknum + ", " + slot + "]";
     }
+
 }

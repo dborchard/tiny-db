@@ -1,11 +1,15 @@
 package edu.utdallas.davisbase.server.a_frontend.common.domain.clause;
 
+import java.io.Serializable;
+
 /**
  * The class that denotes values stored in the database.
  *
  * @author Edward Sciore
  */
-public class D_Constant implements Comparable<D_Constant> {
+public class D_Constant implements Comparable<D_Constant> , Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Integer ival = null;
     private String sval = null;
 

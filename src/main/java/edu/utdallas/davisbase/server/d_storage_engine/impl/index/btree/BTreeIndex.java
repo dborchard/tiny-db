@@ -83,18 +83,18 @@ public class BTreeIndex implements RWIndexScan {
      * previously-specified search key.
      * Returns false if there are no more such leaf records.
      *
-     * @see RWIndexScan#next()
+     * @see RWIndexScan#hasNext()
      */
-    public boolean next() {
+    public boolean hasNext() {
         return leaf.next();
     }
 
     /**
      * Return the dataRID value from the current leaf record.
      *
-     * @see RWIndexScan#getRecordId()
+     * @see RWIndexScan#next()
      */
-    public RecordKey getRecordId() {
+    public RecordKey next() {
         return leaf.getDataRid();
     }
 

@@ -18,11 +18,12 @@ public interface RWIndexScan {
     // Iterator
     public void seek(D_Constant key);
 
-    public boolean next();
+    public boolean hasNext();
 
-    public RecordKey getRecordId();
+    public RecordKey next();
 
 
     public void close();
+
 
 }
