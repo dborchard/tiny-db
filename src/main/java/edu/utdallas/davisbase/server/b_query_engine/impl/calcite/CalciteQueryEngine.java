@@ -2,7 +2,7 @@ package edu.utdallas.davisbase.server.b_query_engine.impl.calcite;
 
 import edu.utdallas.davisbase.server.b_query_engine.IQueryEngine;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.MetadataMgr;
-import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TablePhysicalLayout;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TablePhysicalLayout;
 import edu.utdallas.davisbase.server.b_query_engine.common.dto.TableDto;
 import edu.utdallas.davisbase.server.b_query_engine.impl.calcite.core.B_Table;
 import edu.utdallas.davisbase.server.b_query_engine.impl.calcite.core.C_Schema;

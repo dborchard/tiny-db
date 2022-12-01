@@ -6,8 +6,8 @@ import edu.utdallas.davisbase.server.b_query_engine.common.catalog.index.IndexIn
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.index.IndexMgr;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TableMgr;
 import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
-import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TablePhysicalLayout;
-import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TablePhysicalLayout;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TableDefinition;
 
 import java.util.Map;
 

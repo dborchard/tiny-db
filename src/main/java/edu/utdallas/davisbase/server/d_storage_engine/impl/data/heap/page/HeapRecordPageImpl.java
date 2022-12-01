@@ -2,8 +2,8 @@ package edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.page;
 
 import static java.sql.Types.INTEGER;
 
-import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
-import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TablePhysicalLayout;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TableDefinition;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TablePhysicalLayout;
 import edu.utdallas.davisbase.server.d_storage_engine.common.file.BlockId;
 import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
 

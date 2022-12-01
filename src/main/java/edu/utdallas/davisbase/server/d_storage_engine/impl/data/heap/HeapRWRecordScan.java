@@ -8,7 +8,7 @@ import edu.utdallas.davisbase.server.d_storage_engine.common.file.BlockId;
 import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.page.HeapRecordPageImpl;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.page.RecordKey;
-import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TablePhysicalLayout;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TablePhysicalLayout;
 
 /**
  * Provides the enumeration (iterator) for records stored in the Disk.

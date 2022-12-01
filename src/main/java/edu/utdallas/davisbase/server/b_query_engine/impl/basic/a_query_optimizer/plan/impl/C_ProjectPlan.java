@@ -3,7 +3,7 @@ package edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimize
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.Plan;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.c_sql_scans.C_Project_RORecordScan;
 import edu.utdallas.davisbase.server.d_storage_engine.RORecordScan;
-import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TableDefinition;
 
 import java.util.List;
 

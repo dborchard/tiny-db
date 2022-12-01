@@ -1,6 +1,7 @@
-package edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain;
+package edu.utdallas.davisbase.server.b_query_engine.common.catalog.table;
 
 
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TableDefinition;
 import edu.utdallas.davisbase.server.d_storage_engine.common.file.Page;
 
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain;
+package edu.utdallas.davisbase.server.b_query_engine.common.catalog.table;
 
 import lombok.ToString;
 

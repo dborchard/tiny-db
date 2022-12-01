@@ -1,7 +1,5 @@
 package edu.utdallas.davisbase.server.b_query_engine.common.catalog.table;
 
-import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
-import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TablePhysicalLayout;
 import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.HeapRWRecordScan;
 

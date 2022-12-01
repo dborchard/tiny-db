@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.server.a_frontend.common.domain.commands;
 
-import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TableDefinition;
 import lombok.ToString;
 
 /**

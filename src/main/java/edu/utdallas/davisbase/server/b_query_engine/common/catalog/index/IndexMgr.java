@@ -5,8 +5,8 @@ import edu.utdallas.davisbase.server.b_query_engine.impl.basic.b_stats_manager.d
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TableMgr;
 import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.HeapRWRecordScan;
-import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TablePhysicalLayout;
-import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TablePhysicalLayout;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TableDefinition;
 
 import java.util.HashMap;
 import java.util.Map;

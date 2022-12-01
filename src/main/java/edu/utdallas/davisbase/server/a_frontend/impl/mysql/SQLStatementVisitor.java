@@ -6,7 +6,7 @@ import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.B_Term;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.C_Expression;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.*;
-import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TableDefinition;
 import org.apache.shardingsphere.sql.parser.autogen.MySQLStatementBaseVisitor;
 import org.apache.shardingsphere.sql.parser.autogen.MySQLStatementParser;
 

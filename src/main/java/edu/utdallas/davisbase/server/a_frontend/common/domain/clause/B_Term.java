@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.a_frontend.common.domain.clause;
 
 import edu.utdallas.davisbase.server.d_storage_engine.RORecordScan;
-import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TableDefinition;
 
 /**
  * A term is a comparison between two expressions.

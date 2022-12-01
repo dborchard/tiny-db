@@ -5,7 +5,7 @@ import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.RWIndexScan;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.page.RecordKey;
-import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TablePhysicalLayout;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TablePhysicalLayout;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.serde.ConstantSerializer;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.serde.RecordKeySerializer;
 import java.util.Iterator;

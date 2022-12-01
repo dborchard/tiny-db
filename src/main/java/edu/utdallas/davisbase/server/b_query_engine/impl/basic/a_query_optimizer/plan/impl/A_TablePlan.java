@@ -6,8 +6,8 @@ import edu.utdallas.davisbase.server.b_query_engine.impl.basic.b_stats_manager.d
 import edu.utdallas.davisbase.server.d_storage_engine.RORecordScan;
 import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.HeapRWRecordScan;
-import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TablePhysicalLayout;
-import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TablePhysicalLayout;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TableDefinition;
 
 /**
  * The Plan class corresponding to a table.

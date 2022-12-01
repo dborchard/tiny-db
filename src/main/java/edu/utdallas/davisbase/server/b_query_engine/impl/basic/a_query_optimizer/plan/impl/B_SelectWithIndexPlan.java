@@ -7,7 +7,7 @@ import edu.utdallas.davisbase.server.b_query_engine.impl.basic.c_sql_scans.A_Sel
 import edu.utdallas.davisbase.server.d_storage_engine.RORecordScan;
 import edu.utdallas.davisbase.server.d_storage_engine.RWIndexScan;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.HeapRWRecordScan;
-import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TableDefinition;
 
 /**
  * The Plan class corresponding to the <i>indexselect</i>
