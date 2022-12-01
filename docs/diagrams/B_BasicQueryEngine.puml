@@ -32,9 +32,14 @@ SelectPlan <.> RW_SelectScan
 ProjectPlan <.> R_ProjectScan
 TablePlan <.> RW_HeapRecordScan
 
+'RW_SelectScan -> RW_HeapRecordScan
+
 note right of RW_HeapRecordScan
   Storage Engine
 end note
 
+note right of Parser
+  FrontEnd
+end note
 
 @enduml
