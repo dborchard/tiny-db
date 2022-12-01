@@ -1,14 +1,15 @@
 package edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree;
 
 import com.github.davidmoten.bplustree.BPlusTree;
-import com.github.davidmoten.bplustree.Serializer;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.RWIndexScan;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordKey;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.utils.ByteUtils;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.serde.ConstantSerializer;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.serde.RecordKeySerializer;
 import java.util.Iterator;
+import lombok.SneakyThrows;
 
 
 /**
@@ -18,24 +19,22 @@ import java.util.Iterator;
  */
 public class BPlusTreeIndex implements RWIndexScan {
 
-  BPlusTree<byte[], byte[]> tree;
-  Iterator<byte[]> iterator;
+  BPlusTree<D_Constant, RecordKey> tree;
+  Iterator<RecordKey> iterator;
 
   public BPlusTreeIndex(Transaction tx, String idxname, RecordValueLayout leafRecordValueLayout) {
     tree = BPlusTree.file().directory("davisdb")
         .maxLeafKeys(32)
         .maxNonLeafKeys(8)
         .segmentSizeMB(1)
-        .keySerializer(Serializer.bytes(100))
-        .valueSerializer(Serializer.bytes(100))
+        .keySerializer(new ConstantSerializer())
+        .valueSerializer(new RecordKeySerializer())
         .naturalOrder();
   }
 
   @Override
   public void insert(D_Constant key, RecordKey value) {
-    byte[] k = ByteUtils.convertToBytes(key);
-    byte[] v = ByteUtils.convertToBytes(value);
-    tree.insert(k, v);
+    tree.insert(key, value);
   }
 
   @Override
@@ -45,8 +44,7 @@ public class BPlusTreeIndex implements RWIndexScan {
 
   @Override
   public void seek(D_Constant key) {
-    byte[] k = ByteUtils.convertToBytes(key);
-    iterator = tree.find(k).iterator();
+    iterator = tree.find(key).iterator();
   }
 
   @Override
@@ -56,17 +54,13 @@ public class BPlusTreeIndex implements RWIndexScan {
 
   @Override
   public RecordKey next() {
-    byte[] result = iterator.next();
-    return (RecordKey) ByteUtils.convertFromBytes(result);
+    return iterator.next();
   }
 
+  @SneakyThrows
   @Override
   public void close() {
-    try {
-      tree.close();
-    } catch (Exception ex) {
-      ex.printStackTrace();
-    }
+    tree.close();
   }
 
 
