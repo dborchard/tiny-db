@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.d_storage_engine;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordKey;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.page.RecordKey;
 
 /**
  * This interface contains methods to traverse an index.

@@ -3,10 +3,10 @@ package edu.utdallas.davisbase.server.b_query_engine.common.catalog.index;
 import static java.sql.Types.INTEGER;
 
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.b_stats_manager.domain.StatInfo;
-import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
+import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.RWIndexScan;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TablePhysicalLayout;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.BPlusTreeIndex;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree.BTreeIndex;
 
@@ -22,17 +22,17 @@ public class IndexInfo {
 
   private String idxname, fldname;
   private Transaction tx;
-  private RecordValueSchema tblRecordValueSchema;
-  private RecordValueLayout idxRecordValueLayout;
+  private TableDefinition tblTableDefinition;
+  private TablePhysicalLayout idxRecordValueLayout;
   private StatInfo si;
 
 
-  public IndexInfo(String idxname, String fldname, RecordValueSchema tblRecordValueSchema,
+  public IndexInfo(String idxname, String fldname, TableDefinition tblTableDefinition,
       Transaction tx, StatInfo si) {
     this.idxname = idxname;
     this.fldname = fldname;
     this.tx = tx;
-    this.tblRecordValueSchema = tblRecordValueSchema;
+    this.tblTableDefinition = tblTableDefinition;
     this.idxRecordValueLayout = createIdxLayout();
     this.si = si;
   }
@@ -43,18 +43,18 @@ public class IndexInfo {
   }
 
 
-  private RecordValueLayout createIdxLayout() {
+  private TablePhysicalLayout createIdxLayout() {
     // Schema contains Block, Id, DataValue
-    RecordValueSchema sch = new RecordValueSchema();
+    TableDefinition sch = new TableDefinition();
     sch.addIntField("block");
     sch.addIntField("id");
-    if (tblRecordValueSchema.type(fldname) == INTEGER) {
+    if (tblTableDefinition.type(fldname) == INTEGER) {
       sch.addIntField("dataval");
     } else {
-      int fldlen = tblRecordValueSchema.length(fldname);
+      int fldlen = tblTableDefinition.length(fldname);
       sch.addStringField("dataval", fldlen);
     }
-    return new RecordValueLayout(sch);
+    return new TablePhysicalLayout(sch);
   }
 
   public int blocksAccessed() {

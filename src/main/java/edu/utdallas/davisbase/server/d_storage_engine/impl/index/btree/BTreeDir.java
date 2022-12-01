@@ -1,11 +1,11 @@
 package edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
-import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
+import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.common.file.BlockId;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree.common.BTPage;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree.common.DirEntry;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TablePhysicalLayout;
 
 /**
  * A B-tree directory block.
@@ -14,7 +14,7 @@ import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.Record
  */
 public class BTreeDir {
     private Transaction tx;
-    private RecordValueLayout recordValueLayout;
+    private TablePhysicalLayout recordValueLayout;
     private BTPage contents;
     private String filename;
 
@@ -26,11 +26,11 @@ public class BTreeDir {
      * @param recordValueLayout the metadata of the B-tree directory file
      * @param tx              the calling transaction
      */
-    public BTreeDir(Transaction tx, BlockId blk, RecordValueLayout recordValueLayout) {
+    public BTreeDir(Transaction tx, BlockId blk, TablePhysicalLayout recordValueLayout) {
         this.tx = tx;
         this.recordValueLayout = recordValueLayout;
         contents = new BTPage(tx, blk, recordValueLayout);
-        filename = blk.fileName();
+        filename = blk.getFileName();
     }
 
     /**
@@ -54,7 +54,7 @@ public class BTreeDir {
             contents = new BTPage(tx, childblk, recordValueLayout);
             childblk = findChildBlock(searchkey);
         }
-        return childblk.number();
+        return childblk.getBlockNumber();
     }
 
     /**
@@ -70,7 +70,7 @@ public class BTreeDir {
         D_Constant firstval = contents.getDataVal(0);
         int level = contents.getFlag();
         BlockId newblk = contents.split(0, level); //ie, transfer all the records
-        DirEntry oldroot = new DirEntry(firstval, newblk.number());
+        DirEntry oldroot = new DirEntry(firstval, newblk.getBlockNumber());
         insertEntry(oldroot);
         insertEntry(e);
         contents.setFlag(level + 1);
@@ -109,7 +109,7 @@ public class BTreeDir {
         int splitpos = contents.getNumRecs() / 2;
         D_Constant splitval = contents.getDataVal(splitpos);
         BlockId newblk = contents.split(splitpos, level);
-        return new DirEntry(splitval, newblk.number());
+        return new DirEntry(splitval, newblk.getBlockNumber());
     }
 
     private BlockId findChildBlock(D_Constant searchkey) {

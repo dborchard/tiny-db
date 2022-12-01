@@ -1,9 +1,9 @@
 package edu.utdallas.davisbase.server.b_query_engine.common.catalog.table;
 
-import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.iterator.heap.HeapRecordScan;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TablePhysicalLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.HeapRWRecordScan;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class TableMgr {
     // The max characters a tablename or fieldname can have.
     public static final int MAX_NAME = 16;
-    private RecordValueLayout tcatRecordValueLayout, fcatRecordValueLayout;
+    private TablePhysicalLayout tcatRecordValueLayout, fcatRecordValueLayout;
 
     /**
      * Create a new catalog manager for the database system.
@@ -30,22 +30,22 @@ public class TableMgr {
      * @param tx    the startup transaction
      */
     public TableMgr(boolean isNew, Transaction tx) {
-        RecordValueSchema tcatRecordValueSchema = new RecordValueSchema();
-        tcatRecordValueSchema.addStringField("tblname", MAX_NAME);
-        tcatRecordValueSchema.addIntField("slotsize");
-        tcatRecordValueLayout = new RecordValueLayout(tcatRecordValueSchema);
+        TableDefinition tcatTableDefinition = new TableDefinition();
+        tcatTableDefinition.addStringField("tblname", MAX_NAME);
+        tcatTableDefinition.addIntField("slotsize");
+        tcatRecordValueLayout = new TablePhysicalLayout(tcatTableDefinition);
 
-        RecordValueSchema fcatRecordValueSchema = new RecordValueSchema();
-        fcatRecordValueSchema.addStringField("tblname", MAX_NAME);
-        fcatRecordValueSchema.addStringField("fldname", MAX_NAME);
-        fcatRecordValueSchema.addIntField("type");
-        fcatRecordValueSchema.addIntField("length");
-        fcatRecordValueSchema.addIntField("offset");
-        fcatRecordValueLayout = new RecordValueLayout(fcatRecordValueSchema);
+        TableDefinition fcatTableDefinition = new TableDefinition();
+        fcatTableDefinition.addStringField("tblname", MAX_NAME);
+        fcatTableDefinition.addStringField("fldname", MAX_NAME);
+        fcatTableDefinition.addIntField("type");
+        fcatTableDefinition.addIntField("length");
+        fcatTableDefinition.addIntField("offset");
+        fcatRecordValueLayout = new TablePhysicalLayout(fcatTableDefinition);
 
         if (isNew) {
-            createTable("davisbase_tables", tcatRecordValueSchema, tx);
-            createTable("davisbase_columns", fcatRecordValueSchema, tx);
+            createTable("davisbase_tables", tcatTableDefinition, tx);
+            createTable("davisbase_columns", fcatTableDefinition, tx);
         }
     }
 
@@ -56,18 +56,18 @@ public class TableMgr {
      * @param sch     the table's schema
      * @param tx      the transaction creating the table
      */
-    public void createTable(String tblname, RecordValueSchema sch, Transaction tx) {
-        RecordValueLayout recordValueLayout = new RecordValueLayout(sch);
+    public void createTable(String tblname, TableDefinition sch, Transaction tx) {
+        TablePhysicalLayout recordValueLayout = new TablePhysicalLayout(sch);
 
-        HeapRecordScan tcat = new HeapRecordScan(tx, "davisbase_tables", tcatRecordValueLayout);
-        tcat.seekToHead_Insert();
+        HeapRWRecordScan tcat = new HeapRWRecordScan(tx, "davisbase_tables", tcatRecordValueLayout);
+        tcat.seekToInsertStart();
         tcat.setString("tblname", tblname);
         tcat.setInt("slotsize", recordValueLayout.slotSize());
         tcat.close();
 
-        HeapRecordScan fcat = new HeapRecordScan(tx, "davisbase_columns", fcatRecordValueLayout);
+        HeapRWRecordScan fcat = new HeapRWRecordScan(tx, "davisbase_columns", fcatRecordValueLayout);
         for (String fldname : sch.fields()) {
-            fcat.seekToHead_Insert();
+            fcat.seekToInsertStart();
             fcat.setString("tblname", tblname);
             fcat.setString("fldname", fldname);
             fcat.setInt("type", sch.type(fldname));
@@ -85,18 +85,18 @@ public class TableMgr {
      * @param tx      the transaction
      * @return the table's stored metadata
      */
-    public RecordValueLayout getLayout(String tblname, Transaction tx) {
+    public TablePhysicalLayout getLayout(String tblname, Transaction tx) {
         int size = -1;
-        HeapRecordScan tcat = new HeapRecordScan(tx, "davisbase_tables", tcatRecordValueLayout);
+        HeapRWRecordScan tcat = new HeapRWRecordScan(tx, "davisbase_tables", tcatRecordValueLayout);
         while (tcat.next()) if (tcat.getString("tblname").equals(tblname)) {
             size = tcat.getInt("slotsize");
             break;
         }
         tcat.close();
 
-        RecordValueSchema sch = new RecordValueSchema();
+        TableDefinition sch = new TableDefinition();
         Map<String, Integer> offsets = new HashMap<String, Integer>();
-        HeapRecordScan fcat = new HeapRecordScan(tx, "davisbase_columns", fcatRecordValueLayout);
+        HeapRWRecordScan fcat = new HeapRWRecordScan(tx, "davisbase_columns", fcatRecordValueLayout);
         while (fcat.next()) if (fcat.getString("tblname").equals(tblname)) {
             String fldname = fcat.getString("fldname");
             int fldtype = fcat.getInt("type");
@@ -106,6 +106,6 @@ public class TableMgr {
             sch.addField(fldname, fldtype, fldlen);
         }
         fcat.close();
-        return new RecordValueLayout(sch, offsets, size);
+        return new TablePhysicalLayout(sch, offsets, size);
     }
 }

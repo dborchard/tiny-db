@@ -3,14 +3,14 @@ package edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimize
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.QueryData;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.Plan;
-import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.impl.ProjectPlan;
-import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.impl.SelectPlan;
-import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.impl.SelectWithIndexPlan;
-import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.impl.TablePlan;
+import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.impl.C_ProjectPlan;
+import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.impl.B_SelectPlan;
+import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.impl.B_SelectWithIndexPlan;
+import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.impl.A_TablePlan;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.planner.QueryPlanner;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.index.IndexInfo;
-import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
+import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
 
 import java.util.Map;
 
@@ -38,7 +38,7 @@ public class BetterQueryPlanner implements QueryPlanner {
         select A,B from T2;
         select A,B from T2 where A=2 and B='Alice';
         * */
-        Plan p = new TablePlan(tx, data.table(), mdm);
+        Plan p = new A_TablePlan(tx, data.table(), mdm);
 
         boolean indexFound = false;
         Map<String, IndexInfo> indexes = mdm.getIndexInfo(data.table(), tx);
@@ -46,7 +46,7 @@ public class BetterQueryPlanner implements QueryPlanner {
             D_Constant val = data.pred().equatesWithConstant(fldname);
             if (val != null) {
                 IndexInfo ii = indexes.get(fldname);
-                p = new SelectWithIndexPlan(p, ii, val);
+                p = new B_SelectWithIndexPlan(p, ii, val);
 
                 indexFound = true;
                 System.out.println("index on " + fldname + " used");
@@ -54,9 +54,9 @@ public class BetterQueryPlanner implements QueryPlanner {
             }
         }
 
-        if (!indexFound) p = new SelectPlan(p, data.pred());
+        if (!indexFound) p = new B_SelectPlan(p, data.pred());
 
-        p = new ProjectPlan(p, data.fields());
+        p = new C_ProjectPlan(p, data.fields());
         return p;
     }
 }

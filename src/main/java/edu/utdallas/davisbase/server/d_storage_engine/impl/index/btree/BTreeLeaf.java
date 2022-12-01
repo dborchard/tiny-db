@@ -1,12 +1,12 @@
 package edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
-import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
+import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.common.file.BlockId;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree.common.BTPage;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree.common.DirEntry;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordKey;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueLayout;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.page.RecordKey;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TablePhysicalLayout;
 
 /**
  * An object that holds the contents of a B-tree leaf block.
@@ -15,7 +15,7 @@ import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.Record
  */
 public class BTreeLeaf {
     private Transaction tx;
-    private RecordValueLayout recordValueLayout;
+    private TablePhysicalLayout recordValueLayout;
     private D_Constant searchkey;
     private BTPage contents;
     private int currentslot;
@@ -31,13 +31,13 @@ public class BTreeLeaf {
      * @param searchkey       the search key value
      * @param tx              the calling transaction
      */
-    public BTreeLeaf(Transaction tx, BlockId blk, RecordValueLayout recordValueLayout, D_Constant searchkey) {
+    public BTreeLeaf(Transaction tx, BlockId blk, TablePhysicalLayout recordValueLayout, D_Constant searchkey) {
         this.tx = tx;
         this.recordValueLayout = recordValueLayout;
         this.searchkey = searchkey;
         contents = new BTPage(tx, blk, recordValueLayout);
         currentslot = contents.findSlotBefore(searchkey);
-        filename = blk.fileName();
+        filename = blk.getFileName();
     }
 
     /**
@@ -109,7 +109,7 @@ public class BTreeLeaf {
             currentslot = 0;
             contents.setFlag(-1);
             contents.insertLeaf(currentslot, searchkey, value);
-            return new DirEntry(firstval, newblk.number());
+            return new DirEntry(firstval, newblk.getBlockNumber());
         }
 
         currentslot++;
@@ -122,7 +122,7 @@ public class BTreeLeaf {
         if (lastkey.equals(firstkey)) {
             // create an overflow block to hold all but the first record
             BlockId newblk = contents.split(1, contents.getFlag());
-            contents.setFlag(newblk.number());
+            contents.setFlag(newblk.getBlockNumber());
             return null;
         } else {
             int splitpos = contents.getNumRecs() / 2;
@@ -138,7 +138,7 @@ public class BTreeLeaf {
                     splitpos--;
             }
             BlockId newblk = contents.split(splitpos, -1);
-            return new DirEntry(splitkey, newblk.number());
+            return new DirEntry(splitkey, newblk.getBlockNumber());
         }
     }
 

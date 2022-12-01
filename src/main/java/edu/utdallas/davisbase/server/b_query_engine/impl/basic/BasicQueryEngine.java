@@ -9,8 +9,8 @@ import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.planner.b_rule_base.BetterQueryPlanner;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.planner.b_rule_base.BetterUpdatePlanner;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.MetadataMgr;
-import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.common.scans.RScan;
+import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
+import edu.utdallas.davisbase.server.d_storage_engine.RORecordScan;
 import edu.utdallas.davisbase.server.d_storage_engine.common.file.FileMgr;
 
 import java.io.File;
@@ -44,7 +44,7 @@ public class BasicQueryEngine implements IQueryEngine {
     public TableDto doQuery(String sql) {
         Transaction tx = newTx();
         Plan p = planner.createQueryPlan(sql, tx);
-        RScan s = p.open();
+        RORecordScan s = p.open();
 
         List<String> columnNames = p.schema().fields();
 

@@ -3,12 +3,12 @@ package edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimize
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.*;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.Plan;
-import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.impl.SelectPlan;
-import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.impl.TablePlan;
+import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.impl.B_SelectPlan;
+import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.impl.A_TablePlan;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.planner.UpdatePlanner;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.MetadataMgr;
-import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.RWDataScan;
+import edu.utdallas.davisbase.server.d_storage_engine.RWRecordScan;
+import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
 
 import java.util.Iterator;
 
@@ -35,9 +35,9 @@ public class BasicUpdatePlanner implements UpdatePlanner {
     }
 
     public int executeInsert(InsertData data, Transaction tx) {
-        Plan p = new TablePlan(tx, data.tableName(), mdm);
-        RWDataScan us = (RWDataScan) p.open();
-        us.seekToHead_Insert();
+        Plan p = new A_TablePlan(tx, data.tableName(), mdm);
+        RWRecordScan us = (RWRecordScan) p.open();
+        us.seekToInsertStart();
         Iterator<D_Constant> iter = data.vals().iterator();
         for (String fldname : data.fields()) {
             D_Constant val = iter.next();
@@ -49,9 +49,9 @@ public class BasicUpdatePlanner implements UpdatePlanner {
 
 
     public int executeModify(ModifyData data, Transaction tx) {
-        Plan p = new TablePlan(tx, data.tableName(), mdm);
-        p = new SelectPlan(p, data.pred());
-        RWDataScan us = (RWDataScan) p.open();
+        Plan p = new A_TablePlan(tx, data.tableName(), mdm);
+        p = new B_SelectPlan(p, data.pred());
+        RWRecordScan us = (RWRecordScan) p.open();
         int count = 0;
         while (us.next()) {
             D_Constant val = data.newValue().evaluate(us);
@@ -63,9 +63,9 @@ public class BasicUpdatePlanner implements UpdatePlanner {
     }
 
     public int executeDelete(DeleteData data, Transaction tx) {
-        Plan p = new TablePlan(tx, data.tableName(), mdm);
-        p = new SelectPlan(p, data.pred());
-        RWDataScan us = (RWDataScan) p.open();
+        Plan p = new A_TablePlan(tx, data.tableName(), mdm);
+        p = new B_SelectPlan(p, data.pred());
+        RWRecordScan us = (RWRecordScan) p.open();
         int count = 0;
         while (us.next()) {
             us.delete();

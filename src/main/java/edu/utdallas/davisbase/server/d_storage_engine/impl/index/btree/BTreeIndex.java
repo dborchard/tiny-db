@@ -1,11 +1,11 @@
 package edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
-import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
+import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.RWIndexScan;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordKey;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.page.RecordKey;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TablePhysicalLayout;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree.common.BTPage;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree.common.DirEntry;
 import edu.utdallas.davisbase.server.d_storage_engine.common.file.BlockId;
@@ -19,13 +19,13 @@ import static java.sql.Types.INTEGER;
  */
 public class BTreeIndex implements RWIndexScan {
     private Transaction tx;
-    private RecordValueLayout dirRecordValueLayout, leafRecordValueLayout;
+    private TablePhysicalLayout dirRecordValueLayout, leafRecordValueLayout;
     private String leaftbl;
     private BTreeLeaf leaf = null;
     private BlockId rootblk;
 
 
-    public BTreeIndex(Transaction tx, String idxname, RecordValueLayout leafRecordValueLayout) {
+    public BTreeIndex(Transaction tx, String idxname, TablePhysicalLayout leafRecordValueLayout) {
         this.tx = tx;
         // deal with the leaves
         leaftbl = idxname + "leaf";
@@ -37,11 +37,11 @@ public class BTreeIndex implements RWIndexScan {
         }
 
         // deal with the directory
-        RecordValueSchema dirsch = new RecordValueSchema();
+        TableDefinition dirsch = new TableDefinition();
         dirsch.add("block", leafRecordValueLayout.schema());
         dirsch.add("dataval", leafRecordValueLayout.schema());
         String dirtbl = idxname + "dir";
-        dirRecordValueLayout = new RecordValueLayout(dirsch);
+        dirRecordValueLayout = new TablePhysicalLayout(dirsch);
         rootblk = new BlockId(dirtbl, 0);
         if (tx.size(dirtbl) == 0) {
             // create new root block

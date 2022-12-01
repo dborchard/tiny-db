@@ -6,7 +6,7 @@ import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.B_Term;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.C_Expression;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.*;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -169,39 +169,39 @@ public class DerbyParser implements IParser {
         lex.eatKeyword("table");
         String tblname = lex.eatId();
         lex.eatDelim('(');
-        RecordValueSchema sch = fieldDefs();
+        TableDefinition sch = fieldDefs();
         lex.eatDelim(')');
         return new CreateTableData(tblname, sch);
     }
 
-    private RecordValueSchema fieldDefs() {
-        RecordValueSchema recordValueSchema = fieldDef();
+    private TableDefinition fieldDefs() {
+        TableDefinition tableDefinition = fieldDef();
         if (lex.matchDelim(',')) {
             lex.eatDelim(',');
-            RecordValueSchema recordValueSchema2 = fieldDefs();
-            recordValueSchema.addAll(recordValueSchema2);
+            TableDefinition tableDefinition2 = fieldDefs();
+            tableDefinition.addAll(tableDefinition2);
         }
-        return recordValueSchema;
+        return tableDefinition;
     }
 
-    private RecordValueSchema fieldDef() {
+    private TableDefinition fieldDef() {
         String fldname = field();
         return fieldType(fldname);
     }
 
-    private RecordValueSchema fieldType(String fldname) {
-        RecordValueSchema recordValueSchema = new RecordValueSchema();
+    private TableDefinition fieldType(String fldname) {
+        TableDefinition tableDefinition = new TableDefinition();
         if (lex.matchKeyword("int")) {
             lex.eatKeyword("int");
-            recordValueSchema.addIntField(fldname);
+            tableDefinition.addIntField(fldname);
         } else {
             lex.eatKeyword("varchar");
             lex.eatDelim('(');
             int strLen = lex.eatIntConstant();
             lex.eatDelim(')');
-            recordValueSchema.addStringField(fldname, strLen);
+            tableDefinition.addStringField(fldname, strLen);
         }
-        return recordValueSchema;
+        return tableDefinition;
     }
 
 

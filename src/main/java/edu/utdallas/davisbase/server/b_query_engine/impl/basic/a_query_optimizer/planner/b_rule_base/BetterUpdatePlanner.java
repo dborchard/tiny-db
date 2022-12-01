@@ -4,15 +4,15 @@ package edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimize
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.*;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.Plan;
-import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.impl.SelectPlan;
-import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.impl.TablePlan;
+import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.impl.B_SelectPlan;
+import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan.impl.A_TablePlan;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.planner.UpdatePlanner;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.index.IndexInfo;
-import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.RWDataScan;
+import edu.utdallas.davisbase.server.d_storage_engine.RWRecordScan;
+import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.RWIndexScan;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordKey;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.page.RecordKey;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -43,11 +43,11 @@ public class BetterUpdatePlanner implements UpdatePlanner {
 
     public int executeInsert(InsertData data, Transaction tx) {
         String tblname = data.tableName();
-        Plan p = new TablePlan(tx, tblname, mdm);
+        Plan p = new A_TablePlan(tx, tblname, mdm);
 
         // first, insert the record
-        RWDataScan s = (RWDataScan) p.open();
-        s.seekToHead_Insert();
+        RWRecordScan s = (RWRecordScan) p.open();
+        s.seekToInsertStart();
 
         // then modify each field, inserting an index record if appropriate
         RecordKey recordKey = s.getRid();
@@ -70,11 +70,11 @@ public class BetterUpdatePlanner implements UpdatePlanner {
 
     public int executeDelete(DeleteData data, Transaction tx) {
         String tblname = data.tableName();
-        Plan p = new TablePlan(tx, tblname, mdm);
-        p = new SelectPlan(p, data.pred());
+        Plan p = new A_TablePlan(tx, tblname, mdm);
+        p = new B_SelectPlan(p, data.pred());
         Map<String, IndexInfo> indexes = mdm.getIndexInfo(tblname, tx);
 
-        RWDataScan s = (RWDataScan) p.open();
+        RWRecordScan s = (RWRecordScan) p.open();
         int count = 0;
         while (s.next()) {
             // first, delete the record's RID from every index
@@ -96,13 +96,13 @@ public class BetterUpdatePlanner implements UpdatePlanner {
     public int executeModify(ModifyData data, Transaction tx) {
         String tblname = data.tableName();
         String fldname = data.targetField();
-        Plan p = new TablePlan(tx, tblname, mdm);
-        p = new SelectPlan(p, data.pred());
+        Plan p = new A_TablePlan(tx, tblname, mdm);
+        p = new B_SelectPlan(p, data.pred());
 
         IndexInfo ii = mdm.getIndexInfo(tblname, tx).get(fldname);
         RWIndexScan idx = (ii == null) ? null : ii.open();
 
-        RWDataScan s = (RWDataScan) p.open();
+        RWRecordScan s = (RWRecordScan) p.open();
         int count = 0;
         while (s.next()) {
             // first, update the record

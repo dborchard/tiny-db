@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.a_frontend.common.domain.clause;
 
-import edu.utdallas.davisbase.server.d_storage_engine.common.scans.RScan;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.RORecordScan;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
 
 /**
  * The interface corresponding to SQL expressions.
@@ -27,7 +27,7 @@ public class C_Expression {
      * @param s the scan
      * @return the value of the expression, as a Constant
      */
-    public D_Constant evaluate(RScan s) {
+    public D_Constant evaluate(RORecordScan s) {
         return (val != null) ? val : s.getVal(fldname);
     }
 
@@ -69,7 +69,7 @@ public class C_Expression {
      * @param sch the schema
      * @return true if all fields in the expression are in the schema
      */
-    public boolean appliesTo(RecordValueSchema sch) {
+    public boolean appliesTo(TableDefinition sch) {
         return (val != null) ? true : sch.hasField(fldname);
     }
 

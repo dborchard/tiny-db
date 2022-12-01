@@ -1,7 +1,7 @@
 package edu.utdallas.davisbase.server.b_query_engine.impl.basic.a_query_optimizer.plan;
 
-import edu.utdallas.davisbase.server.d_storage_engine.common.scans.RScan;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.RORecordScan;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
 
 /**
  * Plan encapsulate relational algebra and cost of operation.
@@ -11,9 +11,9 @@ import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.Record
  */
 public interface Plan {
 
-    RScan open();
+    RORecordScan open();
 
-    RecordValueSchema schema();
+    TableDefinition schema();
 
     int blocksAccessed();
 }

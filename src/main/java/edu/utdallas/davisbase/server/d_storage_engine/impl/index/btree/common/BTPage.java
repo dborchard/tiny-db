@@ -1,11 +1,11 @@
 package edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree.common;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
-import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
+import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.common.file.BlockId;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordKey;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.page.RecordKey;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TablePhysicalLayout;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
 
 import static java.sql.Types.INTEGER;
 
@@ -20,7 +20,7 @@ import static java.sql.Types.INTEGER;
 public class BTPage {
     private Transaction tx;
     private BlockId currentblk;
-    private RecordValueLayout recordValueLayout;
+    private TablePhysicalLayout recordValueLayout;
 
     /**
      * Open a node for the specified B-tree block.
@@ -29,7 +29,7 @@ public class BTPage {
      * @param recordValueLayout the metadata for the particular B-tree file
      * @param tx              the calling transaction
      */
-    public BTPage(Transaction tx, BlockId currentblk, RecordValueLayout recordValueLayout) {
+    public BTPage(Transaction tx, BlockId currentblk, TablePhysicalLayout recordValueLayout) {
         this.tx = tx;
         this.currentblk = currentblk;
         this.recordValueLayout = recordValueLayout;
@@ -123,7 +123,7 @@ public class BTPage {
      * @return a reference to the newly-created block
      */
     public BlockId appendNew(int flag) {
-        BlockId blk = tx.append(currentblk.fileName());
+        BlockId blk = tx.append(currentblk.getFileName());
         tx.pin(blk);
         format(blk, flag);
         return blk;
@@ -194,8 +194,8 @@ public class BTPage {
     public void insertLeaf(int slot, D_Constant val, RecordKey recordKey) {
         insert(slot);
         setVal(slot, "dataval", val);
-        setInt(slot, "block", recordKey.blockNumber());
-        setInt(slot, "id", recordKey.slot());
+        setInt(slot, "block", recordKey.getBlockNumber());
+        setInt(slot, "id", recordKey.getSlotNumber());
     }
 
     /**
@@ -268,7 +268,7 @@ public class BTPage {
     }
 
     private void copyRecord(int from, int to) {
-        RecordValueSchema sch = recordValueLayout.schema();
+        TableDefinition sch = recordValueLayout.schema();
         for (String fldname : sch.fields())
             setVal(to, fldname, getVal(from, fldname));
     }
@@ -277,7 +277,7 @@ public class BTPage {
         int destslot = 0;
         while (slot < getNumRecs()) {
             dest.insert(destslot);
-            RecordValueSchema sch = recordValueLayout.schema();
+            TableDefinition sch = recordValueLayout.schema();
             for (String fldname : sch.fields())
                 dest.setVal(destslot, fldname, getVal(slot, fldname));
             delete(slot);

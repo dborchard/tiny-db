@@ -2,7 +2,7 @@ package edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.serd
 
 import com.github.davidmoten.bplustree.LargeByteBuffer;
 import com.github.davidmoten.bplustree.Serializer;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordKey;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.page.RecordKey;
 
 public class RecordKeySerializer implements Serializer<RecordKey> {
 
@@ -15,8 +15,8 @@ public class RecordKeySerializer implements Serializer<RecordKey> {
 
   @Override
   public void write(LargeByteBuffer bb, RecordKey recordKey) {
-    bb.putInt(recordKey.blockNumber());
-    bb.putInt(recordKey.slot());
+    bb.putInt(recordKey.getBlockNumber());
+    bb.putInt(recordKey.getSlotNumber());
   }
 
   @Override

@@ -5,9 +5,9 @@ import edu.utdallas.davisbase.server.b_query_engine.impl.basic.b_stats_manager.d
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.index.IndexInfo;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.index.IndexMgr;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TableMgr;
-import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TablePhysicalLayout;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
 
 import java.util.Map;
 
@@ -27,11 +27,11 @@ public class MetadataMgr {
         idxmgr = new IndexMgr(isnew, tblmgr, statmgr, tx);
     }
 
-    public void createTable(String tblname, RecordValueSchema sch, Transaction tx) {
+    public void createTable(String tblname, TableDefinition sch, Transaction tx) {
         tblmgr.createTable(tblname, sch, tx);
     }
 
-    public RecordValueLayout getLayout(String tblname, Transaction tx) {
+    public TablePhysicalLayout getLayout(String tblname, Transaction tx) {
         return tblmgr.getLayout(tblname, tx);
     }
 
@@ -44,7 +44,7 @@ public class MetadataMgr {
         return idxmgr.getIndexInfo(tblname, tx);
     }
 
-    public StatInfo getStatInfo(String tblname, RecordValueLayout layout, Transaction tx) {
+    public StatInfo getStatInfo(String tblname, TablePhysicalLayout layout, Transaction tx) {
         return statmgr.getStatInfo(tblname, layout, tx);
     }
 }

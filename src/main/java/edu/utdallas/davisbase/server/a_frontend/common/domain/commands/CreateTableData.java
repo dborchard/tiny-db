@@ -1,6 +1,6 @@
 package edu.utdallas.davisbase.server.a_frontend.common.domain.commands;
 
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
 import lombok.ToString;
 
 /**
@@ -11,12 +11,12 @@ import lombok.ToString;
 @ToString
 public class CreateTableData {
     private String tblname;
-    private RecordValueSchema sch;
+    private TableDefinition sch;
 
     /**
      * Saves the table name and schema.
      */
-    public CreateTableData(String tblname, RecordValueSchema sch) {
+    public CreateTableData(String tblname, TableDefinition sch) {
         this.tblname = tblname;
         this.sch = sch;
     }
@@ -35,7 +35,7 @@ public class CreateTableData {
      *
      * @return the schema of the new table
      */
-    public RecordValueSchema newSchema() {
+    public TableDefinition newSchema() {
         return sch;
     }
 }

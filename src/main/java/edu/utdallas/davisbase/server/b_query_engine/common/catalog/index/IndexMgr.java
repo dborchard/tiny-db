@@ -3,10 +3,10 @@ package edu.utdallas.davisbase.server.b_query_engine.common.catalog.index;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.b_stats_manager.StatMgr;
 import edu.utdallas.davisbase.server.b_query_engine.impl.basic.b_stats_manager.domain.StatInfo;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TableMgr;
-import edu.utdallas.davisbase.server.c_key_value_store.Transaction;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.iterator.heap.HeapRecordScan;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.HeapRWRecordScan;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TablePhysicalLayout;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ import java.util.Map;
  * @author Edward Sciore
  */
 public class IndexMgr {
-    private RecordValueLayout recordValueLayout;
+    private TablePhysicalLayout recordValueLayout;
     private TableMgr tblmgr;
     private StatMgr statmgr;
 
@@ -32,7 +32,7 @@ public class IndexMgr {
      */
     public IndexMgr(boolean isnew, TableMgr tblmgr, StatMgr statmgr, Transaction tx) {
         if (isnew) {
-            RecordValueSchema sch = new RecordValueSchema();
+            TableDefinition sch = new TableDefinition();
             sch.addStringField("indexname", TableMgr.MAX_NAME);
             sch.addStringField("tablename", TableMgr.MAX_NAME);
             sch.addStringField("fieldname", TableMgr.MAX_NAME);
@@ -54,8 +54,8 @@ public class IndexMgr {
      * @param tx      the calling transaction
      */
     public void createIndex(String idxname, String tblname, String fldname, Transaction tx) {
-        HeapRecordScan ts = new HeapRecordScan(tx, "idxcat", recordValueLayout);
-        ts.seekToHead_Insert();
+        HeapRWRecordScan ts = new HeapRWRecordScan(tx, "idxcat", recordValueLayout);
+        ts.seekToInsertStart();
         ts.setString("indexname", idxname);
         ts.setString("tablename", tblname);
         ts.setString("fieldname", fldname);
@@ -72,11 +72,11 @@ public class IndexMgr {
      */
     public Map<String, IndexInfo> getIndexInfo(String tblname, Transaction tx) {
         Map<String, IndexInfo> result = new HashMap<String, IndexInfo>();
-        HeapRecordScan ts = new HeapRecordScan(tx, "idxcat", recordValueLayout);
+        HeapRWRecordScan ts = new HeapRWRecordScan(tx, "idxcat", recordValueLayout);
         while (ts.next()) if (ts.getString("tablename").equals(tblname)) {
             String idxname = ts.getString("indexname");
             String fldname = ts.getString("fieldname");
-            RecordValueLayout tblRecordValueLayout = tblmgr.getLayout(tblname, tx);
+            TablePhysicalLayout tblRecordValueLayout = tblmgr.getLayout(tblname, tx);
             StatInfo tblsi = statmgr.getStatInfo(tblname, tblRecordValueLayout, tx);
             IndexInfo ii = new IndexInfo(idxname, fldname, tblRecordValueLayout.schema(), tx, tblsi);
             result.put(fldname, ii);

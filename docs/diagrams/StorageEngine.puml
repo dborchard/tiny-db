@@ -1,0 +1,19 @@
+@startuml Storage Engine Scan Flow
+!pragma layout smetana
+
+
+package HeapRecordScan
+package HeapRecordPageImpl
+package Transactions
+package FileManager
+package Page
+
+HeapRecordScan --> HeapRecordPageImpl
+
+HeapRecordPageImpl --> Transactions
+
+Transactions ..> Page
+
+Page --> FileManager
+
+@enduml

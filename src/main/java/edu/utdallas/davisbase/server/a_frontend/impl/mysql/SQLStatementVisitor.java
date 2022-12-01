@@ -6,7 +6,7 @@ import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.B_Term;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.C_Expression;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.commands.*;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.data.page.heap.RecordValueSchema;
+import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TableDefinition;
 import org.apache.shardingsphere.sql.parser.autogen.MySQLStatementBaseVisitor;
 import org.apache.shardingsphere.sql.parser.autogen.MySQLStatementParser;
 
@@ -43,7 +43,7 @@ public class SQLStatementVisitor extends MySQLStatementBaseVisitor {
 
 
     // Create Table
-    private RecordValueSchema schema;
+    private TableDefinition schema;
 
     public SQLStatementVisitor(MySQLStatementParser parser) {
         this.parser = parser;
@@ -61,7 +61,7 @@ public class SQLStatementVisitor extends MySQLStatementBaseVisitor {
 
         this.updateFieldName = "";
 
-        this.schema = new RecordValueSchema();
+        this.schema = new TableDefinition();
     }
 
     // COMMAND TYPE

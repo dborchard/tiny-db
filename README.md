@@ -87,3 +87,6 @@ select A,B from T2 where A=1;
 This work is a derived from [SimpleDB](http://cs.bc.edu/~sciore/simpledb/)
 
 ## Current Limitations
+- Not implemented Primary Key, Unique Key etc.
+- If we create index after the data is inserted, there is some anomaly.
+- Currently only supports Varchar, int.
