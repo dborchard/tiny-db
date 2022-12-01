@@ -1,0 +1,15 @@
+@startuml Storage Engine Scan Flow
+!pragma layout smetana
+
+
+package QueryEngine
+package StorageEngine
+package CLI
+package Parser
+
+
+CLI --> QueryEngine
+QueryEngine <..> Parser
+QueryEngine --> StorageEngine
+
+@enduml

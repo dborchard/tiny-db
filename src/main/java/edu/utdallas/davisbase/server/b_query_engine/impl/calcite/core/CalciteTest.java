@@ -1,73 +1,44 @@
-package edu.utdallas.davisbase.server.b_query_engine.impl.calcite;
+package edu.utdallas.davisbase.server.b_query_engine.impl.calcite.core;
 
-import edu.utdallas.davisbase.server.b_query_engine.IQueryEngine;
+import edu.utdallas.davisbase.cli.utils.TablePrinter;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.MetadataMgr;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.domain.TablePhysicalLayout;
 import edu.utdallas.davisbase.server.b_query_engine.common.dto.TableDto;
-import edu.utdallas.davisbase.server.b_query_engine.impl.calcite.core.B_Table;
-import edu.utdallas.davisbase.server.b_query_engine.impl.calcite.core.C_Schema;
-import edu.utdallas.davisbase.server.b_query_engine.impl.calcite.core.D_JavaSqlTypeToCalciteSqlTypeConversionRules;
 import edu.utdallas.davisbase.server.d_storage_engine.common.file.FileMgr;
 import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
-import lombok.SneakyThrows;
 import org.apache.calcite.jdbc.CalciteConnection;
 import org.apache.calcite.schema.SchemaPlus;
 import org.apache.calcite.sql.type.SqlTypeName;
 
 /**
- * QueryEngine Implementation with Calcite Parser and Planner.
- * <p>
- * NOTE: There is no Optimizer implemented. Also, Since ModifiableTable is not implemented in
- * {@link  B_Table}, we currently don't support DML operations.
+ * Testing Calcite Overall Flow
  *
  * @author Arjun Sunil Kumar
  */
-public class CalciteQueryEngine implements IQueryEngine {
+public class CalciteTest {
 
   public static int BLOCK_SIZE = 512;
   FileMgr fm;
-  MetadataMgr mdm;
-  Connection connection;
 
-  String tableName = "T1";
-  String schemaName = "davisbase";
-
-  @SneakyThrows
-  public CalciteQueryEngine(String dirname) {
-
+  public void run(String tableName, String schemaName) throws SQLException, ClassNotFoundException {
     //1. Init MetaDataManager (Catalog)
-    File dbDirectory = new File(dirname);
+    File dbDirectory = new File("davisdb");
     fm = new FileMgr(dbDirectory, BLOCK_SIZE);
     Transaction tx1 = newTx();
-    mdm = new MetadataMgr(fm.isNew(), tx1);
+    MetadataMgr mdm = new MetadataMgr(fm.isNew(), tx1);
     tx1.commit();
 
-    // 4.a JDBC similar
-    Class.forName("org.apache.calcite.jdbc.Driver");
-    Properties info = new Properties();
-    info.setProperty("lex", "JAVA");
-    connection = DriverManager.getConnection("jdbc:calcite:", info);
-  }
-
-
-  /**
-   * Use the Syntax:
-   * <code>
-   * select A,B from davisbase.T1;
-   * </code>
-   */
-  @SneakyThrows
-  public TableDto doQuery(String sql) {
     //2.a Get Table Layout
     Transaction tx2 = newTx();
     TablePhysicalLayout tableLayout = mdm.getLayout(tableName, tx2);
@@ -87,6 +58,12 @@ public class CalciteQueryEngine implements IQueryEngine {
 
     // 4. Add schema to the SQL root schema
 
+    // 4.a JDBC similar
+    Class.forName("org.apache.calcite.jdbc.Driver");
+    Properties info = new Properties();
+    info.setProperty("lex", "JAVA");
+    Connection connection = DriverManager.getConnection("jdbc:calcite:", info);
+
     // 4.b Unwrap and add proxy
     CalciteConnection calciteConnection = connection.unwrap(CalciteConnection.class);
     SchemaPlus rootSchema = calciteConnection.getRootSchema();
@@ -94,38 +71,37 @@ public class CalciteQueryEngine implements IQueryEngine {
 
     // 5. Execute JDBC Query
     Statement statement = calciteConnection.createStatement();
+    String sql = "select A,B from " + schemaName + "." + tableName + " as e";
     ResultSet rs = statement.executeQuery(sql);
 
+    // 6. Print
     List<String> columnNames = tableLayout.schema().fields();
     List<List<String>> rows = new ArrayList<>();
     while (rs.next()) {
       List<String> row = new ArrayList<>();
-      for (String field : columnNames) {
-        row.add(rs.getString(field));
-      }
+        for (String field : columnNames) {
+            row.add(rs.getString(field));
+        }
       rows.add(row);
     }
+    TableDto result = new TableDto(columnNames, rows);
+    new TablePrinter().print(result);
 
+    // 7. Close
+    tx2.commit();
     rs.close();
     statement.close();
-    tx2.commit();
-
-    return new TableDto(columnNames, rows);
-  }
-
-  @Override
-  public TableDto doUpdate(String sql) {
-    return null;
-  }
-
-  @SneakyThrows
-  @Override
-  public void close() {
     connection.close();
   }
 
   private Transaction newTx() {
     return new Transaction(fm);
   }
+
+  public static void main(String[] args) throws SQLException, ClassNotFoundException {
+    new CalciteTest().run("T1", "davisbase");
+
+  }
+
 
 }

@@ -1,21 +1,27 @@
 package edu.utdallas.davisbase.server.b_query_engine.impl.calcite.core;
 
+import java.util.Map;
 import org.apache.calcite.schema.Table;
 import org.apache.calcite.schema.impl.AbstractSchema;
 
-import java.util.Map;
-
+/**
+ * Calcite Schema containing multiple table.
+ * <p>
+ * This schema will be injected as Proxy to the JDBMs schema in connection.
+ *
+ * @author Arjun Sunil Kumar
+ */
 public class C_Schema extends AbstractSchema {
 
-    private final Map<String, Table> tableMap;
+  private final Map<String, Table> tableMap;
 
-    public C_Schema(Map<String, Table> tableMap) {
-        this.tableMap = tableMap;
-    }
+  public C_Schema(Map<String, Table> tableMap) {
+    this.tableMap = tableMap;
+  }
 
-    @Override
-    public Map<String, Table> getTableMap() {
-        return tableMap;
-    }
+  @Override
+  public Map<String, Table> getTableMap() {
+    return tableMap;
+  }
 
 }

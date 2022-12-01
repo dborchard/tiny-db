@@ -18,6 +18,11 @@ import org.apache.calcite.schema.ScannableTable;
 import org.apache.calcite.schema.impl.AbstractTable;
 import org.apache.calcite.sql.type.SqlTypeName;
 
+/**
+ * Calcite Table build using Enumerator
+ *
+ * @author Arjun Sunil Kumar
+ */
 public class B_Table extends AbstractTable implements ScannableTable {//, ModifiableTable {
 
   private final String tableName;
