@@ -16,7 +16,7 @@ A tiny database that supports Btree Index, Planner and Parser.
 
 - Index
   - Naive B+Tree Index
-  - Library backed B+Tree Index (davidmoten bplustree library)
+  - Library backed B+Tree Index (davidmoten bplustree library, Delete not supported by library)
   
 - Storage Engine
   - File Manager, Block, Page
