@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree;
+package edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.basic;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
@@ -6,8 +6,8 @@ import edu.utdallas.davisbase.server.d_storage_engine.RWIndexScan;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.page.RecordKey;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TablePhysicalLayout;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TableDefinition;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree.common.BTPage;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree.common.DirEntry;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.basic.common.BTPage;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.basic.common.DirEntry;
 import edu.utdallas.davisbase.server.d_storage_engine.common.file.BlockId;
 
 import static java.sql.Types.INTEGER;
@@ -17,7 +17,7 @@ import static java.sql.Types.INTEGER;
  *
  * @author Edward Sciore
  */
-public class BTreeIndex implements RWIndexScan {
+public class BasicBPlusTreeIndex implements RWIndexScan {
     private Transaction tx;
     private TablePhysicalLayout dirRecordValueLayout, leafRecordValueLayout;
     private String leaftbl;
@@ -25,7 +25,7 @@ public class BTreeIndex implements RWIndexScan {
     private BlockId rootblk;
 
 
-    public BTreeIndex(Transaction tx, String idxname, TablePhysicalLayout leafRecordValueLayout) {
+    public BasicBPlusTreeIndex(Transaction tx, String idxname, TablePhysicalLayout leafRecordValueLayout) {
         this.tx = tx;
         // deal with the leaves
         leaftbl = idxname + "leaf";

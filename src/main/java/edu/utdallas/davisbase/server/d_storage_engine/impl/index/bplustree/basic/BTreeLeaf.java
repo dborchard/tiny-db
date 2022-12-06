@@ -1,10 +1,10 @@
-package edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree;
+package edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.basic;
 
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transaction;
 import edu.utdallas.davisbase.server.d_storage_engine.common.file.BlockId;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree.common.BTPage;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree.common.DirEntry;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.basic.common.BTPage;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.basic.common.DirEntry;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.page.RecordKey;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TablePhysicalLayout;
 

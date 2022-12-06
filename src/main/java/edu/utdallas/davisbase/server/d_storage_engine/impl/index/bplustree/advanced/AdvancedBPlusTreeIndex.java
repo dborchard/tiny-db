@@ -1,4 +1,4 @@
-package edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree;
+package edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.advanced;
 
 import com.github.davidmoten.bplustree.BPlusTree;
 import edu.utdallas.davisbase.server.a_frontend.common.domain.clause.D_Constant;
@@ -6,8 +6,8 @@ import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transac
 import edu.utdallas.davisbase.server.d_storage_engine.RWIndexScan;
 import edu.utdallas.davisbase.server.d_storage_engine.impl.data.heap.page.RecordKey;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TablePhysicalLayout;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.serde.ConstantSerializer;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.serde.RecordKeySerializer;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.advanced.serde.ConstantSerializer;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.advanced.serde.RecordKeySerializer;
 import java.util.Iterator;
 import lombok.SneakyThrows;
 
@@ -17,12 +17,12 @@ import lombok.SneakyThrows;
  *
  * @author Arjun Sunil Kumar
  */
-public class BPlusTreeIndex implements RWIndexScan {
+public class AdvancedBPlusTreeIndex implements RWIndexScan {
 
   BPlusTree<D_Constant, RecordKey> tree;
   Iterator<RecordKey> iterator;
 
-  public BPlusTreeIndex(Transaction tx, String idxname, TablePhysicalLayout leafRecordValueLayout) {
+  public AdvancedBPlusTreeIndex(Transaction tx, String idxname, TablePhysicalLayout leafRecordValueLayout) {
     tree = BPlusTree.file().directory("davisdb")
         .maxLeafKeys(32)
         .maxNonLeafKeys(8)

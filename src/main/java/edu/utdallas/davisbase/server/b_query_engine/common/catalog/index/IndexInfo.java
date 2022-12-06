@@ -7,8 +7,7 @@ import edu.utdallas.davisbase.server.d_storage_engine.common.transaction.Transac
 import edu.utdallas.davisbase.server.d_storage_engine.RWIndexScan;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TablePhysicalLayout;
 import edu.utdallas.davisbase.server.b_query_engine.common.catalog.table.TableDefinition;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.BPlusTreeIndex;
-import edu.utdallas.davisbase.server.d_storage_engine.impl.index.btree.BTreeIndex;
+import edu.utdallas.davisbase.server.d_storage_engine.impl.index.bplustree.basic.BasicBPlusTreeIndex;
 
 
 /**
@@ -39,7 +38,7 @@ public class IndexInfo {
 
 
   public RWIndexScan open() {
-    return new BPlusTreeIndex(tx, idxname, idxRecordValueLayout);
+    return new BasicBPlusTreeIndex(tx, idxname, idxRecordValueLayout);
   }
 
 
@@ -60,7 +59,7 @@ public class IndexInfo {
   public int blocksAccessed() {
     int rpb = tx.blockSize() / idxRecordValueLayout.slotSize();
     int numblocks = si.recordsOutput() / rpb;
-    return BTreeIndex.searchCost(numblocks, rpb);
+    return BasicBPlusTreeIndex.searchCost(numblocks, rpb);
   }
 
   public int recordsOutput() {
