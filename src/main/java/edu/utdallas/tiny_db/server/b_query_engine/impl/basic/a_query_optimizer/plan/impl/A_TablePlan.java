@@ -2,7 +2,7 @@ package edu.utdallas.tiny_db.server.b_query_engine.impl.basic.a_query_optimizer.
 
 import edu.utdallas.tiny_db.server.b_query_engine.common.catalog.MetadataMgr;
 import edu.utdallas.tiny_db.server.b_query_engine.impl.basic.a_query_optimizer.plan.Plan;
-import edu.utdallas.tiny_db.server.b_query_engine.impl.basic.b_stats_manager.domain.StatInfo;
+import edu.utdallas.tiny_db.server.b_query_engine.common.catalog.stats.domain.StatInfo;
 import edu.utdallas.tiny_db.server.d_storage_engine.RORecordScan;
 import edu.utdallas.tiny_db.server.d_storage_engine.common.transaction.Transaction;
 import edu.utdallas.tiny_db.server.d_storage_engine.impl.data.heap.HeapRWRecordScan;

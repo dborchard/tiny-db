@@ -1,4 +1,4 @@
-package edu.utdallas.tiny_db.server.b_query_engine.impl.basic.b_stats_manager.domain;
+package edu.utdallas.tiny_db.server.b_query_engine.common.catalog.stats.domain;
 
 /**
  * A StatInfo object holds three pieces of

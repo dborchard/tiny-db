@@ -1,7 +1,7 @@
 package edu.utdallas.tiny_db.server.b_query_engine.impl.basic.a_query_optimizer.plan.impl;
 
 import edu.utdallas.tiny_db.server.b_query_engine.impl.basic.a_query_optimizer.plan.Plan;
-import edu.utdallas.tiny_db.server.b_query_engine.impl.basic.c_sql_scans.C_Project_RORecordScan;
+import edu.utdallas.tiny_db.server.b_query_engine.impl.basic.b_sql_scans.C_Project_RORecordScan;
 import edu.utdallas.tiny_db.server.d_storage_engine.RORecordScan;
 import edu.utdallas.tiny_db.server.b_query_engine.common.catalog.table.TableDefinition;
 

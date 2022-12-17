@@ -1,7 +1,7 @@
 package edu.utdallas.tiny_db.server.b_query_engine.common.catalog;
 
-import edu.utdallas.tiny_db.server.b_query_engine.impl.basic.b_stats_manager.StatMgr;
-import edu.utdallas.tiny_db.server.b_query_engine.impl.basic.b_stats_manager.domain.StatInfo;
+import edu.utdallas.tiny_db.server.b_query_engine.common.catalog.stats.StatMgr;
+import edu.utdallas.tiny_db.server.b_query_engine.common.catalog.stats.domain.StatInfo;
 import edu.utdallas.tiny_db.server.b_query_engine.common.catalog.index.IndexInfo;
 import edu.utdallas.tiny_db.server.b_query_engine.common.catalog.index.IndexMgr;
 import edu.utdallas.tiny_db.server.b_query_engine.common.catalog.table.TableMgr;

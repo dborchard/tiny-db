@@ -33,6 +33,7 @@ public class TablePhysicalLayout {
         this.tableDefinition = tableDefinition;
         offsets = new HashMap<>();
         int pos = Integer.BYTES; // leave space for the empty/inuse flag
+        // [Inuse [0], A [1 Byte], B [5 Byte]
         for (String fldname : tableDefinition.fields()) {
             offsets.put(fldname, pos);
             pos += lengthInBytes(fldname);
@@ -87,8 +88,8 @@ public class TablePhysicalLayout {
     private int lengthInBytes(String fldname) {
         int fldtype = tableDefinition.type(fldname);
         if (fldtype == INTEGER)
-            return Integer.BYTES;
-        else
+            return Integer.BYTES; // 4
+        else // VARCHAR(-->9)
             return Page.maxBytesRequiredForString(tableDefinition.length(fldname));
     }
 }

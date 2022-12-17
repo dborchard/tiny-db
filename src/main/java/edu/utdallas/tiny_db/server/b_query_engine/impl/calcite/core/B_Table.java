@@ -47,6 +47,7 @@ public class B_Table extends AbstractTable implements ScannableTable {//, Modifi
 
   @Override
   public RelDataType getRowType(RelDataTypeFactory typeFactory) {
+    // singleton pattern
     if (rowType == null) {
       List<RelDataTypeField> fields = new ArrayList<>(fieldNames.size());
 

@@ -13,8 +13,8 @@ package MetadataMgr_TableCatalog
 package RW_HeapRecordScan
 
 
-CalciteEnumerator <...> MetadataMgr_TableCatalog
-CalciteEnumerator <...> RW_HeapRecordScan
+CalciteEnumerator <..> MetadataMgr_TableCatalog
+CalciteEnumerator <..> RW_HeapRecordScan
 CalciteEnumerator ---> CalciteTable
 
 MetadataMgr_TableCatalog -> RW_HeapRecordScan
