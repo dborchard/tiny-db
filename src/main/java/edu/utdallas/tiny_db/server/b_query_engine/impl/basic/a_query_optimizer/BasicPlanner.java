@@ -2,7 +2,7 @@ package edu.utdallas.tiny_db.server.b_query_engine.impl.basic.a_query_optimizer;
 
 import edu.utdallas.tiny_db.server.a_frontend.IParser;
 import edu.utdallas.tiny_db.server.a_frontend.common.domain.commands.*;
-import edu.utdallas.tiny_db.server.a_frontend.impl.mysql.SqlLiteParser;
+import edu.utdallas.tiny_db.server.a_frontend.impl.mysql.MySqlParser;
 import edu.utdallas.tiny_db.server.b_query_engine.impl.basic.a_query_optimizer.plan.Plan;
 import edu.utdallas.tiny_db.server.b_query_engine.impl.basic.a_query_optimizer.planner.QueryPlanner;
 import edu.utdallas.tiny_db.server.b_query_engine.impl.basic.a_query_optimizer.planner.UpdatePlanner;
@@ -24,14 +24,14 @@ public class BasicPlanner {
     }
 
     public Plan createQueryPlan(String qry, Transaction tx) {
-        IParser parser = new SqlLiteParser(qry);
+        IParser parser = new MySqlParser(qry);
         QueryData data = parser.queryCmd();
 //        System.out.println(data);
         return queryPlanner.createPlan(data, tx);
     }
 
     public int executeUpdate(String cmd, Transaction tx) {
-        IParser parser = new SqlLiteParser(cmd);
+        IParser parser = new MySqlParser(cmd);
         Object data = parser.updateCmd();
 //        System.out.println(data);
         if (data instanceof InsertData) return updatePlanner.executeInsert((InsertData) data, tx);

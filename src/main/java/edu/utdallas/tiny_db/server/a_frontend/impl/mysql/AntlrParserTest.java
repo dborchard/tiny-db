@@ -26,7 +26,7 @@ public class AntlrParserTest {
         MySQLStatementParser parser = new MySQLStatementParser(new CommonTokenStream(lexer));
         MySQLStatementParser.ExecuteContext execute = parser.execute();
 
-        SQLStatementVisitor sqlStatementVisitor = new SQLStatementVisitor(parser);
+        MySqlStatementVisitor sqlStatementVisitor = new MySqlStatementVisitor(parser);
         System.out.println(execute.toStringTree(parser));
         sqlStatementVisitor.visit(execute);
 

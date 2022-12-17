@@ -12,15 +12,15 @@ import org.apache.shardingsphere.sql.parser.mysql.parser.MySQLLexer;
  *
  * @author Arjun Sunil Kumar
  */
-public class SqlLiteParser implements IParser {
+public class MySqlParser implements IParser {
 
-    SQLStatementVisitor sqlStatementVisitor;
+    MySqlStatementVisitor sqlStatementVisitor;
 
-    public SqlLiteParser(String sql) {
+    public MySqlParser(String sql) {
         MySQLLexer lexer = new MySQLLexer(CharStreams.fromString(sql));
         MySQLStatementParser parser = new MySQLStatementParser(new CommonTokenStream(lexer));
 
-        sqlStatementVisitor = new SQLStatementVisitor(parser);
+        sqlStatementVisitor = new MySqlStatementVisitor(parser);
         sqlStatementVisitor.visit(parser.execute());
     }
 

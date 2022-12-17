@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author Arjun Sunil Kumar
  */
-public class SQLStatementVisitor extends MySQLStatementBaseVisitor {
+public class MySqlStatementVisitor extends MySQLStatementBaseVisitor {
     private final MySQLStatementParser parser;
     private COMMAND_TYPE commandType;
 
@@ -45,7 +45,7 @@ public class SQLStatementVisitor extends MySQLStatementBaseVisitor {
     // Create Table
     private TableDefinition schema;
 
-    public SQLStatementVisitor(MySQLStatementParser parser) {
+    public MySqlStatementVisitor(MySQLStatementParser parser) {
         this.parser = parser;
 
         this.tableName = "";
