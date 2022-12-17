@@ -36,14 +36,14 @@ public class BasicUpdatePlanner implements UpdatePlanner {
 
     public int executeInsert(InsertData data, Transaction tx) {
         Plan p = new A_TablePlan(tx, data.tableName(), mdm);
-        RWRecordScan us = (RWRecordScan) p.open();
-        us.seekToInsertStart();
+        RWRecordScan scan = (RWRecordScan) p.open();
+        scan.seekToInsertStart();
         Iterator<D_Constant> iter = data.vals().iterator();
         for (String fldname : data.fields()) {
             D_Constant val = iter.next();
-            us.setVal(fldname, val);
+            scan.setVal(fldname, val);
         }
-        us.close();
+        scan.close();
         return 1;
     }
 
@@ -51,14 +51,14 @@ public class BasicUpdatePlanner implements UpdatePlanner {
     public int executeModify(ModifyData data, Transaction tx) {
         Plan p = new A_TablePlan(tx, data.tableName(), mdm);
         p = new B_SelectPlan(p, data.pred());
-        RWRecordScan us = (RWRecordScan) p.open();
+        RWRecordScan scan = (RWRecordScan) p.open();
         int count = 0;
-        while (us.next()) {
-            D_Constant val = data.newValue().evaluate(us);
-            us.setVal(data.targetField(), val);
+        while (scan.next()) {
+            D_Constant val = data.newValue().evaluate(scan);
+            scan.setVal(data.targetField(), val);
             count++;
         }
-        us.close();
+        scan.close();
         return count;
     }
 

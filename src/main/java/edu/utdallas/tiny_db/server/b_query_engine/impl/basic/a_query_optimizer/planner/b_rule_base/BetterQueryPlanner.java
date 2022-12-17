@@ -42,14 +42,14 @@ public class BetterQueryPlanner implements QueryPlanner {
 
         boolean indexFound = false;
         Map<String, IndexInfo> indexes = mdm.getIndexInfo(data.table(), tx);
-        for (String fldname : indexes.keySet()) {
-            D_Constant val = data.pred().equatesWithConstant(fldname);
-            if (val != null) {
-                IndexInfo ii = indexes.get(fldname);
-                p = new B_SelectWithIndexPlan(p, ii, val);
+        for (String columnName : indexes.keySet()) {
+            D_Constant columnValue = data.pred().equatesWithConstant(columnName);
+            if (columnValue != null) {
+                IndexInfo columnIndexInfo = indexes.get(columnName);
+                p = new B_SelectWithIndexPlan(p, columnIndexInfo, columnValue);
 
                 indexFound = true;
-                System.out.println("index on " + fldname + " used");
+                System.out.println("index on " + columnName + " used");
                 break;
             }
         }

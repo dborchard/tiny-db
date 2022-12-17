@@ -12,6 +12,7 @@ import org.apache.shardingsphere.sql.parser.autogen.MySQLStatementParser;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.shardingsphere.sql.parser.autogen.MySQLStatementParser.AliasContext;
 
 /**
  * The ANTLR visitor class for Parsing SQL Statements.

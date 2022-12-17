@@ -46,16 +46,16 @@ public class BetterUpdatePlanner implements UpdatePlanner {
         Plan p = new A_TablePlan(tx, tblname, mdm);
 
         // first, insert the record
-        RWRecordScan s = (RWRecordScan) p.open();
-        s.seekToInsertStart();
+        RWRecordScan scan = (RWRecordScan) p.open();
+        scan.seekToInsertStart();
 
         // then modify each field, inserting an index record if appropriate
-        RecordKey recordKey = s.getRid();
+        RecordKey recordKey = scan.getRid();
         Map<String, IndexInfo> indexes = mdm.getIndexInfo(tblname, tx);
         Iterator<D_Constant> valIter = data.vals().iterator();
         for (String fldname : data.fields()) {
             D_Constant val = valIter.next();
-            s.setVal(fldname, val);
+            scan.setVal(fldname, val);
 
             IndexInfo ii = indexes.get(fldname);
             if (ii != null) {
@@ -64,7 +64,7 @@ public class BetterUpdatePlanner implements UpdatePlanner {
                 idx.close();
             }
         }
-        s.close();
+        scan.close();
         return 1;
     }
 

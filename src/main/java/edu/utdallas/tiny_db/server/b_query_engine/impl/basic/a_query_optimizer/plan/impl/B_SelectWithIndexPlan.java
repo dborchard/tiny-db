@@ -30,9 +30,9 @@ public class B_SelectWithIndexPlan implements Plan {
 
     public RORecordScan open() {
         // throws an exception if p is not a tableplan.
-        HeapRWRecordScan ts = (HeapRWRecordScan) p.open();
+        HeapRWRecordScan scan = (HeapRWRecordScan) p.open();
         RWIndexScan idx = ii.open();
-        return new A_SelectUsingIndex_RORecordScan(ts, idx, val);
+        return new A_SelectUsingIndex_RORecordScan(scan, idx, val);
     }
 
     public TableDefinition schema() {
