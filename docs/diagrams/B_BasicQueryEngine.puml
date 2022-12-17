@@ -1,0 +1,45 @@
+@startuml Basic Query Engine Flow
+!pragma layout smetana
+
+package BasicQueryEngine
+package BasicPlanner
+package Parser
+package QueryPlanner
+package UpdatePlanner
+
+
+package SelectPlan
+package ProjectPlan
+package TablePlan
+package RW_HeapRecordScan
+
+package R_ProjectScan
+package RW_SelectScan
+
+BasicQueryEngine --> BasicPlanner
+
+BasicPlanner <--> Parser
+
+BasicPlanner --> QueryPlanner
+BasicPlanner --> UpdatePlanner
+
+UpdatePlanner <--> TablePlan
+QueryPlanner <--> TablePlan
+TablePlan --> SelectPlan
+SelectPlan --> ProjectPlan
+
+SelectPlan <.> RW_SelectScan
+ProjectPlan <.> R_ProjectScan
+TablePlan <.> RW_HeapRecordScan
+
+'RW_SelectScan -> RW_HeapRecordScan
+
+note right of RW_HeapRecordScan
+  Storage Engine
+end note
+
+note right of Parser
+  FrontEnd
+end note
+
+@enduml

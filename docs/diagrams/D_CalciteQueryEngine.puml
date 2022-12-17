@@ -1,0 +1,32 @@
+@startuml Calcite Query Flow
+!pragma layout smetana
+
+
+package CalciteEnumerator
+package CalciteTable
+package CalciteSchema
+package JDBC_Schema
+package Calcite_JDBC_Schema_Proxy
+package JDBC_Query
+package ResultSet
+package MetadataMgr_TableCatalog
+package RW_HeapRecordScan
+
+
+CalciteEnumerator <...> MetadataMgr_TableCatalog
+CalciteEnumerator <...> RW_HeapRecordScan
+CalciteEnumerator ---> CalciteTable
+
+MetadataMgr_TableCatalog -> RW_HeapRecordScan
+
+CalciteTable --> CalciteSchema
+CalciteSchema ..> JDBC_Schema
+JDBC_Schema ..> Calcite_JDBC_Schema_Proxy
+Calcite_JDBC_Schema_Proxy ..> JDBC_Query
+JDBC_Query ..> ResultSet
+
+note right of RW_HeapRecordScan
+  Storage Engine
+end note
+
+@enduml
