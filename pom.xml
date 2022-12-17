@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>edu.utdallas</groupId>
-    <artifactId>davisbase</artifactId>
+    <artifactId>tiny-db</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
