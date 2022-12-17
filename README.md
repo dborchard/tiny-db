@@ -1,4 +1,4 @@
-## DavisBase
+## Tiny
 
 A tiny database that supports Btree Index, Planner and Parser.
 

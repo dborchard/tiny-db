@@ -3,7 +3,7 @@
 We will be developing TinyDB in a modular structure with the below architecture.
 
 **Tiny DB**: This will be the parent project embedding all the subsequent modules.
-This will be the final executable deliverable that we will run to see the DavisBase in
+This will be the final executable deliverable that we will run to see the TinyDB in
 action. This module can also support JDBC if time permits.
 
 **Query Front End**: This layer is going to parse SQL, Tokenize the inputs, and sends it to
