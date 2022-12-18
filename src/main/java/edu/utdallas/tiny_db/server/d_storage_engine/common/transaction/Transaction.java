@@ -125,8 +125,8 @@ public class Transaction {
      * @param filename the name of the file
      * @return the number of blocks in the file
      */
-    public synchronized int size(String filename) {
-        return fm.length(filename);
+    public synchronized int blockCount(String filename) {
+        return fm.blockCount(filename);
     }
 
     /**

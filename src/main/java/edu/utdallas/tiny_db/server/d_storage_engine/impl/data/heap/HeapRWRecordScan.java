@@ -28,8 +28,8 @@ public class HeapRWRecordScan implements RWRecordScan {
     this.tx = tx;
     this.recordValueLayout = recordValueLayout;
     filename = tblname + ".tbl";
-    if (tx.size(filename) == 0) {
-      moveToNewBlock();
+    if (tx.blockCount(filename) == 0) {
+      createAndMoveToNewBlock();
     } else {
       moveToBlock(0);
     }
@@ -101,7 +101,7 @@ public class HeapRWRecordScan implements RWRecordScan {
     currentSlot = rp.insertAfter(currentSlot);
     while (currentSlot < 0) {
       if (atLastBlock()) {
-        moveToNewBlock();
+        createAndMoveToNewBlock();
       } else {
         moveToBlock(rp.getBlockId().getBlockNumber() + 1);
       }
@@ -133,7 +133,7 @@ public class HeapRWRecordScan implements RWRecordScan {
     currentSlot = -1;
   }
 
-  private void moveToNewBlock() {
+  private void createAndMoveToNewBlock() {
     close();
     BlockId blk = tx.append(filename);
     rp = new HeapRecordPageImpl(tx, blk, recordValueLayout);
@@ -142,6 +142,6 @@ public class HeapRWRecordScan implements RWRecordScan {
   }
 
   private boolean atLastBlock() {
-    return rp.getBlockId().getBlockNumber() == tx.size(filename) - 1;
+    return rp.getBlockId().getBlockNumber() == tx.blockCount(filename) - 1;
   }
 }

@@ -55,7 +55,7 @@ public class FileMgr {
 
 
   public synchronized BlockId append(String filename) {
-    int newBlockNumber = length(filename);
+    int newBlockNumber = blockCount(filename);
     BlockId blk = new BlockId(filename, newBlockNumber);
     byte[] b = new byte[blockSize];
     try {
@@ -70,7 +70,7 @@ public class FileMgr {
   }
 
 
-  public int length(String filename) {
+  public int blockCount(String filename) {
     try {
       RandomAccessFile f = getRandomAccessFile(filename);
       int result = (int) (f.length() / blockSize);

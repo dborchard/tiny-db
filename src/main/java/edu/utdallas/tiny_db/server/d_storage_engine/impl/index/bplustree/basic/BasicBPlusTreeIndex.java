@@ -30,7 +30,7 @@ public class BasicBPlusTreeIndex implements RWIndexScan {
         // deal with the leaves
         leaftbl = idxname + "leaf";
         this.leafRecordValueLayout = leafRecordValueLayout;
-        if (tx.size(leaftbl) == 0) {
+        if (tx.blockCount(leaftbl) == 0) {
             BlockId blk = tx.append(leaftbl);
             BTPage node = new BTPage(tx, blk, leafRecordValueLayout);
             node.format(blk, -1);
@@ -43,7 +43,7 @@ public class BasicBPlusTreeIndex implements RWIndexScan {
         String dirtbl = idxname + "dir";
         dirRecordValueLayout = new TablePhysicalLayout(dirsch);
         rootblk = new BlockId(dirtbl, 0);
-        if (tx.size(dirtbl) == 0) {
+        if (tx.blockCount(dirtbl) == 0) {
             // create new root block
             tx.append(dirtbl);
             BTPage node = new BTPage(tx, rootblk, dirRecordValueLayout);

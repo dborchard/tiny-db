@@ -19,7 +19,6 @@ public class ConstantSerializer implements Serializer<D_Constant> {
 
   @Override
   public int maxSize() {
-
     return Integer.BYTES;
   }
 

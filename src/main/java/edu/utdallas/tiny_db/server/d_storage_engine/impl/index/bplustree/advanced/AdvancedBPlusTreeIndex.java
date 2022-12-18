@@ -39,7 +39,7 @@ public class AdvancedBPlusTreeIndex implements RWIndexScan {
 
   @Override
   public void delete(D_Constant key, RecordKey value) {
-    throw new RuntimeException("Unimplemented by library. To support later");
+    throw new RuntimeException("Not implemented by library. To support later");
   }
 
   @Override
