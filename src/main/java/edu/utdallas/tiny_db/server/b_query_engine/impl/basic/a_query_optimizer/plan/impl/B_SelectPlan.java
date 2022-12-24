@@ -2,7 +2,7 @@ package edu.utdallas.tiny_db.server.b_query_engine.impl.basic.a_query_optimizer.
 
 import edu.utdallas.tiny_db.server.a_frontend.common.domain.clause.A_Predicate;
 import edu.utdallas.tiny_db.server.b_query_engine.impl.basic.a_query_optimizer.plan.Plan;
-import edu.utdallas.tiny_db.server.b_query_engine.impl.basic.b_sql_scans.A_Select_RWRecordScan;
+import edu.utdallas.tiny_db.server.b_query_engine.impl.basic.b_execution_engine.A_Select_RWRecordScan;
 import edu.utdallas.tiny_db.server.d_storage_engine.RORecordScan;
 import edu.utdallas.tiny_db.server.b_query_engine.common.catalog.table.TableDefinition;
 

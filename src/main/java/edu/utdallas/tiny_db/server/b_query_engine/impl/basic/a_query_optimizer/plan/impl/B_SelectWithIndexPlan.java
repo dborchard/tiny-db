@@ -3,7 +3,7 @@ package edu.utdallas.tiny_db.server.b_query_engine.impl.basic.a_query_optimizer.
 import edu.utdallas.tiny_db.server.a_frontend.common.domain.clause.D_Constant;
 import edu.utdallas.tiny_db.server.b_query_engine.impl.basic.a_query_optimizer.plan.Plan;
 import edu.utdallas.tiny_db.server.b_query_engine.common.catalog.index.IndexInfo;
-import edu.utdallas.tiny_db.server.b_query_engine.impl.basic.b_sql_scans.A_SelectUsingIndex_RORecordScan;
+import edu.utdallas.tiny_db.server.b_query_engine.impl.basic.b_execution_engine.A_SelectUsingIndex_RORecordScan;
 import edu.utdallas.tiny_db.server.d_storage_engine.RORecordScan;
 import edu.utdallas.tiny_db.server.d_storage_engine.RWIndexScan;
 import edu.utdallas.tiny_db.server.d_storage_engine.impl.data.heap.HeapRWRecordScan;
