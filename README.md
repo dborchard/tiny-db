@@ -24,13 +24,16 @@ A tiny database that supports Btree Index, Planner and Parser.
 - CLI interface
 
 ## Sample Queries
+
+NOTE: Delete the `tinydb` data directory to start fresh. 
+
 - Without Index
 ```shell
 create table T1 ( A int, B varchar(9) );
 insert into T1 (A, B) values (1, 'Alice');
 insert into T1 (A, B) values (2, 'Bob');
-select A,B from T2;
-select A,B from T2 where A=1;
+select A,B from T1;
+select A,B from T1 where A=1;
 ```
 Output
 ```shell
