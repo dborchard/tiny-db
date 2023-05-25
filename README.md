@@ -66,7 +66,7 @@ select A,B from T2 where A=1;
 
 - Frontend
     - Naive Parser
-    - ANTLR MySQL Parser (ShardingSphere Parser Library)
+    - ANTLR MySQL Parser ([Apache ShardingSphere](https://shardingsphere.apache.org/) Parser Library)
 
 - Query Engine
     - Basic Query Engine (Supporting Projection, Selection etc)
