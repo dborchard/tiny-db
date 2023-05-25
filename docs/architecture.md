@@ -29,7 +29,7 @@ performance. B+Tree will have ColumnValue as the key and RecordId (Contains Bloc
 
 - ANTRL (https://www.antlr.org/)
   ANTRL is a Parser for parsing the SQL and extracting SQL details for the Query
-  Planner. We are using the compiled MySQL parser from shardingsphere.
+  Planner. We are using the compiled MySQL parser from [Apache Shardingsphere](https://shardingsphere.apache.org/).
 - Apache Calcite (Not implemented Fully.)
   Calcite is a Production ready Query Planner + Query Parser that can be integrated
   with a storage engine to execute the Query.
